@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Catat penjualan dan kelola keranjang transaksi." />
+    <title>Catat Penjualan · CatatRezekimu</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+        rel="stylesheet"
+    />
+
+    <style>
+        /* ==============================
+           RESET & GLOBAL
+        ============================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0b3b2c;
+            --primary-dark: #082f23;
+            --primary-soft: #e6f0ec;
+
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --placeholder: #94a3b8;
+
+            --background: #f1f5f9;
+            --surface: #ffffff;
+            --surface-soft: #f8fafc;
+
+            --border: #e2e8f0;
+            --border-soft: #eef2f6;
+
+            --danger-bg: #fee2e2;
+            --danger-text: #991b1b;
+
+            --disabled: #cbd5e1;
+
+            --radius-card: 32px;
+            --radius-section: 20px;
+            --radius-item: 16px;
+        }
+
+        body {
+            font-family:
+                'Inter',
+                -apple-system,
+                BlinkMacSystemFont,
+                'Segoe UI',
+                Roboto,
+                sans-serif;
+
+            background: var(--background);
+            color: var(--text);
+
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* ==============================
+           CARD
+        ============================== */
+        .card {
+            max-width: 420px;
+            width: 100%;
+
+            background: var(--surface);
+
+            border-radius: var(--radius-card);
+
+            box-shadow:
+                0 20px 60px rgba(0, 20, 40, 0.10);
+
+            padding: 24px 18px 28px;
+        }
+
+        /* ==============================
+           HEADER
+        ============================== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            line-height: 1.3;
+            font-weight: 700;
+
+            color: var(--primary);
+            letter-spacing: -0.3px;
+        }
+
+        .header .badge {
+            flex-shrink: 0;
+
+            background: #eef2f6;
+
+            padding: 4px 12px;
+            border-radius: 40px;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            color: #1e293b;
+        }
+
+        /* ==============================
+           SEARCH
+        ============================== */
+        .search-box {
+            margin-bottom: 18px;
+        }
+
+        .search-box label {
+            display: block;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            color: var(--text-secondary);
+
+            margin-bottom: 6px;
+        }
+
+        .search-box input {
+            width: 100%;
+
+            padding: 14px 16px;
+
+            font-size: 15px;
+
+            background: var(--surface-soft);
+
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-item);
+
+            outline: none;
+
+            color: var(--text);
+
+            transition:
+                border-color 0.2s,
+                box-shadow 0.2s,
+                background 0.2s;
+        }
+
+        .search-box input::placeholder {
+            color: var(--placeholder);
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 4px rgba(11, 59, 44, 0.10);
+
+            background: var(--surface);
+        }
+
+        /* ==============================
+           DAFTAR BARANG
+        ============================== */
+        .barang-list {
+            display: flex;
+            flex-direction: column;
+
+            gap: 10px;
+
+            margin-bottom: 24px;
+
+            max-height: 300px;
+
+            overflow-y: auto;
+
+            padding-right: 4px;
+        }
+
+        .barang-list::-webkit-scrollbar,
+        .keranjang-items::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .barang-list::-webkit-scrollbar-thumb,
+        .keranjang-items::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .barang-item {
+            background: var(--surface-soft);
+
+            border: 1px solid var(--border-soft);
+
+            border-radius: var(--radius-item);
+
+            padding: 12px 14px;
+
+            display: flex;
+            flex-wrap: wrap;
+
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 10px;
+        }
+
+        .barang-info {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 6px 12px;
+
+            flex: 1;
+            min-width: 0;
+        }
+
+        .barang-info .field {
+            display: flex;
+            align-items: baseline;
+
+            gap: 4px;
+
+            font-size: 14px;
+        }
+
+        .barang-info .field .label {
+            font-weight: 500;
+
+            color: var(--text-muted);
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.3px;
+        }
+
+        .barang-info .field .value {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .barang-info .field .value.stok {
+            color: var(--primary);
+
+            background: var(--primary-soft);
+
+            padding: 2px 8px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+        }
+
+        /* ==============================
+           BUTTON TAMBAH
+        ============================== */
+        .btn-tambah {
+            background: var(--primary);
+
+            border: none;
+
+            color: #ffffff;
+
+            padding: 8px 14px;
+
+            border-radius: 40px;
+
+            font-weight: 600;
+            font-size: 13px;
+
+            cursor: pointer;
+
+            white-space: nowrap;
+
+            transition:
+                background 0.15s,
+                transform 0.1s;
+        }
+
+        .btn-tambah:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-tambah:active {
+            transform: scale(0.97);
+        }
+
+        .btn-tambah:focus-visible {
+            outline: 3px solid rgba(11, 59, 44, 0.20);
+            outline-offset: 2px;
+        }
+
+        /* ==============================
+           KERANJANG
+        ============================== */
+        .keranjang-section {
+            background: var(--surface-soft);
+
+            border-radius: var(--radius-section);
+
+            padding: 16px 14px;
+
+            border: 1px solid var(--border-soft);
+
+            margin-bottom: 16px;
+        }
+
+        .keranjang-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 12px;
+        }
+
+        .keranjang-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+
+            color: #1e293b;
+        }
+
+        .keranjang-header .item-count {
+            flex-shrink: 0;
+
+            font-size: 13px;
+
+            color: var(--text-muted);
+
+            background: #eef2f6;
+
+            padding: 3px 12px;
+
+            border-radius: 40px;
+        }
+
+        .keranjang-items {
+            display: flex;
+            flex-direction: column;
+
+            gap: 8px;
+
+            max-height: 160px;
+
+            overflow-y: auto;
+        }
+
+        .keranjang-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 10px;
+
+            background: var(--surface);
+
+            padding: 10px 12px;
+
+            border-radius: 12px;
+
+            border: 1px solid var(--border);
+
+            font-size: 14px;
+        }
+
+        .keranjang-item .detail {
+            display: flex;
+            align-items: center;
+
+            gap: 8px 12px;
+
+            flex-wrap: wrap;
+
+            min-width: 0;
+        }
+
+        .keranjang-item .detail .nama {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .keranjang-item .detail .qty {
+            color: var(--text-muted);
+        }
+
+        .keranjang-item .detail .subtotal {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* ==============================
+           AKSI KERANJANG
+        ============================== */
+        .keranjang-item .aksi {
+            display: flex;
+            gap: 5px;
+
+            flex-shrink: 0;
+        }
+
+        .keranjang-item .aksi button {
+            min-width: 32px;
+            min-height: 32px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #eef2f6;
+
+            border: none;
+
+            border-radius: 30px;
+
+            padding: 4px 8px;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            color: #1e293b;
+
+            cursor: pointer;
+
+            transition:
+                background 0.15s,
+                transform 0.1s;
+        }
+
+        .keranjang-item .aksi button:hover {
+            background: #e2e8f0;
+        }
+
+        .keranjang-item .aksi button:active {
+            transform: scale(0.94);
+        }
+
+        .keranjang-item .aksi button:focus-visible {
+            outline: 3px solid rgba(11, 59, 44, 0.20);
+            outline-offset: 2px;
+        }
+
+        .keranjang-item .aksi button.hapus {
+            background: var(--danger-bg);
+            color: var(--danger-text);
+        }
+
+        .keranjang-item .aksi button.hapus:hover {
+            background: #fecaca;
+        }
+
+        /* ==============================
+           TOTAL
+        ============================== */
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 12px 0 8px;
+
+            border-top: 2px solid var(--border);
+
+            margin-top: 8px;
+        }
+
+        .total-row .label {
+            font-size: 16px;
+            font-weight: 600;
+
+            color: #1e293b;
+        }
+
+        .total-row .value {
+            font-size: 20px;
+            font-weight: 700;
+
+            color: var(--primary);
+        }
+
+        /* ==============================
+           LANJUT PEMBAYARAN
+        ============================== */
+        .btn-lanjut {
+            width: 100%;
+
+            padding: 16px;
+
+            background: var(--primary);
+
+            color: #ffffff;
+
+            border: none;
+
+            border-radius: 16px;
+
+            font-family: 'Inter', sans-serif;
+
+            font-size: 16px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            margin-top: 8px;
+
+            box-shadow:
+                0 4px 12px rgba(11, 59, 44, 0.20);
+
+            transition:
+                background 0.15s,
+                transform 0.1s,
+                box-shadow 0.15s;
+        }
+
+        .btn-lanjut:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-lanjut:active {
+            transform: scale(0.99);
+        }
+
+        .btn-lanjut:focus-visible {
+            outline: 3px solid rgba(11, 59, 44, 0.20);
+            outline-offset: 3px;
+        }
+
+        .btn-lanjut.disabled {
+            background: var(--disabled);
+
+            box-shadow: none;
+
+            cursor: not-allowed;
+        }
+
+        /* ==============================
+           CATATAN
+        ============================== */
+        .note {
+            font-size: 12px;
+
+            color: var(--placeholder);
+
+            text-align: center;
+
+            margin-top: 16px;
+
+            border-top: 1px solid var(--border-soft);
+
+            padding-top: 16px;
+
+            line-height: 1.5;
+        }
+
+        /* ==============================
+           WIREFRAME BADGE
+        ============================== */
+        .wireframe-badge {
+            position: fixed;
+
+            bottom: 16px;
+            right: 16px;
+
+            background: rgba(15, 23, 42, 0.7);
+
+            backdrop-filter: blur(4px);
+
+            color: #e2e8f0;
+
+            font-size: 11px;
+            font-weight: 500;
+
+            padding: 6px 14px;
+
+            border-radius: 40px;
+
+            letter-spacing: 0.4px;
+
+            pointer-events: none;
+            user-select: none;
+
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        /* ==============================
+           RESPONSIVE
+        ============================== */
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+
+            .card {
+                padding: 20px 14px 24px;
+
+                border-radius: 28px;
+            }
+
+            .header h1 {
+                font-size: 19px;
+            }
+
+            .barang-item {
+                flex-direction: column;
+
+                align-items: stretch;
+
+                gap: 10px;
+            }
+
+            .barang-info {
+                width: 100%;
+            }
+
+            .btn-tambah {
+                align-self: flex-end;
+            }
+
+            .keranjang-item {
+                flex-direction: column;
+
+                align-items: stretch;
+
+                gap: 8px;
+            }
+
+            .keranjang-item .aksi {
+                justify-content: flex-end;
+            }
+
+            .total-row .value {
+                font-size: 18px;
+            }
+
+            .wireframe-badge {
+                bottom: 10px;
+                right: 10px;
+
+                font-size: 10px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="card">
+
+        <!-- Header -->
+        <header class="header">
+            <h1>🛒 Catat Penjualan</h1>
+            <span class="badge">Sales</span>
+        </header>
+
+        <!-- Pencarian -->
+        <div class="search-box">
+            <label for="cari-barang">Cari barang</label>
+
+            <input
+                id="cari-barang"
+                type="search"
+                placeholder="Cari nama barang ..."
+                autocomplete="off"
+                aria-label="Cari barang"
+            />
+        </div>
+
+        <!-- Daftar Barang -->
+        <section
+            class="barang-list"
+            aria-label="Daftar barang"
+        >
+
+            <article class="barang-item">
+                <div class="barang-info">
+
+                    <span class="field">
+                        <span class="label">Nama</span>
+                        <span class="value">Gula Pasir</span>
+                    </span>
+
+                    <span class="field">
+                        <span class="label">Jual</span>
+                        <span class="value">Rp 16.000</span>
+                    </span>
+
+                    <span class="field">
+                        <span class="label">Stok</span>
+                        <span class="value stok">120</span>
+                    </span>
+
+                </div>
+
+                <button
+                    class="btn-tambah"
+                    type="button"
+                    aria-label="Tambah Gula Pasir ke keranjang"
+                >
+                    + Tambah
+                </button>
+            </article>
+
+
+            <article class="barang-item">
+                <div class="barang-info">
+
+                    <span class="field">
+                        <span class="label">Nama</span>
+                        <span class="value">Minyak Goreng</span>
+                    </span>
+
+                    <span class="field">
+                        <span class="label">Jual</span>
+                        <span class="value">Rp 20.500</span>
+                    </span>
+
+                    <span class="field">
+                        <span class="label">Stok</span>
+                        <span class="value stok">85</span>
+                    </span>
+
+                </div>
+
+                <button
+                    class="btn-tambah"
+                    type="button"
+                    aria-label="Tambah Minyak Goreng ke keranjang"
+                >
+                    + Tambah
+                </button>
+            </article>
+
+
+            <article class="barang-item">
+                <div class="barang-info">
+
+                    <span class="field">
+                        <span class="label">Nama</span>
+                        <span class="value">Beras Premium</span>
+                    </span>
+
+                    <span class="field">
+                        <span class="label">Jual</span>
+                        <span class="value">Rp 350.000</span>
+                    </span>
+
+                    <span class="field">
+                        <span class="label">Stok</span>
+                        <span class="value stok">40</span>
+                    </span>
+
+                </div>
+
+                <button
+                    class="btn-tambah"
+                    type="button"
+                    aria-label="Tambah Beras Premium ke keranjang"
+                >
+                    + Tambah
+                </button>
+            </article>
+
+
+            <article class="barang-item">
+                <div class="barang-info">
+
+                    <span class="field">
+                        <span class="label">Nama</span>
+                        <span class="value">Telur Ayam</span>
+                    </span>
+
+                    <span class="field">
+                        <span class="label">Jual</span>
+                        <span class="value">Rp 24.000</span>
+                    </span>
+
+                    <span class="field">
+                        <span class="label">Stok</span>
+                        <span class="value stok">200</span>
+                    </span>
+
+                </div>
+
+                <button
+                    class="btn-tambah"
+                    type="button"
+                    aria-label="Tambah Telur Ayam ke keranjang"
+                >
+                    + Tambah
+                </button>
+            </article>
+
+        </section>
+
+
+        <!-- Keranjang -->
+        <section
+            class="keranjang-section"
+            aria-label="Keranjang penjualan"
+        >
+
+            <header class="keranjang-header">
+                <h2>🛍️ Keranjang</h2>
+
+                <span class="item-count">
+                    2 produk
+                </span>
+            </header>
+
+
+            <div class="keranjang-items">
+
+                <!-- Keranjang Item 1 -->
+                <article class="keranjang-item">
+
+                    <div class="detail">
+
+                        <span class="nama">
+                            Gula Pasir
+                        </span>
+
+                        <span class="qty">
+                            2 kg
+                        </span>
+
+                        <span class="subtotal">
+                            Rp 32.000
+                        </span>
+
+                    </div>
+
+                    <div class="aksi">
+
+                        <button
+                            type="button"
+                            aria-label="Kurangi Gula Pasir"
+                        >
+                            −
+                        </button>
+
+                        <button
+                            type="button"
+                            aria-label="Tambah Gula Pasir"
+                        >
+                            +
+                        </button>
+
+                        <button
+                            class="hapus"
+                            type="button"
+                            aria-label="Hapus Gula Pasir dari keranjang"
+                        >
+                            ✕
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <!-- Keranjang Item 2 -->
+                <article class="keranjang-item">
+
+                    <div class="detail">
+
+                        <span class="nama">
+                            Minyak Goreng
+                        </span>
+
+                        <span class="qty">
+                            1 liter
+                        </span>
+
+                        <span class="subtotal">
+                            Rp 20.500
+                        </span>
+
+                    </div>
+
+                    <div class="aksi">
+
+                        <button
+                            type="button"
+                            aria-label="Kurangi Minyak Goreng"
+                        >
+                            −
+                        </button>
+
+                        <button
+                            type="button"
+                            aria-label="Tambah Minyak Goreng"
+                        >
+                            +
+                        </button>
+
+                        <button
+                            class="hapus"
+                            type="button"
+                            aria-label="Hapus Minyak Goreng dari keranjang"
+                        >
+                            ✕
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- Total -->
+            <div class="total-row">
+
+                <span class="label">
+                    Total
+                </span>
+
+                <span class="value">
+                    Rp 52.500
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- Lanjut Pembayaran -->
+        <button
+            class="btn-lanjut"
+            type="button"
+            aria-label="Lanjut ke pembayaran"
+        >
+            Lanjut Pembayaran →
+        </button>
+
+
+        <!-- Catatan -->
+        <p class="note">
+            Stok divalidasi saat jumlah barang diubah dan
+            diperiksa kembali saat pembayaran diproses.
+        </p>
+
+    </main>
+
+
+    <!-- Wireframe badge -->
+    <div
+        class="wireframe-badge"
+        aria-hidden="true"
+    >
+        WIREFRAME · CATAT PENJUALAN
+    </div>
+
+</body>
+</html>

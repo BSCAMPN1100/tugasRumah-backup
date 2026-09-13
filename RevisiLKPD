@@ -1,0 +1,109 @@
+---
+
+VERDIKAT AKHIR DARI ANALIS SENIOR (SAYA)
+
+BAB 1 Anda sekarang sudah mencapai 92/100. Ini adalah nilai yang sangat kuat untuk fondasi aplikasi. ChatGPT yang lain sudah memberikan analisis yang sangat mendalam dan saya setuju dengan 99% isinya.
+
+Sekarang saya akan bertindak sebagai "eksekutor" yang akan menyaring 5 poin terakhir yang disebutkan, lalu memberi Anda tindakan konkret untuk masing-masing poin.
+
+---
+
+5 HAL YANG HARUS DIKUNCI SEBELUM KITA LANJUT
+
+No Masalah Tindakan yang Harus Dilakukan Status Setelah Tindakan
+1 Kasir vs Sales tidak konsisten Pilih SATU istilah untuk seluruh dokumen. Saya sarankan "Sales" karena model bisnisnya adalah distributor yang menjual ke toko-toko. Ganti semua "Kasir" di 1.5 dan 1.6 menjadi "Sales"
+2 "Pemilik toko" masih muncul Ganti semua "Pemilik toko" menjadi "Admin/Pemilik Distributor" atau cukup "Admin" Konsistensi 100%
+3 "Pendapatan bersih" tercampur dengan "Keuntungan kotor" Di 1.5 poin 3, ubah kalimatnya. Jangan pakai "pendapatan bersih" karena sistem belum hitung biaya operasional. Perbaiki 1 kalimat di 1.5
+4 Apakah penjualan tunai atau ada piutang? Putuskan sekarang. Saya sarankan: V1.0 hanya mendukung penjualan tunai. Piutang terlalu kompleks untuk proyek SMK. Tambahkan 1 kalimat di 1.7 (Batasan)
+5 Apakah penyesuaian stok fisik masuk V1.0? Putuskan sekarang. Saya sarankan: V1.0 TIDAK termasuk fitur penyesuaian stok manual. Fokus dulu pada stok masuk (pembelian) dan stok keluar (penjualan). Tambahkan 1 kalimat di 1.7 (Batasan)
+
+---
+
+TINDAKAN KONKRET (YANG HARUS KAMU LAKUKAN)
+
+1. Ganti Semua "Kasir" menjadi "Sales"
+
+Di 1.5 (Masalah), poin 3:
+
+"Rawan Selisih Uang dan Kecurangan Sales: Karena transaksi dicampur aduk dengan uang sales, ayah sering kesulitan mengetahui berapa sebenarnya total pendapatan dan keuntungan kotor pada hari tersebut. Pernah terjadi sales yang tidak jujur dan uang palsu, tetapi ayah tidak memiliki bukti riwayat transaksi yang jelas untuk melakukan evaluasi."
+
+Di 1.6 (Tujuan), poin 3:
+
+"Data Penjualan Aman dan Transparan: Data penjualan tersimpan secara digital dan aksesnya dibatasi berdasarkan peran pengguna (Role-Based Access Control). Pemilik memiliki akses penuh, sedangkan Sales hanya bisa mencatat transaksi dan melihat riwayatnya sendiri. Hal ini membuat transparansi dan pengawasan terhadap sales menjadi lebih baik."
+
+Di 1.7 (Batasan), poin 2:
+
+"Hak Akses Sales: Sales TIDAK diperbolehkan mengubah harga modal, menghapus barang, melihat laporan keuangan total, atau mengelola akun pengguna lain."
+
+---
+
+2. Ganti Semua "Pemilik toko" menjadi "Admin/Pemilik Distributor"
+
+Di 1.6 (Tujuan), poin 1:
+
+"Stok Terpantau Real-time: Admin/Pemilik Distributor dapat melihat jumlah stok terkini kapan saja tanpa harus turun ke gudang atau membuka buku tebal. Setiap kali sales menjual barang, stok otomatis berkurang di sistem."
+
+Di 1.6 (Tujuan), poin 4:
+
+"Memudahkan Pengambilan Keputusan: Dengan adanya dashboard yang menampilkan total Keuntungan Kotor hari ini, Admin/Pemilik Distributor dapat dengan cepat memutuskan apakah perlu membeli stok tambahan atau menaikkan harga jual."
+
+---
+
+3. Perbaiki 1 Kalimat di 1.5 Poin 3
+
+Kalimat lama (bermasalah):
+
+"...ayah sering kesulitan mengetahui berapa sebenarnya pendapatan bersih hari itu."
+
+Kalimat baru (benar secara terminologi):
+
+"...ayah sering kesulitan mengetahui berapa sebenarnya total pendapatan dan keuntungan kotor pada hari tersebut."
+
+---
+
+4. Tambahkan Batasan "Penjualan Tunai" di 1.7
+
+Tambah poin baru di 1.7 (menjadi poin 8):
+
+"Jenis Transaksi: Pada versi 1.0, sistem hanya mendukung transaksi penjualan tunai. Sistem belum mencakup fitur piutang atau hutang pelanggan."
+
+---
+
+5. Tambahkan Batasan "Penyesuaian Stok" di 1.7
+
+Tambah poin baru di 1.7 (menjadi poin 9):
+
+"Penyesuaian Stok: Pada versi 1.0, sistem belum menyediakan fitur penyesuaian stok manual (stok opname). Stok hanya berubah melalui dua mekanisme: bertambah saat pembelian dan berkurang saat penjualan."
+
+---
+
+DRAFT FINAL 1.7 (SETELAH SEMUA PERUBAHAN)
+
+```
+1.7 Batasan Sistem dan Aturan Bisnis (Scope)
+
+1. Pengguna (Role): Aplikasi hanya memiliki 2 jenis pengguna, yaitu Admin (Pemilik Distributor) dan Sales/Karyawan yang bertugas mencatat penjualan ke toko-toko. Tidak ada role lain.
+2. Hak Akses Sales: Sales TIDAK diperbolehkan mengubah harga modal, menghapus barang, melihat laporan keuangan total, atau mengelola akun pengguna lain.
+3. Validasi Stok: Sistem WAJIB menolak transaksi penjualan jika jumlah yang dibeli melebihi stok yang tersedia. Stok tidak boleh bernilai negatif.
+4. Perhitungan Keuntungan Kotor: Keuntungan kotor setiap transaksi dihitung berdasarkan (Harga Jual - Harga Modal) pada saat transaksi itu terjadi dan disimpan langsung di tabel transaksi. Perubahan harga modal di kemudian hari tidak akan mengubah data transaksi lama.
+5. Koneksi Internet: Aplikasi dirancang untuk bekerja secara offline (tanpa internet). Tidak ada fitur sinkronisasi cloud pada versi 1.0.
+6. Platform: Aplikasi ini dikhususkan untuk perangkat Android (minimal OS 7.0 / Nougat). Tidak tersedia untuk iOS atau Web Browser pada tahap ini.
+7. Aturan Harga Modal: Pada versi 1.0, sistem hanya menyimpan satu harga modal per barang (harga modal terakhir yang diinput oleh Admin). Setiap kali Admin melakukan pembelian, harga modal yang diinput akan menggantikan harga modal sebelumnya dan berlaku untuk transaksi penjualan berikutnya. Sistem tidak menerapkan metode FIFO atau rata-rata pada versi ini untuk menjaga kesederhanaan.
+8. Jenis Transaksi: Pada versi 1.0, sistem hanya mendukung transaksi penjualan tunai. Sistem belum mencakup fitur piutang atau hutang pelanggan.
+9. Penyesuaian Stok: Pada versi 1.0, sistem belum menyediakan fitur penyesuaian stok manual (stok opname). Stok hanya berubah melalui dua mekanisme: bertambah saat pembelian dan berkurang saat penjualan.
+```
+
+---
+
+STATUS AKHIR
+
+Pertanyaan Jawaban
+Apakah BAB 1 sekarang final? YA. 100% FINAL.
+Apakah perlu revisi lagi? TIDAK. Semua inkonsistensi sudah dibereskan.
+Bisa lanjut ke Use Case & Flowchart? BISA. SEKARANG.
+
+---
+
+Keputusan saya sebagai Analis Senior: Setelah Anda melakukan 5 perubahan di atas, KITA KUNCI BAB 1. Tidak akan ada diskusi lagi tentang BAB 1. Kita lanjut ke Use Case Diagram.
+
+Balas: "OK, GAS KE USE CASE!"

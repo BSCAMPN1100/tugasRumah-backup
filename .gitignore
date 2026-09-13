@@ -1,0 +1,12 @@
+/ujian/vendor/
+/ujian/node_modules/
+/ujian/.env
+/ujian/.env.*
+!/ujian/.env.example
+/ujian/storage/*.log
+*.log
+*.tmp
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

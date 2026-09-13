@@ -1,0 +1,542 @@
+LKPD tugas : 
+
+Aktivitas 1 – Menentukan Ide Project
+• Judul Project
+• Bidang Project
+• Permasalahan
+• Pengguna Aplikasi
+• Manfaat
+
+Aktivitas 2 – Analisis Permasalahan
+• Mengapa aplikasi perlu dibuat?
+• Masalah apa yang sering terjadi?
+• Bagaimana solusi aplikasi?
+• Apa dampaknya jika aplikasi tidak dibuat?
+
+Aktivitas 3 – Analisis Kebutuhan
+• Tuliskan minimal 10 kebutuhan fungsional/fitur.
+• Tuliskan kebutuhan nonfungsional (hardware, software, dll.).
+
+Aktivitas 4 – Identifikasi Pengguna
+• Buat tabel pengguna dan hak aksesnya.
+
+Aktivitas 5 – Flowchart
+• Buat flowchart alur aplikasi.
+
+Aktivitas 6 – Use Case Diagram
+• Minimal 2 aktor dan 5 use case.
+
+Aktivitas 7 – Perancangan Database
+• Buat tabel, field, tipe data, PK, FK.
+
+Aktivitas 8 – Wireframe
+• Buat sketsa Login (jika ada), Dashboard, Halaman Data, Form Tambah Data.
+
+Aktivitas 9 – Refleksi
+• Apa yang paling mudah?
+• Apa yang masih membingungkan?
+• Apa yang akan dipelajari sebelum mulai membuat aplikasi?
+
+Produk yang Dikumpulkan
+• Identitas Project
+• Analisis Permasalahan
+• Analisis Kebutuhan
+• Flowchart
+• Use Case Diagram
+• Rancangan Database
+• Wireframe
+• Refleksi
+
+
+
+
+deskripsi yang menjadi fondasi aplikasi :
+
+
+BAB 1 – DESKRIPSI APLIKASI
+
+1.1 Latar Belakang
+
+Saat ini, Banyak distributor sembako skala kecil, termasuk ayah saya sendiri, yang bertugas membeli barang dari supplier dan menjualnya ke toko-toko, masih mengandalkan sistem pencatatan manual menggunakan dua buku besar. Buku pertama mencatat pembelian dan stok barang, buku kedua mencatat penjualan harian. Cara ini sudah terbukti tidak efektif. Setiap kali ayah ingin mengecek sisa stok gula atau keuntungan kotor hari ini, ia harus membuka puluhan halaman buku, menghitung ulang dengan kalkulator, dan seringkali hasilnya tidak akurat karena selisih catatan. Selain itu, ketika harga modal dari supplier naik, ayah harus mencari dan mencoret harga jual lama satu per satu di buku, yang memakan waktu dan berisiko terlewat. Pengalaman inilah yang melatarbelakangi saya untuk merancang sebuah aplikasi yang dapat membantu mengelola keuangan dan stok barang dagangan secara lebih terstruktur dan cepat.
+
+1.2 Visi Aplikasi
+
+Membangun aplikasi manajemen keuangan dan stok yang sederhana, mudah digunakan, dan dapat diandalkan oleh distributor  sembako khususnya yang sudah lanjut usia (non-teknologi) agar mereka tidak lagi bergantung pada catatan manual yang rumit.
+
+1.3 Misi Aplikasi
+
+1. Mengubah proses pencatatan manual menjadi digital yang terpusat dalam satu genggaman.
+2. Menyajikan informasi stok dan keuntungan kotor secara real-time tanpa perlu menghitung ulang.
+3. Memberikan batasan akses antara Admin/Pemilik Distributor dan Sales agar laporan keuangan lebih aman dan transparan.
+
+1.4 Gambaran Umum Aplikasi (Apa Itu "CatatRezekimu")
+
+CatatRezekimu adalah aplikasi berbasis mobile (Android) yang dirancang khusus untuk membantu distributor sembako dalam mengelola stok barang, mencatat transaksi penjualan harian, serta memantau keuntungan usaha. Aplikasi ini bekerja secara offline (tanpa internet) sehingga cepat digunakan di daerah dengan sinyal buruk. Aplikasi ini memiliki dua peran pengguna: Pemilik (Admin) yang memiliki akses penuh, dan Sales yang hanya bertugas mencatat penjualan.
+
+1.5 Masalah yang Diselesaikan (Mengapa Aplikasi Ini Dibuat?)
+
+Berdasarkan pengamatan langsung dan wawancara dengan ayah saya yang berprofesi sebagai distributor sembako, terdapat tiga masalah utama yang sering terjadi, yaitu:
+
+1. Stok Barang Sering Kelewat (Tidak Akurat): Karena barang yang dijual beragam (gula, minyak, beras, telur) dan jumlahnya banyak, sering terjadi selisih antara stok di buku dengan stok fisik di gudang. Hal ini menyebabkan ayah kehilangan kesempatan menjual karena stok ternyata habis, atau sebaliknya, kelebihan stok yang tidak diketahui.
+2. Kesulitan Menentukan Ulang Harga Jual Saat Harga Modal Naik: Harga sembako dari supplier sering berubah hampir setiap minggu. Setiap kali harga modal naik, ayah harus menghitung ulang margin keuntungan dan mengoreksi daftar harga jual di buku. Proses ini sangat membuang waktu dan seringkali ada barang yang terlewat tidak diupdate harganya, sehingga ayah merugi.
+3. Rawan Selisih Uang dan Kecurangan Sales: Karena transaksi dicampur aduk dengan uang Sales, ayah sering kesulitan mengetahui berapa sebenarnya total pendapatan dan keuntungan kotor pada hari tersebut. Pernah terjadi Sales yang tidak jujur dan uang palsu, tetapi ayah tidak memiliki bukti riwayat transaksi yang jelas untuk melakukan evaluasi.
+
+Selain berdasarkan pengalaman ayah saya, masalah serupa juga sering saya dengar dari distributor lain di sekitar tempat tinggal saya ketika mereka berbincang tentang kesulitan mencatat stok dan transaksi.
+
+1.6 Tujuan dan Manfaat (Dampak Jika Aplikasi Digunakan)
+
+Dengan hadirnya CatatRezekimu, diharapkan masalah-masalah di atas dapat teratasi. Berikut manfaat spesifik yang ditawarkan:
+
+1. Stok Terpantau Real-time: Admin/Distributor dapat melihat jumlah stok terkini kapan saja tanpa harus turun ke gudang atau membuka buku tebal. Setiap kali Sales menjual barang, stok otomatis berkurang di sistem.
+2. Penyesuaian Harga Jadi Cepat dan Tepat: Fitur ubah harga modal memungkinkan pemilik mengubah harga beli dalam hitungan detik. Sistem menyimpan harga modal dan harga jual pada saat transaksi terjadi (sebagai snapshot), sehingga keuntungan setiap transaksi yang sudah tercatat tidak akan berubah meskipun harga modal diubah di kemudian hari. Perubahan harga modal hanya berlaku untuk transaksi penjualan berikutnya.
+3. Data Penjualan Aman dan Transparan: Data penjualan tersimpan secara digital dan aksesnya dibatasi berdasarkan peran pengguna (Role-Based Access Control). Pemilik memiliki akses penuh, sedangkan Sales hanya bisa mencatat transaksi dan melihat riwayatnya sendiri. Hal ini membuat transparansi dan pengawasan terhadap Sales menjadi lebih baik.
+4. Memudahkan Pengambilan Keputusan: Dengan adanya dashboard yang menampilkan total keuntungan kotor hari ini, Admin/Distributor dapat dengan cepat memutuskan apakah perlu membeli stok tambahan atau menaikkan harga jual.
+
+1.7 Batasan Sistem dan Aturan Bisnis (Scope)
+
+1. Pengguna (Role): Aplikasi hanya memiliki 2 jenis pengguna, yaitu Admin (Pemilik Distributor) dan Sales/Karyawan yang bertugas mencatat penjualan ke toko-toko. Tidak ada role lain.
+2. Hak Akses Sales: Sales TIDAK diperbolehkan mengubah harga modal, menghapus barang, melihat laporan keuangan total, atau mengelola akun pengguna lain.
+3. Validasi Stok: Sistem WAJIB menolak transaksi penjualan jika jumlah yang dibeli melebihi stok yang tersedia. Stok tidak boleh bernilai negatif.
+4. Perhitungan Keuntungan Kotor: Keuntungan kotor setiap transaksi dihitung berdasarkan (Harga Jual - Harga Modal) pada saat transaksi itu terjadi dan disimpan langsung di tabel transaksi. Perubahan harga modal di kemudian hari tidak akan mengubah data transaksi lama.
+5. Koneksi Internet: Aplikasi dirancang untuk bekerja secara offline (tanpa internet). Tidak ada fitur sinkronisasi cloud pada versi 1.0.
+6. Platform: Aplikasi ini dikhususkan untuk perangkat Android (minimal OS 7.0 / Nougat). Tidak tersedia untuk iOS atau Web Browser pada tahap ini.
+7. Aturan Harga Modal: Pada versi 1.0, sistem hanya menyimpan satu harga modal per barang (harga modal terakhir yang diinput oleh Admin). Setiap kali Admin melakukan pembelian, harga modal yang diinput akan menggantikan harga modal sebelumnya dan berlaku untuk transaksi penjualan berikutnya. Sistem tidak menerapkan metode FIFO atau rata-rata pada versi ini untuk menjaga kesederhanaan.
+8. Jenis Transaksi: Pada versi 1.0, sistem hanya mendukung transaksi penjualan tunai. Sistem belum mencakup fitur piutang atau hutang pelanggan.
+9. Penyesuaian Stok: Pada versi 1.0, sistem belum menyediakan fitur penyesuaian stok manual (stok opname). Stok hanya berubah melalui dua mekanisme: bertambah saat pembelian dan berkurang saat penjualan.
+10. Barang yang baru ditambahkan ke sistem memiliki stok 0 dan harga modal 0. Sistem tidak mengizinkan transaksi penjualan untuk barang yang belum memiliki harga modal valid (harga modal > 0) dan stok mencukupi, untuk mencegah kesalahan perhitungan keuntungan kotor."
+11. Pada versi 1.0, fitur penghapusan data barang tidak tersedia. Barang yang sudah pernah tercatat dalam transaksi pembelian atau penjualan tidak dapat dihapus untuk menjaga integritas data histori, namun masih dapat diubah (edit) nama, satuan, atau harganya.
+
+---
+
+flowchart : 
+login & autentikasi :
+
+flowchart TD
+    A([Mulai]) --> B[Halaman Login]
+    B --> C[Input Username & Password]
+    C --> D{Validasi Login}
+
+    D -->|Tidak Valid| E[Tampilkan Pesan Error]
+    E --> B
+
+    D -->|Valid| F{Cek Role}
+
+    F -->|Admin| G[Dashboard Admin]
+    F -->|Sales| H[Dashboard Sales]
+
+    %% =========================
+    %% ADMIN
+    %% =========================
+    G --> G1[Pilih Menu]
+
+    G1 --> G2[Kelola Data Barang]
+    G1 --> G3[Catat Pembelian Stok]
+    G1 --> G4[Kelola Akun Sales]
+    G1 --> G5[Lihat Laporan Keuangan]
+    G1 --> G6[Lihat Semua Riwayat]
+    G1 --> G7[Logout]
+
+    G2 --> G2A[Tambah / Ubah / Hapus Barang]
+    G2A --> G
+
+    G3 --> G3A[Input Pembelian dari Supplier]
+    G3A --> G3B[Stok Bertambah]
+    G3B --> G3C[Update Harga Modal Terbaru]
+    G3C --> G
+
+    G4 --> G4A[Tambah / Ubah / Hapus Akun Sales]
+    G4A --> G
+
+    G5 --> G5A[Pilih Periode Laporan]
+    G5A --> G5B[Tampilkan Total Penjualan & Keuntungan Kotor]
+    G5B --> G
+
+    G6 --> G6A[Tampilkan Semua Transaksi]
+    G6A --> G
+
+    G7 --> Z([Selesai])
+
+    %% =========================
+    %% SALES
+    %% =========================
+    H --> H1[Pilih Menu]
+
+    H1 --> H2[Catat Penjualan]
+    H1 --> H3[Lihat Riwayat Saya]
+    H1 --> H4[Logout]
+
+    H2 --> H2A[Lanjut ke Flowchart Transaksi Penjualan]
+    H2A --> H
+
+    H3 --> H3A[Tampilkan Riwayat Transaksi Sendiri]
+    H3A --> H
+
+    H4 --> Z
+    
+transaksi penjualan :
+
+flowchart TD
+    A([Mulai Catat Penjualan]) --> B[Tampilkan Daftar Barang]
+    B --> C[Sales Pilih Barang]
+    C --> D[Input Jumlah]
+    D --> E[Cek Ketersediaan Stok]
+
+    E --> F{Jumlah <= Stok?}
+
+    F -->|Tidak| G[Tampilkan: Stok Tidak Cukup]
+    G --> B
+
+    F -->|Ya| H[Ambil Harga Modal & Harga Jual]
+    H --> I[Hitung Total Harga]
+    I --> J[Hitung Keuntungan Kotor]
+    J --> K[Input Pembayaran Tunai]
+
+    K --> L{Pembayaran >= Total?}
+
+    L -->|Tidak| M[Tampilkan: Pembayaran Kurang]
+    M --> K
+
+    L -->|Ya| N[Hitung Kembalian]
+    N --> O[Simpan Transaksi + Snapshot Harga + Kurangi Stok]
+    O --> P[Transaksi Berhasil]
+
+    P --> Q{Cetak Struk?}
+
+    Q -->|Ya| R[Cetak Struk]
+    Q -->|Tidak| S([Selesai])
+
+    R --> S
+    
+    
+    
+  use case :
+  
+  kode html : 
+  
+  <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=5,IE=9" ><![endif]-->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Diagram Tanpa Judul</title>
+<meta charset="utf-8"/>
+</head>
+<body><div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="{&quot;highlight&quot;:&quot;#0000ff&quot;,&quot;nav&quot;:true,&quot;resize&quot;:true,&quot;dark-mode&quot;:&quot;auto&quot;,&quot;toolbar&quot;:&quot;zoom layers tags lightbox&quot;,&quot;edit&quot;:&quot;_blank&quot;,&quot;xml&quot;:&quot;&lt;mxfile host=\&quot;app.diagrams.net\&quot;&gt;\n  &lt;diagram name=\&quot;Halaman-1\&quot; id=\&quot;ftRVRQVTwJWvCMxnuqRq\&quot;&gt;\n    &lt;mxGraphModel dx=\&quot;810\&quot; dy=\&quot;1395\&quot; grid=\&quot;1\&quot; gridSize=\&quot;10\&quot; guides=\&quot;1\&quot; tooltips=\&quot;1\&quot; connect=\&quot;1\&quot; arrows=\&quot;1\&quot; fold=\&quot;1\&quot; page=\&quot;1\&quot; pageScale=\&quot;1\&quot; pageWidth=\&quot;827\&quot; pageHeight=\&quot;1169\&quot; math=\&quot;0\&quot; shadow=\&quot;0\&quot;&gt;\n      &lt;root&gt;\n        &lt;mxCell id=\&quot;0\&quot; /&gt;\n        &lt;mxCell id=\&quot;1\&quot; parent=\&quot;0\&quot; /&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-27\&quot; parent=\&quot;1\&quot; style=\&quot;rounded=0;whiteSpace=wrap;html=1;\&quot; value=\&quot;\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;730\&quot; width=\&quot;1080\&quot; x=\&quot;160\&quot; y=\&quot;40\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-13\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-1\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-6\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;240\&quot; /&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;330\&quot; /&gt;\n            &lt;/Array&gt;\n            &lt;mxPoint x=\&quot;280\&quot; y=\&quot;320\&quot; as=\&quot;targetPoint\&quot; /&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-14\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-1\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-5\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;240\&quot; /&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;420\&quot; /&gt;\n            &lt;/Array&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-16\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-1\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-4\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;240\&quot; /&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;510\&quot; /&gt;\n            &lt;/Array&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-17\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-1\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-3\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;240\&quot; /&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;600\&quot; /&gt;\n            &lt;/Array&gt;\n            &lt;mxPoint x=\&quot;350\&quot; y=\&quot;610\&quot; as=\&quot;targetPoint\&quot; /&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-18\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-1\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-2\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;240\&quot; /&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;690\&quot; /&gt;\n            &lt;/Array&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-33\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-1\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-67\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;215\&quot; y=\&quot;110\&quot; /&gt;\n            &lt;/Array&gt;\n            &lt;mxPoint x=\&quot;360\&quot; y=\&quot;240\&quot; as=\&quot;targetPoint\&quot; /&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-1\&quot; parent=\&quot;1\&quot; style=\&quot;shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;\&quot; value=\&quot;Admin\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;60\&quot; width=\&quot;30\&quot; x=\&quot;200\&quot; y=\&quot;210\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-2\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;Lihat semua riwayat&amp;amp;nbsp;\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;360\&quot; y=\&quot;650\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-3\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;Lihat laporan keuangan&amp;amp;nbsp;\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;360\&quot; y=\&quot;560\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-4\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;Kelola akun sales\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;360\&quot; y=\&quot;470\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-5\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;Catat Pembelian Stok\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;360\&quot; y=\&quot;380\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-6\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;Kelola Data Barang\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;360\&quot; y=\&quot;290\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-23\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-19\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-67\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;575\&quot; y=\&quot;110\&quot; /&gt;\n            &lt;/Array&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-48\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-19\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-21\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;680\&quot; y=\&quot;240\&quot; /&gt;\n              &lt;mxPoint x=\&quot;680\&quot; y=\&quot;360\&quot; /&gt;\n            &lt;/Array&gt;\n            &lt;mxPoint x=\&quot;720\&quot; y=\&quot;240\&quot; as=\&quot;targetPoint\&quot; /&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-56\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-19\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-22\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;680\&quot; y=\&quot;240\&quot; /&gt;\n              &lt;mxPoint x=\&quot;680\&quot; y=\&quot;520\&quot; /&gt;\n              &lt;mxPoint x=\&quot;680\&quot; y=\&quot;640\&quot; /&gt;\n            &lt;/Array&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-19\&quot; parent=\&quot;1\&quot; style=\&quot;shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;\&quot; value=\&quot;Sales\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;60\&quot; width=\&quot;30\&quot; x=\&quot;560\&quot; y=\&quot;210\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-61\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-21\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;dashed=1;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-29\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;1140\&quot; y=\&quot;360\&quot; /&gt;\n            &lt;/Array&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-64\&quot; connectable=\&quot;0\&quot; parent=\&quot;3qdqp03RIYtdZmV4y2fs-61\&quot; style=\&quot;edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;\&quot; value=\&quot;&amp;amp;lt;&amp;amp;lt;Extend&amp;amp;gt;&amp;amp;gt;\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; x=\&quot;0.7271\&quot; y=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;mxPoint as=\&quot;offset\&quot; /&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-21\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;Catat penjualan\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;760\&quot; y=\&quot;320\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-22\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;Lihat riwayat penjualan saya\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;760\&quot; y=\&quot;600\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-28\&quot; parent=\&quot;1\&quot; style=\&quot;text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;\&quot; value=\&quot;Sistem CatatRejekimu\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;40\&quot; width=\&quot;200\&quot; x=\&quot;160\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-52\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-35\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-21\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot; /&gt;\n            &lt;mxPoint x=\&quot;790\&quot; y=\&quot;530\&quot; as=\&quot;targetPoint\&quot; /&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-29\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;&amp;lt;div&amp;gt;Cetak Struk&amp;lt;/div&amp;gt;\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;1080\&quot; y=\&quot;480\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-49\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-35\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;startArrow=none;startFill=0;endArrow=none;endFill=0;dashed=1;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-21\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-53\&quot; connectable=\&quot;0\&quot; parent=\&quot;3qdqp03RIYtdZmV4y2fs-49\&quot; style=\&quot;edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;\&quot; value=\&quot;&amp;amp;lt;&amp;amp;lt;Include&amp;amp;gt;&amp;amp;gt;\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; x=\&quot;0.1139\&quot; y=\&quot;6\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;mxPoint as=\&quot;offset\&quot; /&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-50\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-36\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;strokeWidth=1;dashed=1;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-21\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;980\&quot; y=\&quot;360\&quot; /&gt;\n            &lt;/Array&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-54\&quot; connectable=\&quot;0\&quot; parent=\&quot;3qdqp03RIYtdZmV4y2fs-50\&quot; style=\&quot;edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;\&quot; value=\&quot;&amp;amp;lt;&amp;amp;lt;Include&amp;amp;gt;&amp;amp;gt;\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; x=\&quot;-0.5639\&quot; y=\&quot;3\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;mxPoint as=\&quot;offset\&quot; /&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-36\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;&amp;lt;div&amp;gt;Simpan snapshot harga&amp;lt;/div&amp;gt;\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;920\&quot; y=\&quot;480\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-35\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;&amp;lt;div&amp;gt;Cek ketersediaan&amp;amp;nbsp; stok&amp;amp;nbsp;&amp;lt;/div&amp;gt;\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;760\&quot; y=\&quot;480\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-67\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;Login\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;360\&quot; y=\&quot;70\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n      &lt;/root&gt;\n    &lt;/mxGraphModel&gt;\n  &lt;/diagram&gt;\n&lt;/mxfile&gt;\n&quot;}"></div>
+<script type="text/javascript" src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
+</body>
+</html>
+
+
+
+ERD : 
+
+erDiagram
+    users {
+        int id PK
+        varchar name
+        varchar username
+        varchar password
+        enum role
+        datetime created_at
+        datetime updated_at
+    }
+
+    barang {
+        int id PK
+        varchar nama
+        varchar satuan
+        decimal harga_modal
+        decimal harga_jual
+        int stok
+        datetime created_at
+        datetime updated_at
+    }
+
+    pembelian {
+        int id PK
+        int user_id FK
+        datetime tanggal
+        decimal total
+    }
+
+    pembelian_detail {
+        int id PK
+        int pembelian_id FK
+        int barang_id FK
+        int qty
+        decimal harga_saat_beli
+    }
+
+    penjualan {
+        int id PK
+        int user_id FK
+        datetime tanggal
+        decimal total_harga
+        decimal uang_dibayar
+        decimal kembalian
+    }
+
+    penjualan_detail {
+        int id PK
+        int penjualan_id FK
+        int barang_id FK
+        int qty
+        decimal harga_jual_snapshot
+        decimal harga_modal_snapshot
+        decimal subtotal
+        decimal keuntungan_kotor
+    }
+
+    %% RELASI (1 : N)
+    users ||--o{ pembelian : "1 Admin melakukan banyak Pembelian"
+    users ||--o{ penjualan : "1 Sales melakukan banyak Penjualan"
+    barang ||--o{ pembelian_detail : "1 Barang dibeli berkali-kali"
+    barang ||--o{ penjualan_detail : "1 Barang terjual berkali-kali"
+    pembelian ||--|{ pembelian_detail : "1 Pembelian terdiri dari banyak Detail"
+    penjualan ||--|{ penjualan_detail : "1 Penjualan terdiri dari banyak Detail"
+    
+struktur tabel : 
+
+📌 2. STRUKTUR TABEL LENGKAP (UNTUK LKPD)
+
+Ini adalah 6 tabel yang wajib kamu tulis di Aktivitas 7 – Perancangan Database pada LKPD-mu.
+
+---
+
+Tabel 1: users (Data Pengguna)
+
+Field Tipe Data PK / FK Keterangan
+id INT PK Auto Increment, nomor unik user
+name VARCHAR(100) - Nama lengkap
+username VARCHAR(50) - Username untuk login
+password VARCHAR(255) - Password (disimpan dalam bentuk hash)
+role ENUM('admin','sales') - Hak akses (Admin atau Sales)
+created_at DATETIME - Waktu data dibuat
+updated_at DATETIME - Waktu data terakhir diubah
+
+---
+
+Tabel 2: barang (Data Produk)
+
+Field Tipe Data PK / FK Keterangan
+id INT PK Auto Increment, nomor unik barang
+nama VARCHAR(100) - Nama barang (misal: Gula Pasir)
+satuan VARCHAR(20) - Satuan barang (kg, liter, karung, dll)
+harga_modal DECIMAL(15,2) - Harga beli terbaru dari supplier
+harga_jual DECIMAL(15,2) - Harga jual ke toko
+stok INT - Jumlah stok tersedia (tidak boleh negatif)
+created_at DATETIME - Waktu data dibuat
+updated_at DATETIME - Waktu data terakhir diubah
+
+---
+
+Tabel 3: pembelian (Header Pembelian)
+
+Field Tipe Data PK / FK Keterangan
+id INT PK Auto Increment, nomor unik pembelian
+user_id INT FK (→ users.id) Admin yang melakukan pembelian
+tanggal DATETIME - Waktu transaksi pembelian
+total DECIMAL(15,2) - Total harga semua barang dalam pembelian
+
+---
+
+Tabel 4: pembelian_detail (Detail Pembelian)
+
+Field Tipe Data PK / FK Keterangan
+id INT PK Auto Increment, nomor unik detail
+pembelian_id INT FK (→ pembelian.id) Induk transaksi pembelian
+barang_id INT FK (→ barang.id) Barang yang dibeli
+qty INT - Jumlah barang yang dibeli
+harga_saat_beli DECIMAL(15,2) - Harga modal saat pembelian (histori)
+
+---
+
+Tabel 5: penjualan (Header Penjualan)
+
+Field Tipe Data PK / FK Keterangan
+id INT PK Auto Increment, nomor unik transaksi
+user_id INT FK (→ users.id) Sales yang melakukan penjualan
+tanggal DATETIME - Waktu transaksi penjualan
+total_harga DECIMAL(15,2) - Total semua barang
+uang_dibayar DECIMAL(15,2) - Uang tunai yang dibayar pembeli
+kembalian DECIMAL(15,2) - Kembalian (uang_dibayar - total_harga)
+
+---
+
+Tabel 6: penjualan_detail (⭐ Detail Penjualan & SNAPSHOT)
+
+Field Tipe Data PK / FK Keterangan
+id INT PK Auto Increment, nomor unik detail
+penjualan_id INT FK (→ penjualan.id) Induk transaksi penjualan
+barang_id INT FK (→ barang.id) Barang yang dijual
+qty INT - Jumlah barang terjual
+harga_jual_snapshot DECIMAL(15,2) - Harga jual SAAT TRANSAKSI
+harga_modal_snapshot DECIMAL(15,2) - Harga modal SAAT TRANSAKSI
+subtotal DECIMAL(15,2) - harga_jual_snapshot × qty
+keuntungan_kotor DECIMAL(15,2) - (harga_jual - harga_modal) × qty
+
+---
+
+
+ini adalah bagian yang akan kita kerjakan yaitu Wireframe dan ini rancangannya:
+
+Baik, bro. Saya tanggalkan semua tabel. Saya buatkan Master List Halaman + Fitur dalam format daftar bertingkat yang rapi dan mudah dibaca. Ini adalah peta jalan final yang akan kita eksekusi satu per satu.
+
+---
+
+MASTER LIST RANCANGAN APLIKASI "CATATREZEKIMU"
+
+---
+
+A. Halaman WAJIB DIGAMBAR untuk Wireframe LKPD (7 Halaman Utama)
+
+Berikut adalah 7 halaman yang wajib Anda buat sketsanya untuk memenuhi tugas Aktivitas 8.
+
+---
+
+1. Halaman Login
+
+· Aktor: Admin dan Sales.
+· Fitur:
+  · Input Username.
+  · Input Password (tersembunyi).
+  · Tombol "Masuk".
+  · Validasi akun (jika salah, tampilkan pesan error).
+  · Setelah berhasil, sistem mengenali role (Admin/Sales).
+  · Redirect ke Dashboard Admin (jika role Admin) atau Dashboard Sales (jika role Sales).
+
+---
+
+2. Dashboard Admin
+
+· Aktor: Admin (Pemilik).
+· Fitur (Informasi + Navigasi):
+  · Menampilkan 3 kartu ringkasan bisnis:
+    · Total Penjualan Hari Ini.
+    · Keuntungan Kotor Hari Ini.
+    · Total Stok Seluruh Barang.
+  · Menu navigasi (5 tombol besar):
+    · Data Barang.
+    · Pembelian.
+    · Kelola Sales.
+    · Laporan Keuangan.
+    · Riwayat Transaksi.
+  · Tombol Logout (di pojok).
+
+---
+
+3. Dashboard Sales
+
+· Aktor: Sales (Karyawan).
+· Fitur:
+  · Sapaan sederhana (misal: "Halo, [Nama Sales]").
+  · 2 Tombol besar sebagai menu utama:
+    · Catat Penjualan.
+    · Riwayat Penjualan Saya.
+  · Tombol Logout (di pojok kanan atas sebagai ikon).
+
+---
+
+4. Halaman Data Barang (Memiliki 2 Versi Tampilan)
+
+· Aktor: Admin dan Sales.
+· Versi Admin:
+  · Menampilkan daftar barang dalam bentuk list/table.
+  · Kolom yang terlihat: Nama, Satuan, Harga Modal, Harga Jual, Stok.
+  · Tombol "Tambah" (+) untuk menambah barang baru.
+  · Tombol "Edit" pada setiap item barang (untuk mengubah data).
+  · Tidak ada tombol Hapus (karena di versi 1.0 fitur hapus ditiadakan).
+· Versi Sales (Daftar Harga & Stok - Read Only):
+  · Menampilkan daftar barang.
+  · Kolom yang terlihat: Nama, Satuan, Harga Jual, Stok.
+  · Tidak menampilkan kolom Harga Modal.
+  · Tidak ada tombol Tambah, Edit, atau Hapus. (Hanya untuk referensi cepat).
+
+---
+
+5. Form Tambah Barang
+
+· Aktor: Admin.
+· Fitur:
+  · Input field: Nama Barang, Satuan, Harga Jual.
+  · Tombol "Simpan" dan "Batal".
+  · Aturan otomatis (tidak perlu diinput): Saat disimpan, sistem otomatis mengisi stok = 0 dan harga_modal = 0.
+  · Catatan Khusus: Barang ini belum boleh dijual sampai Admin melakukan transaksi Pembelian pertama untuk barang tersebut (karena harga modal dan stoknya masih 0).
+
+---
+
+6. Halaman Catat Penjualan
+
+· Aktor: Sales.
+· Fitur (Alur Keranjang Belanja):
+  · Kolom Pencarian barang.
+  · Daftar barang yang tersedia (menampilkan Nama, Harga Jual, dan Stok).
+  · Tombol "Tambah" pada setiap barang untuk memasukkannya ke keranjang.
+  · Saat menekan Tambah, Sales bisa menginput jumlah (Qty).
+  · Validasi stok di awal: Jika Qty melebihi stok, muncul peringatan langsung.
+  · Keranjang belanja di bagian bawah:
+    · Menampilkan item yang sudah dipilih (Nama, Qty, Subtotal).
+    · Bisa mengubah jumlah atau menghapus item dari keranjang.
+  · Menampilkan Total harga semua item di keranjang.
+  · Tombol "Lanjut Pembayaran" untuk ke halaman berikutnya.
+
+---
+
+7. Halaman Pembayaran
+
+· Aktor: Sales.
+· Fitur:
+  · Menampilkan Total Harga yang harus dibayar (read-only, berasal dari keranjang).
+  · Input "Uang Dibayar" (diisi oleh Sales).
+  · Otomatis menampilkan "Kembalian" (hasil hitungan: Uang Dibayar - Total Harga).
+  · Validasi: Jika Uang Dibayar < Total Harga, muncul peringatan "Pembayaran Kurang" dan proses dihentikan.
+  · Validasi Stok FINAL: Saat tombol "Proses Bayar" ditekan, sistem mengecek stok satu kali lagi. Jika stok ternyata habis (karena faktor lain), transaksi dibatalkan dan muncul notifikasi.
+  · Jika semua validasi lolos, sistem menyimpan transaksi ke database (tabel penjualan & penjualan_detail, lengkap dengan snapshot harga), dan mengurangi stok barang.
+
+---
+
+8. [OPSIONAL] Transaksi Berhasil / Cetak Struk
+
+· Aktor: Sales.
+· Fitur:
+  · Tampilan "Transaksi Berhasil" dengan icon centang hijau.
+  · Ringkasan transaksi: Total, Uang Dibayar, Kembalian.
+  · Tombol "Cetak Struk" (jika tersedia printer thermal).
+  · Tombol "Selesai" (kembali ke Dashboard Sales).
+
+---
+
+B. Halaman / Fungsi SISTEM yang TIDAK DIGAMBAR (Tetapi Harus Ada di Rancangan)
+
+Halaman-halaman ini adalah bagian dari aplikasi yang sudah kita sepakati di use case dan database, tetapi tidak wajib dibuat wireframe-nya untuk tugas LKPD. Namun, Anda tetap harus menyebutkannya di struktur sistem.
+
+---
+
+Untuk Admin:
+
+· Pembelian & Form Tambah Pembelian: Admin memilih barang, mengisi qty dan harga beli/modal, lalu menyimpan. Sistem otomatis menambah stok dan memperbarui harga modal di tabel barang.
+· Kelola Sales & Form Tambah/Edit Sales: Admin melihat daftar Sales, menambah akun baru, atau mengubah data Sales (username/password).
+· Laporan Keuangan: Admin memilih periode (tanggal), lalu melihat total penjualan dan total keuntungan kotor.
+· Riwayat Semua Transaksi: Admin melihat semua transaksi penjualan yang dilakukan oleh semua Sales.
+
+Untuk Sales:
+
+· Riwayat Penjualan Saya: Sales melihat daftar transaksi penjualan yang hanya dia lakukan sendiri.
+
+---
+
+🚀 Langkah Selanjutnya (Eksekusi 1 per 1)
+
+Sekarang, ceklis daftar di atas. Kita akan kerjakan Halaman per Halaman sesuai urutan (1 s/d 7).
+
+Mulai dari Halaman 1: Login.
+
+Apakah Anda ingin saya:
+
+· A. Memberikan sketsa tata letak teks untuk Login (posisi field dan tombol)?
+· B. Atau Anda sudah punya gambaran dan ingin langsung menggambar?
+
+Balas dengan pilihan A atau B, atau tanyakan hal lain. Kita gas satu-satu, bro! 🎯
+
+ini adalah hasil obrolan saya dan kamu sebelumnya.
+
+sekarang saya mau kamu mengisi tugas lkpd saya berdasarkan data data ini, saya sudah mengerjakan usecase, flowchart, erd & tabel database, wire frame

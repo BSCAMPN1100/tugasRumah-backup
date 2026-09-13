@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Semua Riwayat - CatatRezekimu</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f2f2f2;
+        }
+
+        .container {
+            width: 390px;
+            min-height: 100vh;
+            margin: auto;
+            background: white;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 18px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .back {
+            font-size: 22px;
+            margin-right: 15px;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .filter {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #999;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            background: white;
+            border: 2px solid #222;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .history-card {
+            border: 1px solid #aaa;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .history-id {
+            font-weight: bold;
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+
+        .history-info {
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .detail-button {
+            margin-top: 12px;
+            border: 1px solid #333;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <div class="back">←</div>
+        <h2>SEMUA RIWAYAT</h2>
+    </div>
+
+    <div class="content">
+
+        <div class="section-title">
+            FILTER PERIODE
+        </div>
+
+        <div class="filter">
+            <label>Dari</label>
+            <input type="date" value="2026-08-17">
+        </div>
+
+        <div class="filter">
+            <label>Sampai</label>
+            <input type="date" value="2026-08-17">
+        </div>
+
+        <button>
+            TAMPILKAN
+        </button>
+
+        <br><br>
+
+        <div class="section-title">
+            DAFTAR TRANSAKSI
+        </div>
+
+        <div class="history-card">
+
+            <div class="history-id">
+                #001
+            </div>
+
+            <div class="history-info">
+                Sales : Budi<br>
+                Tanggal : 17-08-2026<br>
+                Total : Rp 2.000.000
+            </div>
+
+            <button class="detail-button">
+                LIHAT DETAIL
+            </button>
+
+        </div>
+
+        <div class="history-card">
+
+            <div class="history-id">
+                #002
+            </div>
+
+            <div class="history-info">
+                Sales : Andi<br>
+                Tanggal : 17-08-2026<br>
+                Total : Rp 1.500.000
+            </div>
+
+            <button class="detail-button">
+                LIHAT DETAIL
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

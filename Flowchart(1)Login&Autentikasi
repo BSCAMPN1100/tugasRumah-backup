@@ -1,0 +1,61 @@
+flowchart TD
+    A([Mulai]) --> B[Halaman Login]
+    B --> C[Input Username & Password]
+    C --> D{Validasi Login}
+
+    D -->|Tidak Valid| E[Tampilkan Pesan Error]
+    E --> B
+
+    D -->|Valid| F{Cek Role}
+
+    F -->|Admin| G[Dashboard Admin]
+    F -->|Sales| H[Dashboard Sales]
+
+    %% =========================
+    %% ADMIN
+    %% =========================
+    G --> G1[Pilih Menu]
+
+    G1 --> G2[Kelola Data Barang]
+    G1 --> G3[Catat Pembelian Stok]
+    G1 --> G4[Kelola Akun Sales]
+    G1 --> G5[Lihat Laporan Keuangan]
+    G1 --> G6[Lihat Semua Riwayat]
+    G1 --> G7[Logout]
+
+    G2 --> G2A[Tambah / Ubah / Hapus Barang]
+    G2A --> G
+
+    G3 --> G3A[Input Pembelian dari Supplier]
+    G3A --> G3B[Stok Bertambah]
+    G3B --> G3C[Update Harga Modal Terbaru]
+    G3C --> G
+
+    G4 --> G4A[Tambah / Ubah / Hapus Akun Sales]
+    G4A --> G
+
+    G5 --> G5A[Pilih Periode Laporan]
+    G5A --> G5B[Tampilkan Total Penjualan & Keuntungan Kotor]
+    G5B --> G
+
+    G6 --> G6A[Tampilkan Semua Transaksi]
+    G6A --> G
+
+    G7 --> Z([Selesai])
+
+    %% =========================
+    %% SALES
+    %% =========================
+    H --> H1[Pilih Menu]
+
+    H1 --> H2[Catat Penjualan]
+    H1 --> H3[Lihat Riwayat Saya]
+    H1 --> H4[Logout]
+
+    H2 --> H2A[Lanjut ke Flowchart Transaksi Penjualan]
+    H2A --> H
+
+    H3 --> H3A[Tampilkan Riwayat Transaksi Sendiri]
+    H3A --> H
+
+    H4 --> Z

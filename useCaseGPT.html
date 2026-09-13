@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Use Case Diagram - CatatRezekimu</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px;
+            background: #f4f4f4;
+            font-family: Arial, sans-serif;
+            color: #222;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .diagram {
+            position: relative;
+            width: 1400px;
+            height: 850px;
+            margin: auto;
+
+            background: white;
+            border: 3px solid #222;
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+        /* =========================
+           SYSTEM TITLE
+        ========================== */
+
+        .system-title {
+            position: absolute;
+
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+
+            background: white;
+            padding: 0 15px;
+
+            font-size: 20px;
+            font-weight: bold;
+
+            z-index: 5;
+        }
+
+        /* =========================
+           ACTORS
+        ========================== */
+
+        .actor {
+            position: absolute;
+
+            width: 190px;
+            padding: 14px 10px;
+
+            text-align: center;
+
+            border: 2px solid #222;
+            border-radius: 30px;
+
+            background: #fff;
+
+            font-weight: bold;
+
+            z-index: 10;
+        }
+
+        .admin {
+            left: 50px;
+            top: 190px;
+        }
+
+        .sales {
+            left: 50px;
+            top: 560px;
+        }
+
+        /* =========================
+           ADMIN AREA
+        ========================== */
+
+        .area {
+            position: absolute;
+
+            border: 2px solid #888;
+            border-radius: 8px;
+
+            background: #fafafa;
+        }
+
+        .admin-area {
+            left: 330px;
+            top: 90px;
+
+            width: 950px;
+            height: 320px;
+        }
+
+        .sales-area {
+            left: 330px;
+            top: 470px;
+
+            width: 950px;
+            height: 300px;
+        }
+
+        .area-title {
+            position: absolute;
+
+            top: -14px;
+            left: 30px;
+
+            padding: 3px 12px;
+
+            background: white;
+
+            font-weight: bold;
+            color: #555;
+        }
+
+        /* =========================
+           USE CASE
+        ========================== */
+
+        .usecase {
+            position: absolute;
+
+            width: 170px;
+            height: 90px;
+
+            border: 2px solid #222;
+            border-radius: 50%;
+
+            background: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 15px;
+
+            font-size: 14px;
+
+            z-index: 10;
+        }
+
+        /* ADMIN USE CASES */
+
+        .uc-barang {
+            left: 40px;
+            top: 100px;
+        }
+
+        .uc-pembelian {
+            left: 220px;
+            top: 100px;
+        }
+
+        .uc-sales {
+            left: 400px;
+            top: 100px;
+        }
+
+        .uc-laporan {
+            left: 580px;
+            top: 100px;
+        }
+
+        .uc-riwayat {
+            left: 760px;
+            top: 100px;
+        }
+
+        /* SALES USE CASES */
+
+        .uc-penjualan {
+            left: 130px;
+            top: 100px;
+        }
+
+        .uc-riwayat-saya {
+            left: 450px;
+            top: 100px;
+        }
+
+        .uc-struk {
+            left: 130px;
+            top: 210px;
+
+            border-style: dashed;
+        }
+
+        /* =========================
+           LOGIN
+        ========================== */
+
+        .login {
+            position: absolute;
+
+            left: 1090px;
+            top: 430px;
+
+            width: 150px;
+            height: 80px;
+
+            border: 2px solid #222;
+            border-radius: 50%;
+
+            background: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+
+            z-index: 10;
+        }
+
+        /* =========================
+           SVG CONNECTIONS
+        ========================== */
+
+        svg {
+            position: absolute;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            pointer-events: none;
+
+            z-index: 2;
+        }
+
+        .connection {
+            stroke: #222;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .extend-line {
+            stroke: #555;
+            stroke-width: 2;
+
+            stroke-dasharray: 8 6;
+
+            fill: none;
+        }
+
+        /* =========================
+           LEGEND
+        ========================== */
+
+        .legend {
+            position: absolute;
+
+            bottom: 15px;
+            right: 20px;
+
+            font-size: 12px;
+            color: #555;
+
+            background: white;
+            padding: 8px 12px;
+
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 class="page-title">
+        Use Case Diagram — CatatRezekimu
+    </h1>
+
+    <div class="diagram">
+
+        <!-- SYSTEM TITLE -->
+        <div class="system-title">
+            SISTEM CATATREZEKIMU
+        </div>
+
+        <!-- SVG CONNECTIONS -->
+        <svg viewBox="0 0 1400 850">
+
+            <!-- ADMIN CONNECTIONS -->
+
+            <line
+                class="connection"
+                x1="240" y1="235"
+                x2="370" y2="235"
+            />
+
+            <line
+                class="connection"
+                x1="240" y1="235"
+                x2="550" y2="235"
+            />
+
+            <line
+                class="connection"
+                x1="240" y1="235"
+                x2="730" y2="235"
+            />
+
+            <line
+                class="connection"
+                x1="240" y1="235"
+                x2="910" y2="235"
+            />
+
+            <line
+                class="connection"
+                x1="240" y1="235"
+                x2="1090" y2="235"
+            />
+
+
+            <!-- SALES CONNECTIONS -->
+
+            <line
+                class="connection"
+                x1="240" y1="605"
+                x2="460" y2="615"
+            />
+
+            <line
+                class="connection"
+                x1="240" y1="605"
+                x2="780" y2="615"
+            />
+
+
+            <!-- EXTEND: CETAK STRUK -->
+
+            <line
+                class="extend-line"
+                x1="545" y1="660"
+                x2="545" y2="690"
+            />
+
+        </svg>
+
+
+        <!-- ACTORS -->
+
+        <div class="actor admin">
+            Admin / Pemilik Distributor
+        </div>
+
+        <div class="actor sales">
+            Sales / Karyawan
+        </div>
+
+
+        <!-- ADMIN AREA -->
+
+        <div class="area admin-area">
+
+            <div class="area-title">
+                Fungsi Admin
+            </div>
+
+            <div class="usecase uc-barang">
+                Kelola Data Barang
+            </div>
+
+            <div class="usecase uc-pembelian">
+                Catat Pembelian Stok
+            </div>
+
+            <div class="usecase uc-sales">
+                Kelola Akun Sales
+            </div>
+
+            <div class="usecase uc-laporan">
+                Lihat Laporan Keuangan
+            </div>
+
+            <div class="usecase uc-riwayat">
+                Lihat Semua Riwayat
+            </div>
+
+        </div>
+
+
+        <!-- SALES AREA -->
+
+        <div class="area sales-area">
+
+            <div class="area-title">
+                Fungsi Sales
+            </div>
+
+            <div class="usecase uc-penjualan">
+                Catat Penjualan
+            </div>
+
+            <div class="usecase uc-riwayat-saya">
+                Lihat Riwayat Penjualan Saya
+            </div>
+
+            <div class="usecase uc-struk">
+                Cetak Struk
+            </div>
+
+        </div>
+
+
+        <!-- LOGIN -->
+
+        <div class="login">
+            Login
+        </div>
+
+
+        <!-- LEGEND -->
+
+        <div class="legend">
+            Garis putus-putus = <<extend>>
+        </div>
+
+    </div>
+
+</body>
+</html>

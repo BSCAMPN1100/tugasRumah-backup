@@ -1,0 +1,1202 @@
+Baik, saya sudah membaca kode HTML login Anda. Desainnya sangat bagus, rapi, dan sesuai dengan tema "CatatRezekimu" (hijau tua, card bersih, responsif). Saya akan mempertahankan 100% desain asli dan hanya melakukan penyesuaian teknis agar terintegrasi dengan Laravel.
+
+---
+
+Langkah Implementasi (Urutan)
+
+Kita akan kerjakan satu per satu dan test di setiap tahap.
+
+1. Migration tambah kolom role (karena tabel users belum punya role)
+2. Seeder untuk buat akun Admin dan Sales
+3. LoginController (logic autentikasi + redirect berdasarkan role)
+4. Middleware CheckRole (opsional untuk proteksi rute)
+5. View login → ubah login.blade.php dari kode Anda (tambahkan CSRF, action, error, old input)
+6. Routes (login, logout, dashboard)
+7. Testing login dengan akun yang sudah disiapkan
+
+---
+
+1. Migration tambah role
+
+Jalankan perintah di Termux:
+
+```bash
+cd /sdcard/Ya_gitu/tugasRumah/ujian
+php artisan make:migration add_role_to_users_table
+```
+
+File baru akan dibuat di database/migrations/..._add_role_to_users_table.php. Isi dengan:
+
+```php
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->enum('role', ['admin', 'sales'])->default('sales')->after('password');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('role');
+        });
+    }
+};
+```
+
+Jalankan migration:
+
+```bash
+php artisan migrate
+```
+
+---
+
+2. Seeder untuk akun awal
+
+Buat seeder:
+
+```bash
+php artisan make:seeder UsersTableSeeder
+```
+
+Isi file database/seeders/UsersTableSeeder.php:
+
+```php
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+
+class UsersTableSeeder extends Seeder
+{
+    public function run(): void
+    {
+        DB::table('users')->insert([
+            [
+                'name'     => 'Admin Utama',
+                'email'    => 'admin@catatrezekimu.com',
+                'password' => Hash::make('admin123'),
+                'role'     => 'admin',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name'     => 'Sales 1',
+                'email'    => 'sales@catatrezekimu.com',
+                'password' => Hash::make('sales123'),
+                'role'     => 'sales',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+    }
+}
+```
+
+Jalankan seeder (pastikan tidak ada duplikat email):
+
+```bash
+php artisan db:seed --class=UsersTableSeeder
+```
+
+Catatan: Karena kita menggunakan email sebagai unique, pastikan belum ada data dengan email tersebut. Jika ada, hapus dulu atau ganti email di seeder.
+
+---
+
+3. Buat LoginController
+
+```bash
+php artisan make:controller Auth/LoginController
+```
+
+File akan dibuat di app/Http/Controllers/Auth/LoginController.php. Isi dengan:
+
+```php
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class LoginController extends Controller
+{
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
+    public function login(Request $request)
+    {
+        // Validasi input
+        $credentials = $request->validate([
+            'username' => ['required', 'string'],
+            'password' => ['required', 'string'],
+        ]);
+
+        // Coba login dengan field 'name' sebagai username
+        if (Auth::attempt(['name' => $credentials['username'], 'password' => $credentials['password']])) {
+            $request->session()->regenerate();
+
+            // Redirect berdasarkan role
+            $user = Auth::user();
+            if ($user->role === 'admin') {
+                return redirect()->intended('/dashboard/admin');
+            } elseif ($user->role === 'sales') {
+                return redirect()->intended('/dashboard/sales');
+            }
+
+            // fallback (seharusnya tidak terjadi)
+            return redirect('/dashboard');
+        }
+
+        // Jika gagal, kembali dengan error
+        return back()->withErrors([
+            'username' => 'Username atau password salah.',
+        ])->onlyInput('username');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login');
+    }
+}
+```
+
+---
+
+4. Buat Middleware CheckRole (opsional untuk proteksi dashboard)
+
+```bash
+php artisan make:middleware CheckRole
+```
+
+File di app/Http/Middleware/CheckRole.php:
+
+```php
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class CheckRole
+{
+    public function handle(Request $request, Closure $next, ...$roles)
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+
+        $user = Auth::user();
+        if (in_array($user->role, $roles)) {
+            return $next($request);
+        }
+
+        abort(403, 'Akses ditolak.');
+    }
+}
+```
+
+Daftarkan middleware di app/Http/Kernel.php pada array $routeMiddleware:
+
+```php
+'role' => \App\Http\Middleware\CheckRole::class,
+```
+
+---
+
+5. View Login (Blade)
+
+Pindahkan kode HTML Anda ke resources/views/auth/login.blade.php.
+Saya akan mempertahankan seluruh desain dan hanya menambahkan:
+
+· @csrf di dalam form
+· action="{{ route('login') }}" (atau url('/login'))
+· Penampilan error dari $errors
+· Nilai old('username') untuk mempertahankan input
+
+Berikut file lengkap yang sudah saya sesuaikan (simpan di resources/views/auth/login.blade.php):
+
+```blade
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login · CatatRezekimu</title>
+
+    <!-- Google Fonts (inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ----- RESET & GLOBAL ----- */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* ----- CARD UTAMA ----- */
+        .login-card {
+            max-width: 400px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.10);
+            padding: 40px 28px 36px;
+            transition: box-shadow 0.2s;
+        }
+
+        /* ----- BRAND / HEADER ----- */
+        .brand {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .brand-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            background: #0b3b2c;
+            border-radius: 20px;
+            margin-bottom: 14px;
+            color: #ffffff;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            box-shadow: 0 8px 18px rgba(11, 59, 44, 0.20);
+        }
+
+        .brand h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0b3b2c;
+            letter-spacing: -0.3px;
+        }
+
+        .brand .sub {
+            font-size: 14px;
+            font-weight: 400;
+            color: #64748b;
+            margin-top: 4px;
+            letter-spacing: 0.2px;
+        }
+
+        /* ----- FORM ELEMEN ----- */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+
+        .form-group .input-wrap {
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 15px;
+            font-weight: 400;
+            font-family: 'Inter', sans-serif;
+            color: #0f172a;
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 16px;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #0b3b2c;
+            box-shadow: 0 0 0 4px rgba(11, 59, 44, 0.10);
+            background: #ffffff;
+        }
+
+        .form-group input::placeholder {
+            color: #94a3b8;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        .input-wrap .eye-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 20px;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* ----- PESAN ERROR (dinamis dari Laravel) ----- */
+        .error-message {
+            background: #fef2f2;
+            border-left: 4px solid #dc2626;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #991b1b;
+        }
+
+        .error-message .icon {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .error-message.hidden {
+            display: none;
+        }
+
+        /* ----- TOMBOL LOGIN ----- */
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: #0b3b2c;
+            border: none;
+            border-radius: 16px;
+            color: #ffffff;
+            font-size: 17px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.1s;
+            box-shadow: 0 6px 16px rgba(11, 59, 44, 0.25);
+            margin-top: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-login:hover {
+            background: #0a3426;
+        }
+
+        .btn-login:active {
+            transform: scale(0.98);
+            background: #082f23;
+        }
+
+        /* ----- FOOTER ----- */
+        .login-footer {
+            text-align: center;
+            margin-top: 28px;
+            font-size: 13px;
+            color: #94a3b8;
+            border-top: 1px solid #eef2f6;
+            padding-top: 24px;
+        }
+
+        .login-footer .version {
+            display: inline-block;
+            background: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #64748b;
+        }
+
+        /* ----- RESPONSIVE TWEAK ----- */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 32px 20px 28px;
+                border-radius: 28px;
+            }
+
+            .brand h1 {
+                font-size: 24px;
+            }
+
+            .brand-icon {
+                width: 56px;
+                height: 56px;
+                font-size: 26px;
+            }
+
+            .form-group input {
+                padding: 13px 16px;
+                font-size: 15px;
+            }
+
+            .btn-login {
+                padding: 15px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-card">
+
+        <!-- Brand -->
+        <div class="brand">
+            <div class="brand-icon">📦</div>
+            <h1>CatatRezekimu</h1>
+            <div class="sub">Manajemen Stok &amp; Keuangan</div>
+        </div>
+
+        <!-- Pesan error dari Laravel -->
+        @if ($errors->any())
+            <div class="error-message">
+                <span class="icon">⚠️</span>
+                <span>{{ $errors->first() }}</span>
+            </div>
+        @else
+            <!-- Jika tidak ada error, sembunyikan (atau bisa dihapus) -->
+            <div class="error-message hidden" style="display: none;">
+                <span class="icon">⚠️</span>
+                <span>Username atau password salah. Coba lagi.</span>
+            </div>
+        @endif
+
+        <!-- Form Login -->
+        <form action="{{ url('/login') }}" method="POST">
+            @csrf
+
+            <!-- Username (menggunakan name="username") -->
+            <div class="form-group">
+                <label for="username">Username</label>
+                <div class="input-wrap">
+                    <input type="text" id="username" name="username"
+                           placeholder="Masukkan username Anda"
+                           value="{{ old('username') }}" required />
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrap">
+                    <input type="password" id="password" name="password"
+                           placeholder="Masukkan password" required />
+                    <span class="eye-icon">👁️</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-login">Masuk</button>
+        </form>
+
+        <!-- Footer -->
+        <div class="login-footer">
+            <span class="version">versi 1.0 &bull; offline</span>
+        </div>
+
+    </div>
+
+</body>
+</html>
+```
+
+---
+
+6. Routes
+
+Ubah file routes/web.php menjadi:
+
+```php
+<?php
+
+use App\Http\Controllers\MasterController;
+use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Route;
+
+// Halaman login
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Dashboard (dengan middleware auth dan role)
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/dashboard/admin', function () {
+        return view('dashboard.admin'); // nanti kita buat
+    });
+});
+
+Route::middleware(['auth', 'role:sales'])->group(function () {
+    Route::get('/dashboard/sales', function () {
+        return view('dashboard.sales'); // nanti kita buat
+    });
+});
+
+// Route lama (master) - bisa tetap diakses semua, atau kita proteksi juga
+Route::get('/master', [MasterController::class, 'index'])->middleware(['auth', 'role:admin']);
+```
+
+Catatan: Untuk sementara, kita belum membuat view dashboard admin/sales. Nanti setelah login berhasil, kita akan buat halaman dashboard sederhana.
+
+---
+
+7. Buat view dashboard sementara (agar tidak error saat redirect)
+
+Buat dua file kosong:
+
+· resources/views/dashboard/admin.blade.php
+· resources/views/dashboard/sales.blade.php
+
+Isi masing-masing dengan pesan sederhana, misalnya:
+
+```blade
+<h1>Dashboard Admin</h1>
+<p>Selamat datang, {{ Auth::user()->name }}!</p>
+<a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+<form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">@csrf</form>
+```
+
+---
+
+8. Testing
+
+Setelah semua file dibuat:
+
+1. Jalankan server Laravel:
+   ```bash
+   php artisan serve --host=0.0.0.0 --port=8000
+   ```
+2. Buka browser HP dan akses http://localhost:8000/login (atau IP Termux).
+3. Coba login dengan:
+   · Admin: username admin (atau Admin Utama?) – di seeder kita pakai name = 'Admin Utama', jadi username = Admin Utama (sesuai field name).
+   · Sales: username Sales 1? atau sales? Saya menyarankan untuk menggunakan email sebagai username, karena lebih unik. Tapi di kode kita menggunakan name. Untuk kemudahan, kita bisa ubah login agar menggunakan email atau name. Saya akan sesuaikan.
+   Saran: Ubah seeder agar name menjadi admin dan sales (tanpa spasi) agar mudah diingat.
+   Sebaiknya kita ubah seeder menjadi:
+   ```php
+   [
+       'name'     => 'admin',
+       'email'    => 'admin@catatrezekimu.com',
+       'password' => Hash::make('admin123'),
+       'role'     => 'admin',
+   ],
+   [
+       'name'     => 'sales',
+       'email'    => 'sales@catatrezekimu.com',
+       'password' => Hash::make('sales123'),
+       'role'     => 'sales',
+   ],
+   ```
+   Lalu jalankan seeder ulang (atau tambahkan manual via Tinker).
+4. Setelah login berhasil, seharusnya redirect ke dashboard sesuai role.
+
+---
+
+Kesimpulan
+
+· Desain login tetap seperti asli Anda (saya hanya menambahkan @csrf, action, error handling, dan old()).
+· Semua fungsionalitas login sudah siap (validasi, autentikasi, pengecekan role, redirect).
+· Middleware role melindungi dashboard agar hanya bisa diakses oleh role yang sesuai.
+
+---
+
+Langkah selanjutnya: Setelah Anda mengimplementasikan semua kode di atas dan login berhasil, beri tahu saya. Lalu kita lanjut ke pembuatan Dashboard Admin dan Dashboard Sales secara bertahap (satu per satu).
+
+Jika ada kendala (error, migrasi, seeder, dll), tanyakan langsung. Saya siap membantu debugging.
+
+
+
+
+
+
+
+
+problem :
+kita stop di langkah ke 4 
+
+kode ini harus saya jalankan/letakkan dimana?
+'role' => \App\Http\Middleware\CheckRole::class,
+saya jalankan di folder ujian hasilnya :
+bash: AppHttpMiddlewareCheckRole::class,: Operation not permitted
+
+perbaikan:
+Baik, saya perhatikan bahwa Anda menyebutkan file app/Http/Kernel.php belum dibuat. Itu menandakan bahwa project Laravel Anda kemungkinan adalah Laravel versi 11 ke atas, karena sejak Laravel 11, file Kernel.php dihapus dan pendaftaran middleware dipindahkan ke bootstrap/app.php.
+
+Mari kita sesuaikan.
+
+---
+
+Cek versi Laravel Anda
+
+Jalankan perintah di Termux (dalam folder project):
+
+```bash
+php artisan --version
+```
+
+Misalnya output: Laravel Framework 11.x atau 10.x. Jika 11+, maka kita pakai cara baru.
+
+---
+
+Pendaftaran Middleware di Laravel 11+
+
+Buka file bootstrap/app.php (bukan app/Http/Kernel.php). Di dalam file tersebut, cari bagian ->withMiddleware() dan tambahkan alias middleware seperti ini:
+
+```php
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->alias([
+        'role' => \App\Http\Middleware\CheckRole::class,
+    ]);
+})
+```
+
+Contoh penuh file bootstrap/app.php (bagian yang relevan):
+
+```php
+<?php
+
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+
+return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        // ...
+    )
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias([
+            'role' => \App\Http\Middleware\CheckRole::class,
+        ]);
+    })
+    ->withExceptions(function (Exceptions $exceptions) {
+        //
+    })->create();
+```
+
+Setelah menambahkan, simpan file.
+
+---
+
+Jika Anda masih menggunakan Laravel 10 atau lebih lama
+
+Maka file app/Http/Kernel.php memang ada. Isinya kurang lebih seperti yang saya jelaskan sebelumnya. Jika tidak ada, berarti Anda belum membuatnya? Tapi di Laravel 10 ke bawah, file itu otomatis ada saat install. Karena Anda bilang belum dibuat, kemungkinan besar Anda pakai Laravel 11. Jadi ikuti cara di atas.
+
+---
+
+Konfirmasi Langkah Sebelumnya
+
+Sebelum kita lanjut ke langkah 5 (View Login), tolong konfirmasi:
+
+1. Apakah Anda sudah menjalankan migration untuk menambah kolom role?
+2. Apakah Anda sudah menjalankan seeder UsersTableSeeder untuk membuat akun admin dan sales?
+3. Apakah Anda sudah membuat LoginController (app/Http/Controllers/Auth/LoginController.php) dengan kode yang saya berikan?
+4. Apakah Anda sudah berhasil mendaftarkan middleware role di bootstrap/app.php (atau Kernel.php)?
+
+Jika semua sudah, kita siap lanjut ke pembuatan View Login (langkah 5) dan Routes (langkah 6).
+
+---
+
+Rencana Lanjutan
+
+Setelah Anda konfirmasi, saya akan memberikan:
+
+· File resources/views/auth/login.blade.php (sudah saya siapkan di jawaban sebelumnya, tapi akan saya ulang dengan penyesuaian).
+· File routes/web.php yang sudah diperbarui.
+· Dan instruksi untuk membuat dashboard sementara agar redirect tidak error.
+
+---
+
+Action Anda Sekarang
+
+1. Jalankan php artisan --version dan beri tahu saya hasilnya.
+2. Konfirmasi status langkah 1–4.
+3. Jika ada kendala (error migrasi, seeder, dsb), tanyakan langsung.
+
+Saya tunggu.
+
+
+
+problem : folder resources/views/auth belum dibuat
+
+solve :
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Baik, saya perhatikan Anda sudah berhasil menambahkan middleware role di bootstrap/app.php. Versi Laravel 13 tidak masalah, pendekatan kita tetap sama.
+
+---
+
+Sekarang kita lanjut ke Langkah 5: Membuat View Login
+
+Anda benar, di resources/views belum ada folder auth. Kita akan buat.
+
+1. Buat folder dan file
+
+Di dalam Termux (dari folder project /sdcard/Ya_gitu/tugasRumah/ujian):
+
+```bash
+# Buat folder auth
+mkdir -p resources/views/auth
+
+# Buat folder dashboard (untuk nanti)
+mkdir -p resources/views/dashboard
+```
+
+2. Buat file resources/views/auth/login.blade.php
+
+Buat file baru di resources/views/auth/login.blade.php dan salin kode berikut (saya sesuaikan dengan desain Anda + CSRF + error handling + old input):
+
+```blade
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login · CatatRezekimu</title>
+
+    <!-- Google Fonts (inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ----- RESET & GLOBAL ----- */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* ----- CARD UTAMA ----- */
+        .login-card {
+            max-width: 400px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.10);
+            padding: 40px 28px 36px;
+            transition: box-shadow 0.2s;
+        }
+
+        /* ----- BRAND / HEADER ----- */
+        .brand {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .brand-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            background: #0b3b2c;
+            border-radius: 20px;
+            margin-bottom: 14px;
+            color: #ffffff;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            box-shadow: 0 8px 18px rgba(11, 59, 44, 0.20);
+        }
+
+        .brand h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0b3b2c;
+            letter-spacing: -0.3px;
+        }
+
+        .brand .sub {
+            font-size: 14px;
+            font-weight: 400;
+            color: #64748b;
+            margin-top: 4px;
+            letter-spacing: 0.2px;
+        }
+
+        /* ----- FORM ELEMEN ----- */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+
+        .form-group .input-wrap {
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 15px;
+            font-weight: 400;
+            font-family: 'Inter', sans-serif;
+            color: #0f172a;
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 16px;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #0b3b2c;
+            box-shadow: 0 0 0 4px rgba(11, 59, 44, 0.10);
+            background: #ffffff;
+        }
+
+        .form-group input::placeholder {
+            color: #94a3b8;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        .input-wrap .eye-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 20px;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* ----- PESAN ERROR (dinamis dari Laravel) ----- */
+        .error-message {
+            background: #fef2f2;
+            border-left: 4px solid #dc2626;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #991b1b;
+        }
+
+        .error-message .icon {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .error-message.hidden {
+            display: none;
+        }
+
+        /* ----- TOMBOL LOGIN ----- */
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: #0b3b2c;
+            border: none;
+            border-radius: 16px;
+            color: #ffffff;
+            font-size: 17px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.1s;
+            box-shadow: 0 6px 16px rgba(11, 59, 44, 0.25);
+            margin-top: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-login:hover {
+            background: #0a3426;
+        }
+
+        .btn-login:active {
+            transform: scale(0.98);
+            background: #082f23;
+        }
+
+        /* ----- FOOTER ----- */
+        .login-footer {
+            text-align: center;
+            margin-top: 28px;
+            font-size: 13px;
+            color: #94a3b8;
+            border-top: 1px solid #eef2f6;
+            padding-top: 24px;
+        }
+
+        .login-footer .version {
+            display: inline-block;
+            background: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #64748b;
+        }
+
+        /* ----- RESPONSIVE TWEAK ----- */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 32px 20px 28px;
+                border-radius: 28px;
+            }
+
+            .brand h1 {
+                font-size: 24px;
+            }
+
+            .brand-icon {
+                width: 56px;
+                height: 56px;
+                font-size: 26px;
+            }
+
+            .form-group input {
+                padding: 13px 16px;
+                font-size: 15px;
+            }
+
+            .btn-login {
+                padding: 15px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-card">
+
+        <!-- Brand -->
+        <div class="brand">
+            <div class="brand-icon">📦</div>
+            <h1>CatatRezekimu</h1>
+            <div class="sub">Manajemen Stok &amp; Keuangan</div>
+        </div>
+
+        <!-- Pesan error dari Laravel -->
+        @if ($errors->any())
+            <div class="error-message">
+                <span class="icon">⚠️</span>
+                <span>{{ $errors->first() }}</span>
+            </div>
+        @endif
+
+        <!-- Form Login -->
+        <form action="{{ url('/login') }}" method="POST">
+            @csrf
+
+            <!-- Username (menggunakan name="username") -->
+            <div class="form-group">
+                <label for="username">Username</label>
+                <div class="input-wrap">
+                    <input type="text" id="username" name="username"
+                           placeholder="Masukkan username Anda"
+                           value="{{ old('username') }}" required autofocus />
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrap">
+                    <input type="password" id="password" name="password"
+                           placeholder="Masukkan password" required />
+                    <span class="eye-icon">👁️</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-login">Masuk</button>
+        </form>
+
+        <!-- Footer -->
+        <div class="login-footer">
+            <span class="version">versi 1.0 &bull; offline</span>
+        </div>
+
+    </div>
+
+</body>
+</html>
+```
+
+---
+
+3. Buat file dashboard sementara (supaya redirect tidak error)
+
+Buat file resources/views/dashboard/admin.blade.php:
+
+```blade
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin</title>
+</head>
+<body>
+    <h1>Dashboard Admin</h1>
+    <p>Selamat datang, {{ Auth::user()->name }}!</p>
+    <form action="{{ url('/logout') }}" method="POST">
+        @csrf
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>
+```
+
+Buat file resources/views/dashboard/sales.blade.php:
+
+```blade
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Sales</title>
+</head>
+<body>
+    <h1>Dashboard Sales</h1>
+    <p>Selamat datang, {{ Auth::user()->name }}!</p>
+    <form action="{{ url('/logout') }}" method="POST">
+        @csrf
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>
+```
+
+---
+
+4. Update file routes/web.php
+
+Ganti isi routes/web.php dengan yang berikut (pertahankan route /master yang sudah ada, tambahkan login, logout, dashboard):
+
+```php
+<?php
+
+use App\Http\Controllers\MasterController;
+use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Route;
+
+// Halaman login
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Dashboard (dengan middleware auth dan role)
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/dashboard/admin', function () {
+        return view('dashboard.admin');
+    });
+});
+
+Route::middleware(['auth', 'role:sales'])->group(function () {
+    Route::get('/dashboard/sales', function () {
+        return view('dashboard.sales');
+    });
+});
+
+// Route lama (master) - tetap bisa diakses, tapi kita proteksi hanya untuk admin
+Route::get('/master', [MasterController::class, 'index'])->middleware(['auth', 'role:admin']);
+```
+
+---
+
+5. Testing
+
+Pastikan semua langkah sebelumnya selesai:
+
+· Migration tambah kolom role sudah dijalankan.
+· Seeder UsersTableSeeder sudah dijalankan (dengan akun admin dan sales).
+· LoginController sudah dibuat di app/Http/Controllers/Auth/LoginController.php dengan kode yang saya berikan.
+· Middleware CheckRole sudah ada dan terdaftar di bootstrap/app.php.
+
+Sekarang jalankan server:
+
+```bash
+php artisan serve --host=0.0.0.0 --port=8000
+```
+
+Buka browser di HP, akses http://localhost:8000/login. Coba login dengan:
+
+· Admin: username = admin, password = admin123 (sesuai seeder).
+· Sales: username = sales, password = sales123.
+
+Setelah login berhasil, seharusnya redirect ke dashboard masing-masing.
+
+---
+
+Jika ada error, tanyakan. Jika semua berjalan, kita sudah selesai dengan fitur LOGIN. Selanjutnya kita akan buat Dashboard Admin dan Dashboard Sales secara bertahap.
+
+Saya tunggu hasil testing Anda.

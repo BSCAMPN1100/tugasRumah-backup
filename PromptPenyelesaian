@@ -1,0 +1,100 @@
+oke bro: 
+saya adalah seorang siswa smk dengan jurusan Rekayasa Perangkat Lunak kelas 12. tugas ini adalah persiapan untuk uji kompetensi nantinya.
+
+hierarki Goals :
+1. saya paham aplikasi apa yang mau saya buat (kesulitan : rumit)
+2. saya dapat menjelaskan ulang dengan percaya diri alur dari aplikasi yang saya buat, tetmasuk : Flowchart nya, use casenya, Wireframenya, dan struktur databasenya (kesulitan : sangat-sangat rumit )
+3. setelah saya pelajari dasar² nya baru saya mau menyesuaikan apa yang telah saya pahami dan aplikasi saya dengan kemauan pasar nya.
+
+bagaimana menurut mu? saya adalah seorang siswa smk kelas 12, haruskah saya mengikuti alur yang mengharuskan mempelajari pasar terlebih dahulu atau fokus dulu mempelajari cara membuat alur,rancangan, database, dan aplikasi yang jelas meskipun aplikasinya tidak sesuai dengan keinginan pasar (karena sebagai latihan jadi aplikasinya yang mudah² dulu) baru setelah aplikasinya selesai dan saya sudah memiliki skill² yang dibutuhkan aplikadinya nanti akan disesuaikan dengan keinginan pasar.
+
+
+karena saya melihat alur yang kamu berikan juga berfokus pada apa yang di inginkan pasar sedangkan saya benar² pemula dan tidak paham dengan apa yang akan saya kerjakan.
+
+
+
+---
+
+🔴 PRIORITAS 1 (KRITIS - HARUS DISELESAIKAN)
+
+Jika ini salah, seluruh dokumen dan kode Anda akan dianggap tidak logis.
+
+1. Masalah: Aktor "Tamu" dan Jalur "Guest"
+
+· Mengapa Ini Kritis: Aplikasi Anda adalah sistem manajemen stok untuk bisnis, bukan aplikasi catatan pribadi. Adanya "Tamu" yang bisa mencatat tanpa login merusak esensi sistem. Ini menunjukkan Anda tidak fokus pada tujuan bisnis.
+· Tindakan yang Harus Dilakukan: Hapus seluruh jalur Tamu dari Flowchart. Hapus Aktor Tamu dari Use Case Diagram. Fokus hanya pada Admin dan Kasir.
+
+2. Masalah: Flowchart Terlalu General (Tidak Spesifik)
+
+· Mengapa Ini Kritis: Flowchart Anda hanya berisi kotak "Kelola Transaksi" dan "Kelola Inventaris". Itu bukan alur, itu hanya label menu. Tidak ada logika di dalamnya. Guru akan menilai ini sebagai "tidak memahami alur data".
+· Tindakan yang Harus Dilakukan: Breakdown setiap menu menjadi langkah spesifik. Contoh: Pilih Menu Catat Penjualan → Pilih Barang → Input Jumlah → Sistem Cek Stok → [Jika Stok Cukup] Kurangi Stok & Simpan → [Jika Stok Kurang] Tampilkan Error. Lakukan ini untuk semua fitur.
+
+3. Masalah: Fitur "Edit Harga Modal" Berdiri Sendiri
+
+· Mengapa Ini Kritis: Secara teknis, ini adalah duplikasi fungsi "Ubah Barang". Dalam database, Anda hanya perlu 1 fitur untuk mengubah atribut barang (nama, harga modal, harga jual). Memisahkan ini membuat kode Anda mengembang dan tidak efisien.
+· Tindakan yang Harus Dilakukan: Gabungkan "Edit Harga Modal" ke dalam fitur "Kelola Barang (Ubah)". Di Use Case, tulis "Mengubah Data Barang" yang mencakup ubah harga.
+
+4. Masalah: Belum Ada Perhitungan Logika Stok (Aritmatika)
+
+· Mengapa Ini Kritis: Anda belum menentukan di mana logika stok = stok - jumlah akan dijalankan. Jika Anda mulai coding tanpa ini, stok Anda akan selalu salah.
+· Tindakan yang Harus Dilakukan: Tuliskan di catatan teknis Anda: "Setiap transaksi penjualan sukses, sistem WAJIB menjalankan UPDATE stok di tabel barang dalam 1 transaksi database (atomic) agar tidak terjadi minus."
+
+---
+
+🟠 PRIORITAS 2 (PENTING - BERPENGARUH BESAR TERHADAP NILAI)
+
+Jika ini selesai, dokumen Anda akan terlihat profesional dan nilai Anda naik drastis.
+
+5. Masalah: Use Case Kurang Detail (Hanya 1 kotak untuk banyak aksi)
+
+· Mengapa Ini Penting: Use case "Kelola data Barang" seharusnya mencakup Tambah, Ubah, Hapus, dan Lihat. Jika hanya 1 kotak, guru menganggap Anda malas memecah fungsi.
+· Tindakan yang Harus Dilakukan: Pecah use case menjadi 4 entitas terpisah (atau gunakan relasi <<extend>>). Minimal tuliskan di keterangan use case bahwa itu mencakup 4 aktivitas.
+
+6. Masalah: Panah Include Menuju Login Berantakan
+
+· Mengapa Ini Penting: Menarik garis dari 5 use case ke Login membuat diagram terlihat kacau dan tidak estetis. Secara UML, <<include>> digunakan untuk fungsi yang selalu dipanggil, tetapi tidak harus digambar dengan 5 garis bersilangan.
+· Tindakan yang Harus Dilakukan: Hapus semua panah include ke Login. Cukup tulis Catatan (Note) di samping diagram: "Semua use case di atas (kecuali yang diakses Tamu) mengharuskan pengguna sudah login." Ini lebih rapi dan efisien.
+
+7. Masalah: Rancangan Database (ERD) Belum Siap
+
+· Mengapa Ini Penting: Anda sendiri mengaku bingung soal relasi. Ini adalah fondasi aplikasi. Jika relasi salah, semua fitur Anda (laporan, stok, riwayat) akan menghasilkan data sampah.
+· Tindakan yang Harus Dilakukan: Buat ERD minimal 4 tabel: (1) users (id, nama, role, password), (2) barang (id, nama, harga_modal, harga_jual, stok), (3) transaksi_penjualan (id, user_id, barang_id, jumlah, total_harga, tanggal), (4) pengeluaran (id, user_id, deskripsi, nominal, tanggal). Tentukan Foreign Key (FK) secara spesifik.
+
+8. Masalah: Validasi Masalah Hanya n=1 (Ayah)
+
+· Mengapa Ini Penting: Untuk tugas analisis, mewawancarai 1 orang adalah kelemahan fatal dalam metodologi. Guru akan bertanya: "Bagaimana tahu masalah ini umum terjadi?"
+· Tindakan yang Harus Dilakukan: Lakukan wawancara singkat dengan minimal 2-3 pedagang/penjaga toko lain (bisa tetangga atau teman). Catat pernyataan mereka (cukup 1-2 kalimat) untuk memperkuat data di Aktivitas 2.
+
+---
+
+🟢 PRIORITAS 3 (TAMBAHAN / NICE-TO-HAVE)
+
+Jika ini selesai, aplikasi Anda akan terlihat "lebih pintar" dari yang lain. Tidak wajib, tapi sangat direkomendasikan untuk nilai sempurna.
+
+9. Masalah: Tidak Ada Fitur Pembeda (Unik)
+
+· Mengapa Ini Bagus: Anda bersaing dengan BukuKas/SiApik. Meniru 100% fitur mereka adalah strategi yang lemah untuk presentasi.
+· Tindakan yang Harus Dilakukan: Tambahkan 1 fitur sederhana namun berguna, misal: "Notifikasi Stok Menipis" (jika stok < 5, muncul peringatan di Dashboard). Ini menunjukkan Anda berpikir solutif.
+
+10. Masalah: Wireframe Belum Dibuat
+
+· Mengapa Ini Bagus: Wireframe adalah gambaran nyata dari Flowchart. Tanpa ini, koding akan membingungkan.
+· Tindakan yang Harus Dilakukan: Buat sketsa untuk 4 halaman utama: Login, Dashboard Admin, Form Tambah Barang, dan Halaman Transaksi Kasir. Pastikan tombol besar-besar sesuai kebutuhan non-fungsional.
+
+11. Masalah: Kebutuhan Non-Fungsional Kurang Spesifik
+
+· Mengapa Ini Bagus: Anda menulis "Desain tombol besar". Itu terlalu subjektif.
+· Tindakan yang Harus Dilakukan: Ubah menjadi spesifik: "Minimal ukuran tombol 48dp x 48dp" (standar aksesibilitas Android) dan "Kontras warna teks vs latar minimal 4.5:1" agar mudah dibaca orang tua.
+
+---
+
+📅 RENCANA TINDAK LANJUT (UNTUK 1 MINGGU KE DEPAN)
+
+1. Hari 1: Selesaikan poin 1 (Hapus Tamu), 2 (Detail Flowchart), dan 3 (Gabung Edit Harga).
+2. Hari 2: Selesaikan poin 5 (Perbaiki Use Case) dan 6 (Rapikan panah).
+3. Hari 3: Selesaikan poin 7 (Buat ERD Database dan tulis relasi FK/PK).
+4. Hari 4: Selesaikan poin 4 (Tulis logika aritmatika stok di samping ERD) dan 8 (Wawancara 2 orang tambahan, tulis di laporan).
+5. Hari 5: Selesaikan poin 10 (Buat Wireframe) dan 9 (Tambahan fitur notifikasi jika sempat).
+6. Hari 6: Review Ulang seluruh dokumen. Bacalah dari awal. Apakah semua bagian sekarang terhubung secara logis?
+
+Peringatan Keras: Jangan mulai coding di Android Studio/Laravel sebelum Anda menyelesaikan Prioritas 1 dan 2. Jika Anda memaksa coding sekarang, Anda akan membuat kode yang berantakan dan harus diulang dari nol. Selesaikan analisisnya dulu sampai tuntas.

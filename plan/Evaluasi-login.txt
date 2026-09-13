@@ -1,0 +1,407 @@
+=== pwd ===
+[/storage/emulated/0/Ya_gitu/tugasRumah/ujian]
+
+=== php artisan --version ===
+[Laravel Framework 13.23.0]
+
+=== php -v ===
+[PHP 8.5.1 (cli) (built: Dec 22 2025 00:03:00) (NTS)
+Copyright (c) The PHP Group
+Zend Engine v4.5.1, Copyright (c) Zend Technologies
+    with Zend OPcache v8.5.1, Copyright (c), by Zend Technologies]
+
+=== composer --version ===
+[Composer version 2.10.2 2026-07-01 11:24:45
+PHP version 8.5.1 (/data/data/com.termux/files/usr/bin/php)
+Run the "diagnose" command to get more detailed diagnostics output.]
+
+=== route:list ===
+[
+  GET|HEAD  dashboard/admin ................ routes/web.php:14
+  GET|HEAD  dashboard/sales ................ routes/web.php:20
+  GET|HEAD  login . login › Auth\LoginController@showLoginForm
+  POST      login ................. Auth\LoginController@login
+  POST      logout ...... logout › Auth\LoginController@logout
+  GET|HEAD  master .................... MasterController@index
+  GET|HEAD  storage/{path} storage.local › vendor/laravel/fra…
+  PUT       storage/{path} storage.local.upload › vendor/lara…
+  GET|HEAD  up vendor/laravel/framework/src/Illuminate/Founda…
+
+                                            Showing [9] routes
+]
+
+=== migrate:status ===
+[Migration name .............................. Batch / Status
+  0001_01_01_000000_create_users_table ............... [1] Ran
+  0001_01_01_000001_create_cache_table ............... [1] Ran
+  0001_01_01_000002_create_jobs_table ................ [1] Ran
+  2026_08_25_071551_add_role_to_users_table .......... [2] Ran
+]
+
+=== .env ===
+[DB_CONNECTION=mysql
+ DB_HOST=127.0.0.1
+ DB_PORT=3306
+ DB_DATABASE=laravel
+ DB_USERNAME=root]
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ ===== routes/web.php =====
+[<?php
+
+use App\Http\Controllers\MasterController;
+use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Route;
+
+// Halaman login
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Dashboard (dengan middleware auth dan role)
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/dashboard/admin', function () {
+        return view('dashboard.admin');
+    });
+});
+
+Route::middleware(['auth', 'role:sales'])->group(function () {
+    Route::get('/dashboard/sales', function () {
+        return view('dashboard.sales');
+    });
+});
+
+// Route lama (master) - tetap bisa diakses, tapi kita proteksi hanya untuk admin
+Route::get('/master', [MasterController::class, 'index'])->middleware(['auth', 'role:admin']);]
+
+===== LoginController.php =====
+[s/Auth/LoginController.php
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class LoginController extends Controller
+{
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
+    public function login(Request $request)
+    {
+        // Validasi input
+        $credentials = $request->validate([
+            'username' => ['required', 'string'],
+            'password' => ['required', 'string'],
+        ]);
+
+        // Coba login dengan field 'name' sebagai username
+        if (Auth::attempt(['name' => $credentials['username'], 'password' => $credentials['password']])) {
+            $request->session()->regenerate();
+
+            // Redirect berdasarkan role
+            $user = Auth::user();
+            if ($user->role === 'admin') {
+                return redirect()->intended('/dashboard/admin');
+            } elseif ($user->role === 'sales') {
+                return redirect()->intended('/dashboard/sales');
+            }
+
+            // fallback (seharusnya tidak terjadi)
+            return redirect('/dashboard');
+        }
+
+        // Jika gagal, kembali dengan error
+        return back()->withErrors([
+            'username' => 'Username atau password salah.',
+        ])->onlyInput('username');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login');
+    }
+}]
+
+===== CheckRole.php =====
+[<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class CheckRole
+{
+    public function handle(Request $request, Closure $next, ...$roles)
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+
+        $user = Auth::user();
+        if (in_array($user->role, $roles)) {
+            return $next($request);
+        }
+
+        abort(403, 'Akses ditolak.');
+    }
+}]
+
+===== User.php =====
+[<?php
+
+namespace App\Models;
+
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
+class User extends Authenticatable
+{
+    use HasFactory, Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'role',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
+}]
+
+===== bootstrap/app.php =====
+[<?php
+
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
+
+return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->alias([
+        'role' => \App\Http\Middleware\CheckRole::class,
+    ]);
+    })
+    ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->shouldRenderJsonWhen(
+            fn (Request $request) => $request->is('api/*'),
+        );
+    })->create();]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Saya sedang mengerjakan project Laravel dan ingin Anda mengkoreksi fitur Login + Role (Admin/Sales).  
+Saya sudah melakukan audit awal dan sekarang saya akan menjalankan pengujian bertahap sesuai panduan Anda.  
+
+Mohon ikuti alur berikut dan berikan koreksi berdasarkan hasil yang saya kirimkan.
+
+---
+
+### 🔍 RENCANA AUDIT LOGIN (BERTAHAP)
+
+Kita akan lakukan dalam beberapa step. Saya akan mengirim hasil step pertama dulu, lalu Anda instruksikan step selanjutnya.
+
+---
+
+#### STEP 1 — Cek Database (dikerjakan SEKARANG)
+
+Di Termux, jalankan:
+
+```bash
+php artisan tinker
+
+
+
+1. Login admin :
+berhasil semua percobaan yang saya lakulan :
+- mencoba password/username salah = tidak bisa masuk, ada peringatan
+- mencoba password&username benar = bisa masuk ke dashboard admin/sales
+- url saat masuk ke dashboard admin/sales : http://localhost:8000/dashboard/admin & http://localhost:8000/dashboard/sales
+
+2. login sales juga sama
+
+3. sama tetap tidak bisa masuk
+
+4, 5, 6 = sukses semua 
+
+7. Tombol Logout berfungsi, saya diarahkan kembali ke halaman login, saya juga bisa kembali login menjadi admin/sales tanpa ada masalah dan ke 2 dashboard tersebut juga sama tidak ada masalah. 
+
+masalah yang mungkin saya lihat, user dapat langsung masuk ke dashboard admin hanya dengan mengetikkan http://localhost:8000/dashboard/admin
+
+saya mencoba masukkan link http://localhost:8000/dashboard/admin dan langsung berhasil masuk ke dashboard admin, saya pikir ini juga berlaku pada dashboard sales.
+
+
+
+
+
+
+
+
+
+
+
+A. 
+1. masuk ke dashboard admin langsung setelah menutup semua tab = tidak bisa malah diarahkan ke halaman login begitu juga dengan dashboard sales
+2. saya login sebagai admin berhasil masuk ke dashboard admin keluar lalu mencoba masuk kembali ke dashboard admin (saat tab masih belum ditutup) dengan http://localhost:8000/dashboard/admin dan bisa. lalu saya mencoba masuk ke dashboard sales hasilnya : 403 | Akses Ditolak.
+
+
+
+B. php artisan route:list -v :
+  GET|HEAD  dashboard/admin ................ routes/web.php:14
+            ⇂ web
+            ⇂ auth
+            ⇂ role:admin
+  GET|HEAD  dashboard/sales ................ routes/web.php:20
+            ⇂ web
+            ⇂ auth
+            ⇂ role:sales
+  GET|HEAD  login . login › Auth\LoginController@showLoginForm
+            ⇂ web
+  POST      login ................. Auth\LoginController@login
+            ⇂ web
+  POST      logout ...... logout › Auth\LoginController@logout
+            ⇂ web
+  GET|HEAD  master .................... MasterController@index
+            ⇂ web
+            ⇂ auth
+            ⇂ role:admin
+  GET|HEAD  storage/{path} storage.local › vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:111
+  PUT       storage/{path} storage.local.upload › vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:119
+  GET|HEAD  up vendor/laravel/framework/src/Illuminate/Foundation/Configuration/ApplicationBuilder.php:224
+
+                                            Showing [9] routes
+
+
+C. cat app/Http/Middleware/CheckRole.php :
+/CheckRole.php
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class CheckRole
+{
+    public function handle(Request $request, Closure $next, ...$roles)
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+
+        $user = Auth::user();
+        if (in_array($user->role, $roles)) {
+            return $next($request);
+        }
+
+        abort(403, 'Akses ditolak.');
+    }
+}
+
+D. cat bootstrap/app.php : 
+<?php
+
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
+
+return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->alias([
+        'role' => \App\Http\Middleware\CheckRole::class,
+    ]);
+    })
+    ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->shouldRenderJsonWhen(
+            fn (Request $request) => $request->is('api/*'),
+        );
+    })->create();

@@ -1,0 +1,185 @@
+---
+
+🟢 ERD & STRUKTUR DATABASE - VERSI FINAL
+
+Ini adalah kode dan tabel terbaru yang sudah kita kunci bersama. Semua aturan bisnis (multi-barang, snapshot harga, stok tidak negatif, update harga modal) sudah tertanam di sini.
+
+---
+
+📌 1. ERD (ENTITY RELATIONSHIP DIAGRAM)
+
+Salin kode Mermaid di bawah ini, lalu tempelkan ke Mermaid Live Editor atau Draw.io untuk menghasilkan gambar diagram.
+
+```mermaid
+erDiagram
+    users {
+        int id PK
+        varchar name
+        varchar username
+        varchar password
+        enum role
+        datetime created_at
+        datetime updated_at
+    }
+
+    barang {
+        int id PK
+        varchar nama
+        varchar satuan
+        decimal harga_modal
+        decimal harga_jual
+        int stok
+        datetime created_at
+        datetime updated_at
+    }
+
+    pembelian {
+        int id PK
+        int user_id FK
+        datetime tanggal
+        decimal total
+    }
+
+    pembelian_detail {
+        int id PK
+        int pembelian_id FK
+        int barang_id FK
+        int qty
+        decimal harga_saat_beli
+    }
+
+    penjualan {
+        int id PK
+        int user_id FK
+        datetime tanggal
+        decimal total_harga
+        decimal uang_dibayar
+        decimal kembalian
+    }
+
+    penjualan_detail {
+        int id PK
+        int penjualan_id FK
+        int barang_id FK
+        int qty
+        decimal harga_jual_snapshot
+        decimal harga_modal_snapshot
+        decimal subtotal
+        decimal keuntungan_kotor
+    }
+
+    %% RELASI (1 : N)
+    users ||--o{ pembelian : "1 Admin melakukan banyak Pembelian"
+    users ||--o{ penjualan : "1 Sales melakukan banyak Penjualan"
+    barang ||--o{ pembelian_detail : "1 Barang dibeli berkali-kali"
+    barang ||--o{ penjualan_detail : "1 Barang terjual berkali-kali"
+    pembelian ||--|{ pembelian_detail : "1 Pembelian terdiri dari banyak Detail"
+    penjualan ||--|{ penjualan_detail : "1 Penjualan terdiri dari banyak Detail"
+```
+
+---
+
+📌 2. STRUKTUR TABEL LENGKAP (UNTUK LKPD)
+
+Ini adalah 6 tabel yang wajib kamu tulis di Aktivitas 7 – Perancangan Database pada LKPD-mu.
+
+---
+
+Tabel 1: users (Data Pengguna)
+
+Field Tipe Data PK / FK Keterangan
+id INT PK Auto Increment, nomor unik user
+name VARCHAR(100) - Nama lengkap
+username VARCHAR(50) - Username untuk login
+password VARCHAR(255) - Password (disimpan dalam bentuk hash)
+role ENUM('admin','sales') - Hak akses (Admin atau Sales)
+created_at DATETIME - Waktu data dibuat
+updated_at DATETIME - Waktu data terakhir diubah
+
+---
+
+Tabel 2: barang (Data Produk)
+
+Field Tipe Data PK / FK Keterangan
+id INT PK Auto Increment, nomor unik barang
+nama VARCHAR(100) - Nama barang (misal: Gula Pasir)
+satuan VARCHAR(20) - Satuan barang (kg, liter, karung, dll)
+harga_modal DECIMAL(15,2) - Harga beli terbaru dari supplier
+harga_jual DECIMAL(15,2) - Harga jual ke toko
+stok INT - Jumlah stok tersedia (tidak boleh negatif)
+created_at DATETIME - Waktu data dibuat
+updated_at DATETIME - Waktu data terakhir diubah
+
+---
+
+Tabel 3: pembelian (Header Pembelian)
+
+Field Tipe Data PK / FK Keterangan
+id INT PK Auto Increment, nomor unik pembelian
+user_id INT FK (→ users.id) Admin yang melakukan pembelian
+tanggal DATETIME - Waktu transaksi pembelian
+total DECIMAL(15,2) - Total harga semua barang dalam pembelian
+
+---
+
+Tabel 4: pembelian_detail (Detail Pembelian)
+
+Field Tipe Data PK / FK Keterangan
+id INT PK Auto Increment, nomor unik detail
+pembelian_id INT FK (→ pembelian.id) Induk transaksi pembelian
+barang_id INT FK (→ barang.id) Barang yang dibeli
+qty INT - Jumlah barang yang dibeli
+harga_saat_beli DECIMAL(15,2) - Harga modal saat pembelian (histori)
+
+---
+
+Tabel 5: penjualan (Header Penjualan)
+
+Field Tipe Data PK / FK Keterangan
+id INT PK Auto Increment, nomor unik transaksi
+user_id INT FK (→ users.id) Sales yang melakukan penjualan
+tanggal DATETIME - Waktu transaksi penjualan
+total_harga DECIMAL(15,2) - Total semua barang
+uang_dibayar DECIMAL(15,2) - Uang tunai yang dibayar pembeli
+kembalian DECIMAL(15,2) - Kembalian (uang_dibayar - total_harga)
+
+---
+
+Tabel 6: penjualan_detail (⭐ Detail Penjualan & SNAPSHOT)
+
+Field Tipe Data PK / FK Keterangan
+id INT PK Auto Increment, nomor unik detail
+penjualan_id INT FK (→ penjualan.id) Induk transaksi penjualan
+barang_id INT FK (→ barang.id) Barang yang dijual
+qty INT - Jumlah barang terjual
+harga_jual_snapshot DECIMAL(15,2) - Harga jual SAAT TRANSAKSI
+harga_modal_snapshot DECIMAL(15,2) - Harga modal SAAT TRANSAKSI
+subtotal DECIMAL(15,2) - harga_jual_snapshot × qty
+keuntungan_kotor DECIMAL(15,2) - (harga_jual - harga_modal) × qty
+
+---
+
+📌 3. RINGKASAN RELASI (UNTUK DIJELASKAN KE GURU)
+
+Relasi Penjelasan
+1 Admin → Banyak Pembelian Satu Admin bisa melakukan banyak transaksi pembelian. (FK: pembelian.user_id)
+1 Sales → Banyak Penjualan Satu Sales bisa melakukan banyak transaksi penjualan. (FK: penjualan.user_id)
+1 Barang → Banyak Pembelian_Detail Satu barang bisa dibeli berkali-kali dalam pembelian berbeda. (FK: pembelian_detail.barang_id)
+1 Barang → Banyak Penjualan_Detail Satu barang bisa dijual berkali-kali dalam transaksi berbeda. (FK: penjualan_detail.barang_id)
+1 Pembelian → Banyak Detail Satu pembelian bisa berisi banyak barang. (FK: pembelian_detail.pembelian_id)
+1 Penjualan → Banyak Detail Satu penjualan bisa berisi banyak barang. (FK: penjualan_detail.penjualan_id)
+
+---
+
+🎯 KEKUATAN UTAMA DESAIN INI
+
+1. Snapshot Harga: Data transaksi tidak akan berubah meskipun harga barang diubah nanti. (Cocok dengan BAB 1).
+2. Multi-Barang: 1 Transaksi bisa untuk banyak barang (Header + Detail). (Cocok dengan Flowchart).
+3. Histori Pembelian: Harga modal saat pembelian disimpan di pembelian_detail, sedangkan harga modal terbaru di barang. (Cocok dengan Aturan Bisnis).
+4. Satuan Barang: Memudahkan pembacaan laporan.
+
+---
+
+Sekarang, salin ERD dan 6 tabel di atas ke LKPD-mu di Aktivitas 7.
+
+Sudah siap lanjut ke Wireframe (Aktivitas 8)? Balas: "SIAP, GAS WIREFRAME!" 🚀

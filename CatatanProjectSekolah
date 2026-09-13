@@ -1,0 +1,186 @@
+---
+
+📝 AKTIVITAS 1 – Menentukan Ide Project
+
+Komponen Isi
+Judul Project SembakoTrack (atau WarungKu, SiSales) - Aplikasi Manajemen Keuangan & Stok untuk Distributor Sembako
+Bidang Project Perdagangan / Distribusi Barang Kebutuhan Pokok (Sembako)
+Permasalahan Pedagang/distributor kesulitan mencatat stok barang yang banyak, sering kehilangan catatan karena harga modal naik turun, dan sulit merekap keuntungan harian karena transaksi campur aduk dengan uang kasir.
+Pengguna Aplikasi 1. Pemilik Toko / Distributor (Ayah)   2. Kasir / Karyawan Toko
+Manfaat Membantu pemilik toko memantau stok secara real-time, menyesuaikan harga jual otomatis saat harga modal berubah, dan mencegah kerugian akibat selisih uang/stok.
+
+---
+
+🔍 AKTIVITAS 2 – Analisis Permasalahan
+
+Pertanyaan Jawaban (Berdasarkan Data Wawancara)
+Mengapa aplikasi perlu dibuat? Karena selama ini ayah mencatat di 2 buku manual. Proses ini memakan waktu, rawan salah hitung, dan tidak memberikan informasi cepat seperti "stok gula sisa berapa?" atau "untung hari ini berapa?" saat dibutuhkan.
+Masalah apa yang sering terjadi? 1. Stok kelewat: Banyak barang (gula, minyak, beras) terkadang terlewat tidak tercatat.   2. Harga modal naik: Ayah jadi bingung menentukan ulang harga jual dan membeli lebih sedikit.   3. Uang hilang/curang: Ada kasir yang tidak jujur dan pernah menerima uang palsu.
+Bagaimana solusi aplikasi? 1. Aplikasi menyediakan fitur "Stok Opname" untuk mencocokkan stok fisik dengan catatan.   2. Fitur "Edit Harga Modal" yang otomatis menghitung ulang keuntungan.   3. Fitur "Riwayat Transaksi" yang mencatat semua pemasukan dari kasir, sehingga pemilik bisa mengecek selisih.
+Apa dampaknya jika aplikasi tidak dibuat? Ayah akan terus menerus mengalami kerugian akibat stok hilang tidak terdeteksi, tidak bisa mengambil keputusan cepat saat harga sembako naik, dan uang hasil penjualan terus-menerus rawan selisih di tangan kasir.
+
+---
+
+⚙️ AKTIVITAS 3 – Analisis Kebutuhan
+
+A. Kebutuhan Fungsional (Fitur - Minimal 10)
+
+1. Login (untuk membedakan Pemilik dan Kasir).
+2. Dashboard (menampilkan Total Saldo, Total Stok, dan Keuntungan Hari Ini).
+3. Tambah Barang (Input nama barang, harga modal, harga jual, dan stok awal).
+4. Edit Harga Modal (Mengubah harga beli saat terjadi kenaikan dari supplier).
+5. Catat Penjualan (Memilih barang, input jumlah terjual, otomatis mengurangi stok).
+6. Catat Pengeluaran (Untuk belanja stok baru atau biaya operasional toko).
+7. Riwayat Transaksi (Melihat semua pemasukan/pengeluaran per hari/per kasir).
+8. Stok Opname (Mencocokkan data stok di aplikasi dengan stok fisik di gudang).
+9. Laporan Keuangan (Melihat total laba/rugi dalam periode tertentu, misal mingguan/bulanan).
+10. Manajemen Kasir (Melihat total penjualan yang dilakukan oleh tiap kasir).
+
+B. Kebutuhan Non-Fungsional
+
+Kategori Kebutuhan
+Perangkat Keras (Hardware) Smartphone Android minimal OS 7.0 (Nougat), RAM 2GB, layar 5 inci.
+Perangkat Lunak (Software) Android Studio (IDE), JDK 11, Emulator Android atau HP sungguhan untuk testing.
+Database Menggunakan SQLite (offline, tidak butuh internet) agar mudah dan cepat.
+Desain Antarmuka harus sederhana dengan tombol besar dan angka yang jelas (karena pengguna mungkin sudah tua seperti ayah).
+Keamanan Data tersimpan lokal di HP, tidak perlu koneksi internet (untuk versi 1.0).
+
+---
+
+👤 AKTIVITAS 4 – Identifikasi Pengguna & Hak Akses
+
+No Nama Pengguna (Aktor) Hak Akses (Fitur yang Bisa Digunakan)
+1 Pemilik / Admin Akses penuh ke semua fitur: Dashboard, Tambah/Edit Barang, Edit Harga Modal, Lihat Semua Laporan, Manajemen Kasir, Hapus Data, Stok Opname.
+2 Kasir / Karyawan Akses terbatas: Hanya bisa mengakses fitur Catat Penjualan, Lihat Daftar Barang (tidak bisa edit harga), dan Lihat Riwayat Penjualan miliknya sendiri (tidak bisa lihat laporan keuangan total).
+
+---
+
+📊 AKTIVITAS 5 – Flowchart (Alur Aplikasi Utama)
+
+Karena kamu harus menggambar, saya kasih teks alurnya. Kamu tinggal buat kotak-kotak di kertas atau Visio.
+
+Alur Mulai Aplikasi:
+
+1. Mulai → 2. Halaman Login → (Masukkan Username & Password)
+   · Jika Salah → Kembali ke Login
+   · Jika Benar → 3. Dashboard (Menu Utama)
+2. Di Dashboard ada 3 pilihan:
+   · Pilihan A: Kelola Stok → (Tambah Barang / Edit Stok / Opname) → Kembali ke Dashboard.
+   · Pilihan B: Transaksi → (Input Penjualan / Input Pengeluaran) → Data tersimpan ke Database → Kembali ke Dashboard.
+   · Pilihan C: Lihat Laporan → (Pilih Tanggal / Pilih Kasir) → Tampilkan Laporan → Kembali ke Dashboard.
+3. Logout → Kembali ke Login → Selesai.
+
+---
+
+📈 AKTIVITAS 6 – Use Case Diagram (2 Aktor & 5 Use Case)
+
+Saya kasih daftar aktor dan use case-nya. Kamu tinggal gambar diagramnya (kotak aktor di kiri/kanan, gelembung use case di tengah, garis penghubung).
+
+· Aktor 1: Admin (Pemilik)
+· Aktor 2: Kasir
+
+Daftar 5 Use Case (Fitur Utama):
+
+1. Login (diakses oleh Admin & Kasir)
+2. Kelola Data Barang (Tambah/Ubah/Hapus - hanya Admin)
+3. Catat Penjualan (diakses oleh Admin & Kasir)
+4. Lakukan Stok Opname (hanya Admin)
+5. Cetak Laporan Keuangan (hanya Admin)
+
+---
+
+🗄️ AKTIVITAS 7 – Perancangan Database (3 Tabel Utama)
+
+Kamu buat 3 tabel ini di laporanmu.
+
+1. Tabel Barang
+
+Nama Field Tipe Data Keterangan
+id_barang INTEGER (PK) Auto Increment, Primary Key
+nama_barang VARCHAR(100) Nama barang (Gula, Minyak, Beras)
+harga_modal INTEGER Harga beli dari supplier
+harga_jual INTEGER Harga jual ke konsumen
+stok INTEGER Jumlah stok saat ini
+
+2. Tabel Transaksi
+
+Nama Field Tipe Data Keterangan
+id_transaksi INTEGER (PK) Auto Increment, Primary Key
+id_barang INTEGER (FK) Foreign Key ke tabel Barang
+jenis_transaksi VARCHAR(10) Isi: "Jual" atau "Beli"
+jumlah INTEGER Jumlah barang yang dijual/dibeli
+total_harga INTEGER Jumlah x Harga
+tanggal DATETIME Waktu transaksi terjadi
+id_kasir INTEGER Foreign Key ke tabel User (jika ada)
+
+3. Tabel User (Login)
+
+Nama Field Tipe Data Keterangan
+id_user INTEGER (PK) Auto Increment
+username VARCHAR(50) Nama untuk login
+password VARCHAR(255) Simpan sebagai hash (untuk keamanan)
+role VARCHAR(20) Isi: "Admin" atau "Kasir"
+
+---
+
+🖌️ AKTIVITAS 8 – Wireframe (Sketsa 4 Layar)
+
+Saya jelaskan isi tiap sketsa, kamu gambar di kertas kotak-kotak ya:
+
+1. Halaman Login:
+   · Di bagian atas ada logo/teks "SembakoTrack".
+   · Tengah ada 2 kotak isian (Username, Password).
+   · Bawah ada tombol besar "MASUK".
+2. Halaman Dashboard(Admin):
+   · Header: "Selamat Datang, [Nama]".
+   · 4 Kotak angka besar berwarna:
+     · Kotak 1: Total Saldo (Rp. xxx), Total Stok (xxx item).
+     · Kotak 2: Untung Hari Ini (Rp. xxx).
+     · Kotak 3: Tombol Kelola Data Barang, Tombol Lakukan Stok Opname.
+     · Kotak 4: Tombol Catat Penjualan, Tombol Lihat Laporan Keuangan.
+     
+   · Bawah ada 3 tombol: "🛒 Transaksi", "📦 Stok", "📊 Laporan".
+3. Halaman Dashboard(Karyawan):
+   · Header: "Selamat Datang, [Nama]".
+   · 3 Kotak angka besar berwarna:
+     · Kotak 1: Input Memasukkan Tanggal
+     · Kotak 2: Tombol Buat Laporan Keuangan.
+     · Kotak 3: Catatan Untuk Admin
+   · Bawah ada 3 tombol: "🛒 Transaksi", "📦 Stok", "📊 Laporan".
+3. Halaman Data Barang (Kelola Stok):
+   · Header: "Daftar Barang".
+   · Ada tombol "+ Tambah" di pojok kanan atas.
+   · Di bawahnya daftar seperti tabel/daftar: (Gula - Stok: 10 - Harga: 15.000).
+   · Setiap item ada icon pensil (Edit) dan tempat sampah (Hapus).
+4. Form Tambah Data (Form Transaksi Penjualan):
+   · Header: "Tambah Penjualan".
+   · Dropdown pilih barang (misal: Gula).
+   · Input angka: "Jumlah Terjual".
+   · Input angka: "Harga Jual per Item" (auto terisi).
+   · Tombol besar "SIMPAN" di bagian bawah.
+
+---
+
+🤔 AKTIVITAS 9 – Refleksi
+
+Jawab dengan jujur seperti ini:
+
+Pertanyaan Jawaban Saya
+Apa yang paling mudah dari perencanaan ini? Membuat daftar fitur dan kebutuhan pengguna, karena saya sudah punya data wawancara langsung dari ayah saya, jadi saya tahu persis apa yang dia keluhkan.
+Apa yang masih membingungkan? Saya agak bingung menentukan relasi antar tabel database, terutama bagaimana menghubungkan transaksi dengan stok agar stok otomatis berkurang. Saya juga bingung cara membuat harga jual otomatis menyesuaikan saat harga modal diubah.
+Apa yang akan saya pelajari sebelum mulai membuat aplikasi (coding)? Saya harus belajar lebih dalam tentang SQLite (cara query update dan delete), Logika Aritmatika di pemrograman (pengurangan stok saat transaksi), dan Desain UI sederhana agar tombolnya besar-besar dan mudah ditebak oleh pengguna seperti ayah saya.
+
+---
+
+🚀 LANJUT KE DESAIN & CODING?
+
+Nah, Bro! Aktivitas 1 sampai 9 sudah beres semua. Sekarang kamu tinggal:
+
+1. Salin jawaban di atas ke laporan tugas sekolahmu (word/PDF).
+2. Gambar Flowchart, Use Case, dan Wireframe di kertas/figma (sesuai arahan di atas).
+
+Setelah semua dokumen tugas selesai dan kamu kumpulin, kita lanjut ke Langkah 5, 6, dan 7 (Pilih Teknologi, Setup Android Studio, dan Mulai Coding).
+
+Untuk coding, karena kamu masih pemula dan aplikasi ini offline, saya sarankan pakai Android Studio + Java + SQLite. Tapi kita bahas teknisnya nanti.
+
+Pertanyaan sekarang: Apakah ada bagian dari Aktivitas 1-9 di atas yang masih kurang jelas atau mau kamu tanyakan? Kalau sudah oke, kita bisa lanjut bahas teknologi dan mulai project Androidnya! 👨‍💻🔥

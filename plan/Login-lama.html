@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login · CatatRezekimu</title>
+
+    <!-- Google Fonts (inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ----- RESET & GLOBAL ----- */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* ----- CARD UTAMA ----- */
+        .login-card {
+            max-width: 400px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.10);
+            padding: 40px 28px 36px;
+            transition: box-shadow 0.2s;
+        }
+
+        /* ----- BRAND / HEADER ----- */
+        .brand {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .brand-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            background: #0b3b2c;
+            border-radius: 20px;
+            margin-bottom: 14px;
+            color: #ffffff;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            box-shadow: 0 8px 18px rgba(11, 59, 44, 0.20);
+        }
+
+        .brand h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0b3b2c;
+            letter-spacing: -0.3px;
+        }
+
+        .brand .sub {
+            font-size: 14px;
+            font-weight: 400;
+            color: #64748b;
+            margin-top: 4px;
+            letter-spacing: 0.2px;
+        }
+
+        /* ----- FORM ELEMEN ----- */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+
+        .form-group .input-wrap {
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 15px;
+            font-weight: 400;
+            font-family: 'Inter', sans-serif;
+            color: #0f172a;
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 16px;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #0b3b2c;
+            box-shadow: 0 0 0 4px rgba(11, 59, 44, 0.10);
+            background: #ffffff;
+        }
+
+        .form-group input::placeholder {
+            color: #94a3b8;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        .input-wrap .eye-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 20px;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* ----- PESAN ERROR (dinamis dari Laravel) ----- */
+        .error-message {
+            background: #fef2f2;
+            border-left: 4px solid #dc2626;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #991b1b;
+        }
+
+        .error-message .icon {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .error-message.hidden {
+            display: none;
+        }
+
+        /* ----- TOMBOL LOGIN ----- */
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: #0b3b2c;
+            border: none;
+            border-radius: 16px;
+            color: #ffffff;
+            font-size: 17px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.1s;
+            box-shadow: 0 6px 16px rgba(11, 59, 44, 0.25);
+            margin-top: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-login:hover {
+            background: #0a3426;
+        }
+
+        .btn-login:active {
+            transform: scale(0.98);
+            background: #082f23;
+        }
+
+        /* ----- FOOTER ----- */
+        .login-footer {
+            text-align: center;
+            margin-top: 28px;
+            font-size: 13px;
+            color: #94a3b8;
+            border-top: 1px solid #eef2f6;
+            padding-top: 24px;
+        }
+
+        .login-footer .version {
+            display: inline-block;
+            background: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #64748b;
+        }
+
+        /* ----- RESPONSIVE TWEAK ----- */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 32px 20px 28px;
+                border-radius: 28px;
+            }
+
+            .brand h1 {
+                font-size: 24px;
+            }
+
+            .brand-icon {
+                width: 56px;
+                height: 56px;
+                font-size: 26px;
+            }
+
+            .form-group input {
+                padding: 13px 16px;
+                font-size: 15px;
+            }
+
+            .btn-login {
+                padding: 15px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-card">
+
+        <!-- Brand -->
+        <div class="brand">
+            <div class="brand-icon">📦</div>
+            <h1>CatatRezekimu</h1>
+            <div class="sub">Manajemen Stok &amp; Keuangan</div>
+        </div>
+
+        <!-- Pesan error dari Laravel -->
+        @if ($errors->any())
+            <div class="error-message">
+                <span class="icon">⚠️</span>
+                <span>{{ $errors->first() }}</span>
+            </div>
+        @endif
+
+        <!-- Form Login -->
+        <form action="{{ url('/login') }}" method="POST">
+            @csrf
+
+            <!-- Username (menggunakan name="username") -->
+            <div class="form-group">
+                <label for="username">Username</label>
+                <div class="input-wrap">
+                    <input type="text" id="username" name="username"
+                           placeholder="Masukkan username Anda"
+                           value="{{ old('username') }}" required autofocus />
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrap">
+                    <input type="password" id="password" name="password"
+                           placeholder="Masukkan password" required />
+                    <span class="eye-icon">👁️</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-login">Masuk</button>
+        </form>
+
+        <!-- Footer -->
+        <div class="login-footer">
+            <span class="version">versi 1.0 &bull; offline</span>
+        </div>
+
+    </div>
+
+</body>
+</html>

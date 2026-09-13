@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keranjang Penjualan - CatatRezekimu</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eeeeee;
+            color: #222;
+        }
+
+        .phone {
+            width: 390px;
+            min-height: 844px;
+            margin: 20px auto;
+            background: white;
+            border: 2px solid #222;
+        }
+
+        /* HEADER */
+        .header {
+            height: 65px;
+            border-bottom: 2px solid #222;
+            display: flex;
+            align-items: center;
+            padding: 0 18px;
+            gap: 15px;
+        }
+
+        .back {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .header h1 {
+            font-size: 20px;
+        }
+
+        /* CONTENT */
+        .content {
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* ITEM */
+        .item {
+            border: 2px solid #222;
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+
+        .item-name {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 7px;
+        }
+
+        .item-info {
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .item-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .item-total {
+            font-weight: bold;
+        }
+
+        .delete-btn {
+            border: 1px solid #222;
+            background: white;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .delete-btn:hover {
+            background: #eeeeee;
+        }
+
+        /* TOTAL */
+        .total-box {
+            border-top: 2px solid #222;
+            margin-top: 20px;
+            padding-top: 18px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* BUTTONS */
+        .buttons {
+            padding: 0 20px 20px;
+        }
+
+        .btn {
+            width: 100%;
+            height: 45px;
+            border: 2px solid #222;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .add-btn {
+            background: white;
+            color: #222;
+        }
+
+        .payment-btn {
+            background: #222;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        /* EMPTY CART */
+        .empty {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty p {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="phone">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="back" onclick="goBack()">←</div>
+        <h1>KERANJANG</h1>
+    </div>
+
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <div class="section-title">
+            DAFTAR BARANG
+        </div>
+
+
+        <!-- ITEM 1 -->
+        <div class="item" id="item1">
+
+            <div class="item-name">
+                Gula Pasir
+            </div>
+
+            <div class="item-info">
+                10 kg × Rp12.000 / kg
+            </div>
+
+            <div class="item-bottom">
+
+                <span class="item-total">
+                    Rp120.000
+                </span>
+
+                <button
+                    class="delete-btn"
+                    onclick="hapusItem('item1')"
+                >
+                    HAPUS
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ITEM 2 -->
+        <div class="item" id="item2">
+
+            <div class="item-name">
+                Minyak Goreng
+            </div>
+
+            <div class="item-info">
+                5 liter × Rp14.000 / liter
+            </div>
+
+            <div class="item-bottom">
+
+                <span class="item-total">
+                    Rp70.000
+                </span>
+
+                <button
+                    class="delete-btn"
+                    onclick="hapusItem('item2')"
+                >
+                    HAPUS
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL -->
+        <div class="total-box">
+
+            <div class="total-row">
+
+                <span>TOTAL</span>
+
+                <span id="total">
+                    Rp190.000
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- EMPTY -->
+    <div class="empty" id="emptyCart">
+
+        <p>Keranjang masih kosong.</p>
+
+        <button
+            class="btn add-btn"
+            onclick="tambahBarang()"
+        >
+            TAMBAH BARANG
+        </button>
+
+    </div>
+
+
+    <!-- BUTTONS -->
+    <div class="buttons">
+
+        <button
+            class="btn add-btn"
+            onclick="tambahBarang()"
+        >
+            + TAMBAH BARANG LAGI
+        </button>
+
+        <button
+            class="btn payment-btn"
+            onclick="lanjutPembayaran()"
+        >
+            LANJUT KE PEMBAYARAN
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    let total = 190000;
+
+    function hapusItem(id) {
+
+        const item = document.getElementById(id);
+
+        if (item) {
+
+            item.remove();
+
+            // Contoh sederhana untuk wireframe
+            alert("Barang dihapus dari keranjang.");
+
+            cekKeranjang();
+        }
+    }
+
+
+    function cekKeranjang() {
+
+        const items = document.querySelectorAll(".item");
+
+        if (items.length === 0) {
+
+            document.querySelector(".content").style.display = "none";
+
+            document.querySelector(".buttons").style.display = "none";
+
+            document.getElementById("emptyCart").style.display = "block";
+
+            document.getElementById("total").innerText = "Rp0";
+        }
+    }
+
+
+    function tambahBarang() {
+
+        alert("Kembali ke halaman Catat Penjualan.");
+
+        // Nantinya:
+        // window.location.href = "catat-penjualan.html";
+    }
+
+
+    function lanjutPembayaran() {
+
+        const items = document.querySelectorAll(".item");
+
+        if (items.length === 0) {
+
+            alert("Keranjang masih kosong.");
+
+            return;
+        }
+
+        alert("Lanjut ke halaman Pembayaran.");
+
+        // Nantinya:
+        // window.location.href = "pembayaran.html";
+    }
+
+
+    function goBack() {
+
+        alert("Kembali ke Catat Penjualan.");
+
+        // Nantinya:
+        // window.location.href = "catat-penjualan.html";
+    }
+
+</script>
+
+</body>
+</html>

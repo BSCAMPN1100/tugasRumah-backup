@@ -1,0 +1,54 @@
+BAB 1 – DESKRIPSI APLIKASI
+
+1.1 Latar Belakang
+
+Saat ini, Banyak distributor sembako skala kecil, termasuk ayah saya sendiri, yang bertugas membeli barang dari supplier dan menjualnya ke toko-toko, masih mengandalkan sistem pencatatan manual menggunakan dua buku besar. Buku pertama mencatat pembelian dan stok barang, buku kedua mencatat penjualan harian. Cara ini sudah terbukti tidak efektif. Setiap kali ayah ingin mengecek sisa stok gula atau keuntungan kotor hari ini, ia harus membuka puluhan halaman buku, menghitung ulang dengan kalkulator, dan seringkali hasilnya tidak akurat karena selisih catatan. Selain itu, ketika harga modal dari supplier naik, ayah harus mencari dan mencoret harga jual lama satu per satu di buku, yang memakan waktu dan berisiko terlewat. Pengalaman inilah yang melatarbelakangi saya untuk merancang sebuah aplikasi yang dapat membantu mengelola keuangan dan stok barang dagangan secara lebih terstruktur dan cepat.
+
+1.2 Visi Aplikasi
+
+Membangun aplikasi manajemen keuangan dan stok yang sederhana, mudah digunakan, dan dapat diandalkan oleh distributor  sembako khususnya yang sudah lanjut usia (non-teknologi) agar mereka tidak lagi bergantung pada catatan manual yang rumit.
+
+1.3 Misi Aplikasi
+
+1. Mengubah proses pencatatan manual menjadi digital yang terpusat dalam satu genggaman.
+2. Menyajikan informasi stok dan keuntungan kotor secara real-time tanpa perlu menghitung ulang.
+3. Memberikan batasan akses antara Admin/Pemilik Distributor dan Sales agar laporan keuangan lebih aman dan transparan.
+
+1.4 Gambaran Umum Aplikasi (Apa Itu "CatatRezekimu")
+
+CatatRezekimu adalah aplikasi berbasis mobile (Android) yang dirancang khusus untuk membantu distributor sembako dalam mengelola stok barang, mencatat transaksi penjualan harian, serta memantau keuntungan usaha. Aplikasi ini bekerja secara offline (tanpa internet) sehingga cepat digunakan di daerah dengan sinyal buruk. Aplikasi ini memiliki dua peran pengguna: Pemilik (Admin) yang memiliki akses penuh, dan Sales yang hanya bertugas mencatat penjualan.
+
+1.5 Masalah yang Diselesaikan (Mengapa Aplikasi Ini Dibuat?)
+
+Berdasarkan pengamatan langsung dan wawancara dengan ayah saya yang berprofesi sebagai distributor sembako, terdapat tiga masalah utama yang sering terjadi, yaitu:
+
+1. Stok Barang Sering Kelewat (Tidak Akurat): Karena barang yang dijual beragam (gula, minyak, beras, telur) dan jumlahnya banyak, sering terjadi selisih antara stok di buku dengan stok fisik di gudang. Hal ini menyebabkan ayah kehilangan kesempatan menjual karena stok ternyata habis, atau sebaliknya, kelebihan stok yang tidak diketahui.
+2. Kesulitan Menentukan Ulang Harga Jual Saat Harga Modal Naik: Harga sembako dari supplier sering berubah hampir setiap minggu. Setiap kali harga modal naik, ayah harus menghitung ulang margin keuntungan dan mengoreksi daftar harga jual di buku. Proses ini sangat membuang waktu dan seringkali ada barang yang terlewat tidak diupdate harganya, sehingga ayah merugi.
+3. Rawan Selisih Uang dan Kecurangan Sales: Karena transaksi dicampur aduk dengan uang Sales, ayah sering kesulitan mengetahui berapa sebenarnya total pendapatan dan keuntungan kotor pada hari tersebut. Pernah terjadi Sales yang tidak jujur dan uang palsu, tetapi ayah tidak memiliki bukti riwayat transaksi yang jelas untuk melakukan evaluasi.
+
+Selain berdasarkan pengalaman ayah saya, masalah serupa juga sering saya dengar dari distributor lain di sekitar tempat tinggal saya ketika mereka berbincang tentang kesulitan mencatat stok dan transaksi.
+
+1.6 Tujuan dan Manfaat (Dampak Jika Aplikasi Digunakan)
+
+Dengan hadirnya CatatRezekimu, diharapkan masalah-masalah di atas dapat teratasi. Berikut manfaat spesifik yang ditawarkan:
+
+1. Stok Terpantau Real-time: Admin/Distributor dapat melihat jumlah stok terkini kapan saja tanpa harus turun ke gudang atau membuka buku tebal. Setiap kali Sales menjual barang, stok otomatis berkurang di sistem.
+2. Penyesuaian Harga Jadi Cepat dan Tepat: Fitur ubah harga modal memungkinkan pemilik mengubah harga beli dalam hitungan detik. Sistem menyimpan harga modal dan harga jual pada saat transaksi terjadi (sebagai snapshot), sehingga keuntungan setiap transaksi yang sudah tercatat tidak akan berubah meskipun harga modal diubah di kemudian hari. Perubahan harga modal hanya berlaku untuk transaksi penjualan berikutnya.
+3. Data Penjualan Aman dan Transparan: Data penjualan tersimpan secara digital dan aksesnya dibatasi berdasarkan peran pengguna (Role-Based Access Control). Pemilik memiliki akses penuh, sedangkan Sales hanya bisa mencatat transaksi dan melihat riwayatnya sendiri. Hal ini membuat transparansi dan pengawasan terhadap Sales menjadi lebih baik.
+4. Memudahkan Pengambilan Keputusan: Dengan adanya dashboard yang menampilkan total keuntungan kotor hari ini, Admin/Distributor dapat dengan cepat memutuskan apakah perlu membeli stok tambahan atau menaikkan harga jual.
+
+1.7 Batasan Sistem dan Aturan Bisnis (Scope)
+
+1. Pengguna (Role): Aplikasi hanya memiliki 2 jenis pengguna, yaitu Admin (Pemilik Distributor) dan Sales/Karyawan yang bertugas mencatat penjualan ke toko-toko. Tidak ada role lain.
+2. Hak Akses Sales: Sales TIDAK diperbolehkan mengubah harga modal, menghapus barang, melihat laporan keuangan total, atau mengelola akun pengguna lain.
+3. Validasi Stok: Sistem WAJIB menolak transaksi penjualan jika jumlah yang dibeli melebihi stok yang tersedia. Stok tidak boleh bernilai negatif.
+4. Perhitungan Keuntungan Kotor: Keuntungan kotor setiap transaksi dihitung berdasarkan (Harga Jual - Harga Modal) pada saat transaksi itu terjadi dan disimpan langsung di tabel transaksi. Perubahan harga modal di kemudian hari tidak akan mengubah data transaksi lama.
+5. Koneksi Internet: Aplikasi dirancang untuk bekerja secara offline (tanpa internet). Tidak ada fitur sinkronisasi cloud pada versi 1.0.
+6. Platform: Aplikasi ini dikhususkan untuk perangkat Android (minimal OS 7.0 / Nougat). Tidak tersedia untuk iOS atau Web Browser pada tahap ini.
+7. Aturan Harga Modal: Pada versi 1.0, sistem hanya menyimpan satu harga modal per barang (harga modal terakhir yang diinput oleh Admin). Setiap kali Admin melakukan pembelian, harga modal yang diinput akan menggantikan harga modal sebelumnya dan berlaku untuk transaksi penjualan berikutnya. Sistem tidak menerapkan metode FIFO atau rata-rata pada versi ini untuk menjaga kesederhanaan.
+8. Jenis Transaksi: Pada versi 1.0, sistem hanya mendukung transaksi penjualan tunai. Sistem belum mencakup fitur piutang atau hutang pelanggan.
+9. Penyesuaian Stok: Pada versi 1.0, sistem belum menyediakan fitur penyesuaian stok manual (stok opname). Stok hanya berubah melalui dua mekanisme: bertambah saat pembelian dan berkurang saat penjualan.
+10. Barang yang baru ditambahkan ke sistem memiliki stok 0 dan harga modal 0. Sistem tidak mengizinkan transaksi penjualan untuk barang yang belum memiliki harga modal valid (harga modal > 0) dan stok mencukupi, untuk mencegah kesalahan perhitungan keuntungan kotor."
+11. Pada versi 1.0, fitur penghapusan data barang tidak tersedia. Barang yang sudah pernah tercatat dalam transaksi pembelian atau penjualan tidak dapat dihapus untuk menjaga integritas data histori, namun masih dapat diubah (edit) nama, satuan, atau harganya.
+
+---

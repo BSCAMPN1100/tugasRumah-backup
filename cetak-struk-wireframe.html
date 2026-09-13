@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cetak Struk - CatatRezekimu</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eeeeee;
+            color: #222;
+        }
+
+        .phone {
+            width: 390px;
+            min-height: 844px;
+            margin: 20px auto;
+            background: white;
+            border: 2px solid #222;
+        }
+
+        /* HEADER */
+        .header {
+            height: 65px;
+            border-bottom: 2px solid #222;
+            display: flex;
+            align-items: center;
+            padding: 0 18px;
+            gap: 15px;
+        }
+
+        .back {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .header h1 {
+            font-size: 20px;
+        }
+
+        /* CONTENT */
+        .content {
+            padding: 20px;
+        }
+
+        .success {
+            text-align: center;
+            border: 2px solid #222;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .success-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .success-text {
+            font-size: 13px;
+        }
+
+        /* STRUK */
+        .receipt {
+            border: 2px solid #222;
+            padding: 18px;
+        }
+
+        .receipt-header {
+            text-align: center;
+            border-bottom: 1px dashed #222;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .store-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .store-desc {
+            font-size: 12px;
+        }
+
+        .transaction-info {
+            font-size: 12px;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .transaction-info div {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* ITEMS */
+        .items {
+            border-top: 1px dashed #222;
+            border-bottom: 1px dashed #222;
+            padding: 12px 0;
+        }
+
+        .item {
+            margin-bottom: 12px;
+        }
+
+        .item:last-child {
+            margin-bottom: 0;
+        }
+
+        .item-name {
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .item-detail {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+        }
+
+        /* TOTAL */
+        .total-section {
+            padding-top: 15px;
+            font-size: 13px;
+            line-height: 2;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .grand-total {
+            font-size: 17px;
+            font-weight: bold;
+            border-top: 2px solid #222;
+            padding-top: 8px;
+            margin-top: 5px;
+        }
+
+        /* FOOTER */
+        .receipt-footer {
+            text-align: center;
+            border-top: 1px dashed #222;
+            margin-top: 15px;
+            padding-top: 15px;
+            font-size: 12px;
+        }
+
+        /* BUTTON */
+        .button-area {
+            padding: 0 20px 20px;
+        }
+
+        .btn {
+            width: 100%;
+            height: 48px;
+            border: 2px solid #222;
+            background: #222;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .secondary-btn {
+            background: white;
+            color: #222;
+        }
+
+        /* PRINT */
+        @media print {
+
+            body {
+                background: white;
+            }
+
+            .phone {
+                width: 100%;
+                min-height: auto;
+                margin: 0;
+                border: none;
+            }
+
+            .header,
+            .success,
+            .button-area {
+                display: none;
+            }
+
+            .content {
+                padding: 0;
+            }
+
+            .receipt {
+                border: none;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="phone">
+
+    <!-- HEADER -->
+    <div class="header">
+
+        <div class="back" onclick="kembali()">
+            ←
+        </div>
+
+        <h1>CETAK STRUK</h1>
+
+    </div>
+
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <!-- SUCCESS -->
+        <div class="success">
+
+            <div class="success-title">
+                ✓ TRANSAKSI BERHASIL
+            </div>
+
+            <div class="success-text">
+                Transaksi telah berhasil disimpan.
+            </div>
+
+        </div>
+
+
+        <!-- RECEIPT -->
+        <div class="receipt">
+
+            <!-- RECEIPT HEADER -->
+            <div class="receipt-header">
+
+                <div class="store-name">
+                    CATATREZEKIMU
+                </div>
+
+                <div class="store-desc">
+                    Aplikasi Manajemen Sembako
+                </div>
+
+            </div>
+
+
+            <!-- TRANSACTION INFO -->
+            <div class="transaction-info">
+
+                <div>
+                    <span>No. Transaksi</span>
+                    <span>#TRX001</span>
+                </div>
+
+                <div>
+                    <span>Tanggal</span>
+                    <span>18-08-2026</span>
+                </div>
+
+                <div>
+                    <span>Sales</span>
+                    <span>Budi</span>
+                </div>
+
+            </div>
+
+
+            <!-- ITEMS -->
+            <div class="items">
+
+                <!-- ITEM 1 -->
+                <div class="item">
+
+                    <div class="item-name">
+                        Gula Pasir
+                    </div>
+
+                    <div class="item-detail">
+                        <span>10 kg × Rp12.000</span>
+                        <span>Rp120.000</span>
+                    </div>
+
+                </div>
+
+
+                <!-- ITEM 2 -->
+                <div class="item">
+
+                    <div class="item-name">
+                        Minyak Goreng
+                    </div>
+
+                    <div class="item-detail">
+                        <span>5 liter × Rp14.000</span>
+                        <span>Rp70.000</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TOTAL -->
+            <div class="total-section">
+
+                <div class="total-row">
+
+                    <span>Subtotal</span>
+
+                    <span>
+                        Rp190.000
+                    </span>
+
+                </div>
+
+
+                <div class="total-row grand-total">
+
+                    <span>TOTAL</span>
+
+                    <span>
+                        Rp190.000
+                    </span>
+
+                </div>
+
+
+                <div class="total-row">
+
+                    <span>Uang Dibayar</span>
+
+                    <span>
+                        Rp200.000
+                    </span>
+
+                </div>
+
+
+                <div class="total-row">
+
+                    <span>Kembalian</span>
+
+                    <span>
+                        Rp10.000
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- FOOTER -->
+            <div class="receipt-footer">
+
+                Terima kasih atas pembelian Anda.
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BUTTONS -->
+    <div class="button-area">
+
+        <button
+            class="btn"
+            onclick="cetakStruk()"
+        >
+            CETAK STRUK
+        </button>
+
+        <button
+            class="btn secondary-btn"
+            onclick="selesai()"
+        >
+            SELESAI
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    function cetakStruk() {
+
+        /*
+         * Untuk wireframe:
+         * Membuka dialog print browser.
+         */
+
+        window.print();
+
+    }
+
+
+    function kembali() {
+
+        alert("Kembali ke halaman sebelumnya.");
+
+        // Nantinya:
+        // window.location.href = "pembayaran.html";
+
+    }
+
+
+    function selesai() {
+
+        alert("Transaksi selesai.");
+
+        // Nantinya kembali ke dashboard sales:
+        // window.location.href = "dashboard-sales.html";
+
+    }
+
+</script>
+
+</body>
+</html>

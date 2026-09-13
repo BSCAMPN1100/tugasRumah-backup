@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Barang · CatatRezekimu</title>
+
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ----- RESET & GLOBAL ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+            gap: 30px;
+        }
+
+        /* ----- CARD UTAMA (masing-masing versi) ----- */
+        .card {
+            max-width: 420px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.10);
+            padding: 24px 18px 30px;
+            transition: box-shadow 0.2s;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .card-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0b3b2c;
+            letter-spacing: -0.3px;
+        }
+
+        .card-header .badge {
+            background: #eef2f6;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        /* ----- TOMBOL TAMBAH (khusus Admin) ----- */
+        .btn-tambah {
+            background: #0b3b2c;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: default;
+            transition: background 0.15s;
+            margin-bottom: 16px;
+        }
+
+        .btn-tambah span {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .btn-tambah:active {
+            background: #082f23;
+        }
+
+        /* ----- DAFTAR BARANG (list/table) ----- */
+        .barang-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .barang-item {
+            background: #f8fafc;
+            border: 1px solid #eef2f6;
+            border-radius: 16px;
+            padding: 14px 16px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Kolom informasi */
+        .barang-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 14px;
+            flex: 1;
+        }
+
+        .barang-info .field {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+            font-size: 14px;
+        }
+
+        .barang-info .field .label {
+            font-weight: 500;
+            color: #64748b;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .barang-info .field .value {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .barang-info .field .value.stok {
+            color: #0b3b2c;
+            background: #e6f0ec;
+            padding: 0 8px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        /* ----- TOMBOL AKSI (Admin) ----- */
+        .aksi-admin {
+            display: flex;
+            gap: 8px;
+            margin-left: 8px;
+        }
+
+        .btn-edit {
+            background: #eef2f6;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #1e293b;
+            cursor: default;
+            transition: background 0.15s;
+        }
+
+        .btn-edit:active {
+            background: #dce1e8;
+        }
+
+        .btn-hapus {
+            background: #fee2e2;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #991b1b;
+            cursor: default;
+            transition: background 0.15s;
+            display: none;
+            /* disembunyikan sesuai aturan versi 1.0 */
+        }
+
+        /* ----- VERSI SALES (tanpa aksi) ----- */
+        .sales-only .barang-item {
+            padding: 12px 16px;
+        }
+
+        .sales-only .barang-info .field .label {
+            font-size: 11px;
+        }
+
+        /* ----- PISAH ANTAR VERSI (judul) ----- */
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 6px 0 14px;
+            padding-bottom: 6px;
+            border-bottom: 2px dashed #dce1e8;
+        }
+
+        .note {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 16px;
+            text-align: center;
+            border-top: 1px solid #eef2f6;
+            padding-top: 16px;
+        }
+
+        /* ----- RESPONSIVE ----- */
+        @media (max-width: 480px) {
+            .card {
+                padding: 20px 14px 24px;
+                border-radius: 28px;
+            }
+
+            .barang-item {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            .barang-info {
+                gap: 4px 12px;
+            }
+
+            .aksi-admin {
+                margin-left: 0;
+                justify-content: flex-end;
+            }
+
+            .btn-tambah {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* ----- wireframe badge (opsional) ----- */
+        .wireframe-badge {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(4px);
+            color: #e2e8f0;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 40px;
+            letter-spacing: 0.4px;
+            pointer-events: none;
+            user-select: none;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ====== VERSI ADMIN ====== -->
+    <div class="card">
+        <div class="card-header">
+            <h2>📦 Data Barang</h2>
+            <span class="badge">Admin</span>
+        </div>
+
+        <!-- Tombol Tambah -->
+        <button class="btn-tambah" type="button">
+            <span>➕</span> Tambah Barang
+        </button>
+
+        <!-- Daftar barang -->
+        <div class="barang-list">
+            <!-- Item 1 -->
+            <div class="barang-item">
+                <div class="barang-info">
+                    <span class="field"><span class="label">Nama</span><span class="value">Gula Pasir</span></span>
+                    <span class="field"><span class="label">Satuan</span><span class="value">kg</span></span>
+                    <span class="field"><span class="label">Modal</span><span class="value">Rp 14.500</span></span>
+                    <span class="field"><span class="label">Jual</span><span class="value">Rp 16.000</span></span>
+                    <span class="field"><span class="label">Stok</span><span class="value stok">120</span></span>
+                </div>
+                <div class="aksi-admin">
+                    <button class="btn-edit" type="button">✏️ Edit</button>
+                    <!-- tombol hapus disembunyikan -->
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="barang-item">
+                <div class="barang-info">
+                    <span class="field"><span class="label">Nama</span><span class="value">Minyak Goreng</span></span>
+                    <span class="field"><span class="label">Satuan</span><span class="value">liter</span></span>
+                    <span class="field"><span class="label">Modal</span><span class="value">Rp 18.000</span></span>
+                    <span class="field"><span class="label">Jual</span><span class="value">Rp 20.500</span></span>
+                    <span class="field"><span class="label">Stok</span><span class="value stok">85</span></span>
+                </div>
+                <div class="aksi-admin">
+                    <button class="btn-edit" type="button">✏️ Edit</button>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="barang-item">
+                <div class="barang-info">
+                    <span class="field"><span class="label">Nama</span><span class="value">Beras Premium</span></span>
+                    <span class="field"><span class="label">Satuan</span><span class="value">karung</span></span>
+                    <span class="field"><span class="label">Modal</span><span class="value">Rp 320.000</span></span>
+                    <span class="field"><span class="label">Jual</span><span class="value">Rp 350.000</span></span>
+                    <span class="field"><span class="label">Stok</span><span class="value stok">40</span></span>
+                </div>
+                <div class="aksi-admin">
+                    <button class="btn-edit" type="button">✏️ Edit</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="note">* Hapus data tidak tersedia (versi 1.0)</div>
+    </div>
+
+    <!-- ====== VERSI SALES (Read-Only) ====== -->
+    <div class="card sales-only">
+        <div class="card-header">
+            <h2>📦 Daftar Harga &amp; Stok</h2>
+            <span class="badge">Sales</span>
+        </div>
+
+        <!-- Daftar barang (tanpa aksi) -->
+        <div class="barang-list">
+            <!-- Item 1 -->
+            <div class="barang-item">
+                <div class="barang-info">
+                    <span class="field"><span class="label">Nama</span><span class="value">Gula Pasir</span></span>
+                    <span class="field"><span class="label">Satuan</span><span class="value">kg</span></span>
+                    <span class="field"><span class="label">Jual</span><span class="value">Rp 16.000</span></span>
+                    <span class="field"><span class="label">Stok</span><span class="value stok">120</span></span>
+                </div>
+                <!-- tidak ada tombol -->
+            </div>
+
+            <!-- Item 2 -->
+            <div class="barang-item">
+                <div class="barang-info">
+                    <span class="field"><span class="label">Nama</span><span class="value">Minyak Goreng</span></span>
+                    <span class="field"><span class="label">Satuan</span><span class="value">liter</span></span>
+                    <span class="field"><span class="label">Jual</span><span class="value">Rp 20.500</span></span>
+                    <span class="field"><span class="label">Stok</span><span class="value stok">85</span></span>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="barang-item">
+                <div class="barang-info">
+                    <span class="field"><span class="label">Nama</span><span class="value">Beras Premium</span></span>
+                    <span class="field"><span class="label">Satuan</span><span class="value">karung</span></span>
+                    <span class="field"><span class="label">Jual</span><span class="value">Rp 350.000</span></span>
+                    <span class="field"><span class="label">Stok</span><span class="value stok">40</span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="note">* Sales hanya dapat melihat data (read-only)</div>
+    </div>
+
+    <!-- Wireframe badge -->
+    <div class="wireframe-badge">WIREFRAME · DATA BARANG</div>
+
+</body>
+</html>

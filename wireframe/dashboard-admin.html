@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Admin · CatatRezekimu</title>
+
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ----- RESET & GLOBAL ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* ----- CARD UTAMA (mockup HP) ----- */
+        .dashboard-card {
+            max-width: 420px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.10);
+            padding: 28px 20px 36px;
+            transition: box-shadow 0.2s;
+            margin: 0 auto;
+        }
+
+        /* ----- HEADER : Sapaan + Logout ----- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .header .greeting h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0b3b2c;
+            letter-spacing: -0.3px;
+        }
+
+        .header .greeting p {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .btn-logout {
+            background: #f1f5f9;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: default;
+            transition: background 0.15s;
+        }
+
+        .btn-logout span {
+            font-size: 16px;
+        }
+
+        .btn-logout:active {
+            background: #e2e8f0;
+        }
+
+        /* ----- KARTU RINGKASAN (3 kartu) ----- */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .summary-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #eef2f6;
+        }
+
+        .summary-card .label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 6px;
+        }
+
+        .summary-card .value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0b3b2c;
+        }
+
+        .summary-card .value small {
+            font-size: 12px;
+            font-weight: 400;
+            color: #94a3b8;
+            margin-left: 2px;
+        }
+
+        /* ----- MENU NAVIGASI (5 tombol besar) ----- */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-bottom: 8px;
+        }
+
+        .menu-item {
+            background: #f8fafc;
+            border: 1px solid #eef2f6;
+            border-radius: 20px;
+            padding: 20px 10px;
+            text-align: center;
+            transition: background 0.15s, transform 0.1s;
+            cursor: default;
+        }
+
+        .menu-item:active {
+            transform: scale(0.96);
+            background: #f1f5f9;
+        }
+
+        .menu-item .icon {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .menu-item .label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            letter-spacing: -0.2px;
+        }
+
+        /* item khusus yang memakan 2 kolom (opsional, kita buat item terakhir full width) */
+        .menu-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* ----- FOOTER (opsional) ----- */
+        .dashboard-footer {
+            margin-top: 28px;
+            text-align: center;
+            font-size: 12px;
+            color: #94a3b8;
+            border-top: 1px solid #eef2f6;
+            padding-top: 20px;
+        }
+
+        .dashboard-footer .version {
+            background: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 500;
+            color: #64748b;
+            display: inline-block;
+        }
+
+        /* ----- RESPONSIVE TWEAK ----- */
+        @media (max-width: 480px) {
+            .dashboard-card {
+                padding: 20px 16px 28px;
+                border-radius: 28px;
+            }
+
+            .summary-grid {
+                gap: 8px;
+            }
+
+            .summary-card {
+                padding: 12px 6px;
+            }
+
+            .summary-card .value {
+                font-size: 17px;
+            }
+
+            .menu-grid {
+                gap: 10px;
+            }
+
+            .menu-item {
+                padding: 16px 8px;
+            }
+
+            .menu-item .icon {
+                font-size: 24px;
+            }
+
+            .header .greeting h2 {
+                font-size: 18px;
+            }
+
+            .btn-logout {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+        }
+
+        /* ----- wireframe badge (opsional) ----- */
+        .wireframe-badge {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(4px);
+            color: #e2e8f0;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 40px;
+            letter-spacing: 0.4px;
+            pointer-events: none;
+            user-select: none;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ====== DASHBOARD ADMIN ====== -->
+    <div class="dashboard-card">
+
+        <!-- Header: sapaan & logout -->
+        <div class="header">
+            <div class="greeting">
+                <h2>👋 Halo, Admin</h2>
+                <p>Selamat datang di CatatRezekimu</p>
+            </div>
+            <button class="btn-logout" type="button">
+                <span>⏻</span> Logout
+            </button>
+        </div>
+
+        <!-- Ringkasan 3 kartu (dengan label yang diperbaiki) -->
+        <div class="summary-grid">
+            <div class="summary-card">
+                <div class="label">Omzet Hari Ini</div>
+                <div class="value">Rp 4.2 <small>juta</small></div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Keuntungan Kotor</div>
+                <div class="value">Rp 1.8 <small>juta</small></div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Jumlah Produk</div>
+                <div class="value">24 <small>produk</small></div>
+            </div>
+        </div>
+
+        <!-- Menu navigasi 5 tombol -->
+        <div class="menu-grid">
+            <div class="menu-item">
+                <span class="icon">📦</span>
+                <span class="label">Data Barang</span>
+            </div>
+            <div class="menu-item">
+                <span class="icon">🛒</span>
+                <span class="label">Pembelian</span>
+            </div>
+            <div class="menu-item">
+                <span class="icon">👥</span>
+                <span class="label">Kelola Sales</span>
+            </div>
+            <div class="menu-item">
+                <span class="icon">📊</span>
+                <span class="label">Laporan Keuangan</span>
+            </div>
+            <div class="menu-item full-width">
+                <span class="icon">📋</span>
+                <span class="label">Riwayat Transaksi</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="dashboard-footer">
+            <span class="version">versi 1.0 · offline</span>
+        </div>
+
+    </div>
+
+    <!-- Wireframe keterangan -->
+    <div class="wireframe-badge">WIREFRAME · DASHBOARD ADMIN</div>
+
+</body>
+</html>

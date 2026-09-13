@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b3b2c" />
+
+    <title>Pembayaran · CatatRezekimu</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+        rel="stylesheet"
+    />
+
+<style>
+    /* =========================================================
+       RESET & GLOBAL
+    ========================================================= */
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --primary: #0b3b2c;
+        --primary-dark: #082f23;
+        --primary-soft: #e6f0ec;
+
+        --text: #0f172a;
+        --text-secondary: #475569;
+        --text-muted: #64748b;
+        --text-light: #94a3b8;
+
+        --surface: #ffffff;
+        --surface-soft: #f8fafc;
+        --background: #f1f5f9;
+
+        --border: #e2e8f0;
+        --border-soft: #eef2f6;
+
+        --danger: #dc2626;
+        --danger-dark: #991b1b;
+        --danger-soft: #fef2f2;
+
+        --success: #0b3b2c;
+        --success-soft: #e6f0ec;
+
+        --radius-card: 30px;
+        --radius-section: 20px;
+        --radius-input: 16px;
+    }
+
+    body {
+        font-family:
+            'Inter',
+            -apple-system,
+            BlinkMacSystemFont,
+            'Segoe UI',
+            Roboto,
+            sans-serif;
+
+        background: var(--background);
+        color: var(--text);
+
+        min-height: 100vh;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 20px;
+    }
+
+    button,
+    input {
+        font: inherit;
+    }
+
+    button {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* =========================================================
+       CARD
+    ========================================================= */
+
+    .card {
+        width: 100%;
+        max-width: 420px;
+
+        background: var(--surface);
+
+        border-radius: var(--radius-card);
+
+        box-shadow:
+            0 20px 60px rgba(0, 20, 40, 0.10),
+            0 2px 8px rgba(0, 20, 40, 0.04);
+
+        padding: 28px 20px 28px;
+    }
+
+    /* =========================================================
+       HEADER
+    ========================================================= */
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 12px;
+
+        margin-bottom: 22px;
+    }
+
+    .header h1 {
+        font-size: 20px;
+        line-height: 1.25;
+
+        font-weight: 700;
+
+        color: var(--primary);
+
+        letter-spacing: -0.3px;
+    }
+
+    .badge {
+        flex-shrink: 0;
+
+        background: #eef2f6;
+
+        color: #1e293b;
+
+        padding: 5px 12px;
+
+        border-radius: 999px;
+
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    /* =========================================================
+       RINGKASAN TRANSAKSI
+    ========================================================= */
+
+    .ringkasan {
+        background: var(--surface-soft);
+
+        border: 1px solid var(--border-soft);
+
+        border-radius: var(--radius-section);
+
+        padding: 15px 16px;
+
+        margin-bottom: 22px;
+    }
+
+    .ringkasan-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        margin-bottom: 8px;
+    }
+
+    .ringkasan-title h2 {
+        font-size: 14px;
+        font-weight: 600;
+
+        color: var(--text);
+    }
+
+    .ringkasan-title span {
+        font-size: 12px;
+        color: var(--text-muted);
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        gap: 16px;
+
+        padding: 6px 0;
+
+        font-size: 14px;
+    }
+
+    .summary-row .label {
+        color: var(--text-muted);
+        font-weight: 500;
+    }
+
+    .summary-row .value {
+        color: var(--text);
+        font-weight: 600;
+        text-align: right;
+    }
+
+    .summary-total {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 16px;
+
+        border-top: 2px solid var(--border);
+
+        margin-top: 7px;
+        padding-top: 12px;
+    }
+
+    .summary-total .label {
+        color: var(--primary);
+
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .summary-total .value {
+        color: var(--primary);
+
+        font-size: 20px;
+        font-weight: 700;
+
+        white-space: nowrap;
+    }
+
+    /* =========================================================
+       FORM PEMBAYARAN
+    ========================================================= */
+
+    .payment-section {
+        margin-bottom: 18px;
+    }
+
+    .form-group {
+        margin-bottom: 12px;
+    }
+
+    .form-label-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 10px;
+
+        margin-bottom: 7px;
+    }
+
+    .form-label {
+        font-size: 14px;
+        font-weight: 600;
+
+        color: var(--text);
+    }
+
+    .form-helper {
+        font-size: 11px;
+        color: var(--text-light);
+    }
+
+    .input-wrapper {
+        position: relative;
+    }
+
+    .currency-prefix {
+        position: absolute;
+
+        left: 16px;
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        color: var(--text-muted);
+
+        font-size: 16px;
+        font-weight: 600;
+
+        pointer-events: none;
+    }
+
+    .payment-input {
+        width: 100%;
+
+        padding: 15px 16px 15px 50px;
+
+        background: var(--surface-soft);
+
+        border: 1.5px solid var(--border);
+
+        border-radius: var(--radius-input);
+
+        outline: none;
+
+        color: var(--text);
+
+        font-size: 20px;
+        font-weight: 600;
+
+        transition:
+            border-color 0.2s,
+            box-shadow 0.2s,
+            background 0.2s;
+    }
+
+    .payment-input::placeholder {
+        color: var(--text-light);
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    .payment-input:focus {
+        background: var(--surface);
+
+        border-color: var(--primary);
+
+        box-shadow:
+            0 0 0 4px rgba(11, 59, 44, 0.10);
+    }
+
+    .payment-input.invalid {
+        border-color: var(--danger);
+
+        box-shadow:
+            0 0 0 4px rgba(220, 38, 38, 0.08);
+    }
+
+    .payment-input::-webkit-outer-spin-button,
+    .payment-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .payment-input[type="number"] {
+        -moz-appearance: textfield;
+    }
+
+    /* =========================================================
+       QUICK NOMINAL
+    ========================================================= */
+
+    .quick-payment {
+        display: flex;
+        gap: 8px;
+
+        overflow-x: auto;
+
+        padding: 2px 1px 4px;
+
+        margin-bottom: 18px;
+
+        scrollbar-width: none;
+    }
+
+    .quick-payment::-webkit-scrollbar {
+        display: none;
+    }
+
+    .quick-btn {
+        flex-shrink: 0;
+
+        background: var(--surface);
+
+        border: 1px solid var(--border);
+
+        color: var(--text-secondary);
+
+        padding: 8px 12px;
+
+        border-radius: 999px;
+
+        font-size: 12px;
+        font-weight: 600;
+
+        cursor: pointer;
+
+        transition:
+            background 0.15s,
+            border-color 0.15s,
+            color 0.15s;
+    }
+
+    .quick-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+    }
+
+    .quick-btn:active {
+        transform: scale(0.97);
+    }
+
+    /* =========================================================
+       STATUS PEMBAYARAN
+    ========================================================= */
+
+    .payment-status {
+        min-height: 20px;
+
+        margin-top: 7px;
+
+        font-size: 12px;
+        line-height: 1.4;
+
+        color: var(--text-muted);
+    }
+
+    .payment-status.error {
+        color: var(--danger-dark);
+    }
+
+    .payment-status.success {
+        color: var(--primary);
+    }
+
+    /* =========================================================
+       KEMBALIAN
+    ========================================================= */
+
+    .kembalian-box {
+        background: var(--success-soft);
+
+        border: 1px solid #c9ddd5;
+
+        border-radius: var(--radius-input);
+
+        padding: 15px 16px;
+
+        margin-top: 4px;
+        margin-bottom: 20px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 16px;
+    }
+
+    .kembalian-info {
+        display: flex;
+        flex-direction: column;
+
+        gap: 3px;
+    }
+
+    .kembalian-label {
+        color: var(--primary);
+
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .kembalian-helper {
+        color: #527468;
+
+        font-size: 11px;
+    }
+
+    .kembalian-value {
+        color: var(--primary);
+
+        font-size: 21px;
+        font-weight: 700;
+
+        white-space: nowrap;
+    }
+
+    .kembalian-box.insufficient {
+        background: var(--danger-soft);
+        border-color: #fecaca;
+    }
+
+    .kembalian-box.insufficient .kembalian-label,
+    .kembalian-box.insufficient .kembalian-value {
+        color: var(--danger-dark);
+    }
+
+    .kembalian-box.insufficient .kembalian-helper {
+        color: #b45353;
+    }
+
+    /* =========================================================
+       ERROR
+    ========================================================= */
+
+    .error-message {
+        display: flex;
+        align-items: flex-start;
+
+        gap: 10px;
+
+        background: var(--danger-soft);
+
+        border: 1px solid #fecaca;
+
+        border-left: 4px solid var(--danger);
+
+        border-radius: 12px;
+
+        padding: 11px 13px;
+
+        margin-bottom: 16px;
+
+        color: var(--danger-dark);
+
+        font-size: 13px;
+        line-height: 1.4;
+        font-weight: 500;
+    }
+
+    .error-message[hidden] {
+        display: none;
+    }
+
+    .error-icon {
+        flex-shrink: 0;
+
+        font-size: 16px;
+        line-height: 1.2;
+    }
+
+    /* =========================================================
+       TOMBOL PROSES
+    ========================================================= */
+
+    .btn-proses {
+        width: 100%;
+
+        min-height: 54px;
+
+        padding: 15px 16px;
+
+        border: none;
+        border-radius: var(--radius-input);
+
+        background: var(--primary);
+
+        color: #ffffff;
+
+        font-size: 16px;
+        font-weight: 600;
+
+        cursor: pointer;
+
+        box-shadow:
+            0 5px 14px rgba(11, 59, 44, 0.20);
+
+        transition:
+            background 0.15s,
+            transform 0.1s,
+            box-shadow 0.15s,
+            opacity 0.15s;
+    }
+
+    .btn-proses:hover:not(:disabled) {
+        background: var(--primary-dark);
+    }
+
+    .btn-proses:active:not(:disabled) {
+        transform: scale(0.985);
+    }
+
+    .btn-proses:disabled {
+        background: #cbd5e1;
+
+        color: #ffffff;
+
+        box-shadow: none;
+
+        cursor: not-allowed;
+
+        opacity: 0.9;
+    }
+
+    .btn-proses.loading {
+        cursor: wait;
+        opacity: 0.85;
+    }
+
+    /* =========================================================
+       CATATAN
+    ========================================================= */
+
+    .note {
+        border-top: 1px solid var(--border-soft);
+
+        margin-top: 18px;
+        padding-top: 15px;
+
+        text-align: center;
+
+        color: var(--text-light);
+
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+    /* =========================================================
+       WIREFRAME BADGE
+    ========================================================= */
+
+    .wireframe-badge {
+        position: fixed;
+
+        right: 16px;
+        bottom: 16px;
+
+        background: rgba(15, 23, 42, 0.72);
+
+        backdrop-filter: blur(4px);
+
+        color: #e2e8f0;
+
+        font-size: 10px;
+        font-weight: 500;
+
+        padding: 6px 12px;
+
+        border-radius: 999px;
+
+        letter-spacing: 0.4px;
+
+        pointer-events: none;
+        user-select: none;
+
+        border: 1px solid rgba(255, 255, 255, 0.10);
+    }
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 480px) {
+
+        body {
+            align-items: flex-start;
+            padding: 12px;
+        }
+
+        .card {
+            margin-top: 8px;
+
+            padding: 22px 15px 24px;
+
+            border-radius: 26px;
+        }
+
+        .header {
+            margin-bottom: 18px;
+        }
+
+        .header h1 {
+            font-size: 19px;
+        }
+
+        .ringkasan {
+            padding: 14px;
+        }
+
+        .summary-total .label {
+            font-size: 14px;
+        }
+
+        .summary-total .value {
+            font-size: 18px;
+        }
+
+        .payment-input {
+            font-size: 19px;
+        }
+
+        .kembalian-value {
+            font-size: 19px;
+        }
+
+        .wireframe-badge {
+            display: none;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+        *,
+        *::before,
+        *::after {
+            scroll-behavior: auto !important;
+            transition: none !important;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         HALAMAN PEMBAYARAN
+    ========================================================== -->
+
+    <main class="card">
+
+        <!-- HEADER -->
+        <header class="header">
+            <h1>💳 Pembayaran</h1>
+            <span class="badge">Sales</span>
+        </header>
+
+
+        <!-- =====================================================
+             RINGKASAN TRANSAKSI
+        ====================================================== -->
+
+        <section
+            class="ringkasan"
+            aria-labelledby="ringkasan-title"
+        >
+
+            <div class="ringkasan-title">
+                <h2 id="ringkasan-title">
+                    Ringkasan Transaksi
+                </h2>
+
+                <span>2 produk</span>
+            </div>
+
+            <div class="summary-row">
+                <span class="label">
+                    Total Belanja
+                </span>
+
+                <span class="value">
+                    Rp 52.500
+                </span>
+            </div>
+
+            <div class="summary-row">
+                <span class="label">
+                    Jumlah Item
+                </span>
+
+                <span class="value">
+                    3 item
+                </span>
+            </div>
+
+            <div class="summary-total">
+
+                <span class="label">
+                    Total Pembayaran
+                </span>
+
+                <span
+                    class="value"
+                    id="totalPembayaran"
+                    data-total="52500"
+                >
+                    Rp 52.500
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PEMBAYARAN
+        ====================================================== -->
+
+        <section
+            class="payment-section"
+            aria-labelledby="payment-title"
+        >
+
+            <div class="form-group">
+
+                <div class="form-label-row">
+
+                    <label
+                        class="form-label"
+                        id="payment-title"
+                        for="uang_dibayar"
+                    >
+                        Uang Dibayar
+                    </label>
+
+                    <span class="form-helper">
+                        Masukkan nominal tunai
+                    </span>
+
+                </div>
+
+
+                <div class="input-wrapper">
+
+                    <span
+                        class="currency-prefix"
+                        aria-hidden="true"
+                    >
+                        Rp
+                    </span>
+
+                    <input
+                        class="payment-input"
+                        type="number"
+                        id="uang_dibayar"
+                        name="uang_dibayar"
+                        inputmode="numeric"
+                        min="0"
+                        step="500"
+                        placeholder="0"
+                        autocomplete="off"
+                        aria-describedby="payment-status"
+                        required
+                    />
+
+                </div>
+
+
+                <div
+                    class="payment-status"
+                    id="payment-status"
+                    aria-live="polite"
+                >
+                    Masukkan jumlah uang yang diterima
+                    dari pelanggan.
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 NOMINAL CEPAT
+            ================================================== -->
+
+            <div
+                class="quick-payment"
+                aria-label="Pilihan nominal pembayaran"
+            >
+
+                <button
+                    type="button"
+                    class="quick-btn"
+                    data-amount="52500"
+                >
+                    Uang Pas
+                </button>
+
+                <button
+                    type="button"
+                    class="quick-btn"
+                    data-amount="60000"
+                >
+                    Rp 60.000
+                </button>
+
+                <button
+                    type="button"
+                    class="quick-btn"
+                    data-amount="100000"
+                >
+                    Rp 100.000
+                </button>
+
+            </div>
+
+
+            <!-- =================================================
+                 KEMBALIAN
+            ================================================== -->
+
+            <div
+                class="kembalian-box"
+                id="kembalianBox"
+                aria-live="polite"
+            >
+
+                <div class="kembalian-info">
+
+                    <span class="kembalian-label">
+                        💵 Kembalian
+                    </span>
+
+                    <span
+                        class="kembalian-helper"
+                        id="kembalianHelper"
+                    >
+                        Akan dihitung otomatis
+                    </span>
+
+                </div>
+
+
+                <span
+                    class="kembalian-value"
+                    id="kembalianValue"
+                >
+                    Rp 0
+                </span>
+
+            </div>
+
+
+            <!-- =================================================
+                 ERROR
+            ================================================== -->
+
+            <div
+                class="error-message"
+                id="errorMessage"
+                role="alert"
+                hidden
+            >
+
+                <span
+                    class="error-icon"
+                    aria-hidden="true"
+                >
+                    ⚠️
+                </span>
+
+                <span id="errorText">
+                    Pembayaran kurang.
+                </span>
+
+            </div>
+
+
+            <!-- =================================================
+                 TOMBOL PROSES
+            ================================================== -->
+
+            <form
+                id="paymentForm"
+                action="#"
+                method="post"
+            >
+
+                <button
+                    class="btn-proses"
+                    id="btnProses"
+                    type="submit"
+                    disabled
+                >
+                    ✅ Proses Bayar
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- =====================================================
+             CATATAN
+        ====================================================== -->
+
+        <footer class="note">
+
+            Pastikan nominal pembayaran sudah benar.
+
+            <br />
+
+            Stok akan dikurangi setelah transaksi
+            berhasil diproses.
+
+        </footer>
+
+    </main>
+
+
+    <!-- =========================================================
+         WIREFRAME BADGE
+    ========================================================== -->
+
+    <div class="wireframe-badge">
+        WIREFRAME · PEMBAYARAN
+    </div>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script>
+
+        /* =======================================================
+           DATA TRANSAKSI
+        ======================================================= */
+
+        const total = Number(
+            document
+                .getElementById('totalPembayaran')
+                .dataset.total
+        );
+
+
+        /* =======================================================
+           ELEMENT
+        ======================================================= */
+
+        const paymentInput =
+            document.getElementById(
+                'uang_dibayar'
+            );
+
+        const paymentStatus =
+            document.getElementById(
+                'payment-status'
+            );
+
+        const kembalianBox =
+            document.getElementById(
+                'kembalianBox'
+            );
+
+        const kembalianValue =
+            document.getElementById(
+                'kembalianValue'
+            );
+
+        const kembalianHelper =
+            document.getElementById(
+                'kembalianHelper'
+            );
+
+        const errorMessage =
+            document.getElementById(
+                'errorMessage'
+            );
+
+        const errorText =
+            document.getElementById(
+                'errorText'
+            );
+
+        const btnProses =
+            document.getElementById(
+                'btnProses'
+            );
+
+        const paymentForm =
+            document.getElementById(
+                'paymentForm'
+            );
+
+        const quickButtons =
+            document.querySelectorAll(
+                '.quick-btn'
+            );
+
+
+        /* =======================================================
+           FORMAT RUPIAH
+        ======================================================= */
+
+        function formatRupiah(value) {
+
+            return new Intl.NumberFormat(
+                'id-ID',
+                {
+                    style: 'currency',
+                    currency: 'IDR',
+                    maximumFractionDigits: 0
+                }
+            ).format(value);
+
+        }
+
+
+        /* =======================================================
+           UPDATE STATUS PEMBAYARAN
+        ======================================================= */
+
+        function updatePayment() {
+
+            const amount =
+                Number(paymentInput.value) || 0;
+
+            const difference =
+                amount - total;
+
+
+            /* Reset */
+
+            errorMessage.hidden = true;
+
+            paymentInput.classList.remove(
+                'invalid'
+            );
+
+            kembalianBox.classList.remove(
+                'insufficient'
+            );
+
+            btnProses.disabled = true;
+
+
+            /* ===================================================
+               BELUM ADA NOMINAL
+            =================================================== */
+
+            if (amount <= 0) {
+
+                kembalianValue.textContent =
+                    'Rp 0';
+
+                kembalianHelper.textContent =
+                    'Akan dihitung otomatis';
+
+                paymentStatus.textContent =
+                    'Masukkan jumlah uang yang diterima dari pelanggan.';
+
+                paymentStatus.className =
+                    'payment-status';
+
+                return;
+            }
+
+
+            /* ===================================================
+               PEMBAYARAN KURANG
+            =================================================== */
+
+            if (difference < 0) {
+
+                const kurang =
+                    Math.abs(difference);
+
+
+                paymentInput.classList.add(
+                    'invalid'
+                );
+
+                kembalianBox.classList.add(
+                    'insufficient'
+                );
+
+
+                kembalianValue.textContent =
+                    formatRupiah(kurang);
+
+                kembalianHelper.textContent =
+                    'Jumlah yang masih kurang';
+
+
+                paymentStatus.textContent =
+                    'Pembayaran belum mencukupi.';
+
+                paymentStatus.className =
+                    'payment-status error';
+
+
+                errorText.textContent =
+                    'Pembayaran kurang ' +
+                    formatRupiah(kurang) +
+                    '. Silakan tambahkan uang.';
+
+                errorMessage.hidden = false;
+
+                return;
+            }
+
+
+            /* ===================================================
+               PEMBAYARAN CUKUP
+            =================================================== */
+
+            kembalianValue.textContent =
+                formatRupiah(difference);
+
+
+            kembalianHelper.textContent =
+                difference === 0
+                    ? 'Uang pas'
+                    : 'Dikembalikan kepada pelanggan';
+
+
+            paymentStatus.textContent =
+                difference === 0
+                    ? 'Nominal pembayaran pas.'
+                    : 'Pembayaran mencukupi.';
+
+            paymentStatus.className =
+                'payment-status success';
+
+
+            btnProses.disabled = false;
+
+        }
+
+
+        /* =======================================================
+           INPUT PEMBAYARAN
+        ======================================================= */
+
+        paymentInput.addEventListener(
+            'input',
+            updatePayment
+        );
+
+
+        /* =======================================================
+           NOMINAL CEPAT
+        ======================================================= */
+
+        quickButtons.forEach(
+            function(button) {
+
+                button.addEventListener(
+                    'click',
+                    function() {
+
+                        const amount =
+                            Number(
+                                button.dataset.amount
+                            );
+
+
+                        paymentInput.value =
+                            amount;
+
+
+                        updatePayment();
+
+
+                        paymentInput.focus();
+
+                    }
+                );
+
+            }
+        );
+
+
+        /* =======================================================
+           PROSES BAYAR
+        ======================================================= */
+
+        paymentForm.addEventListener(
+            'submit',
+            function(event) {
+
+                event.preventDefault();
+
+
+                const amount =
+                    Number(paymentInput.value) || 0;
+
+
+                /* Validasi */
+
+                if (amount < total) {
+
+                    updatePayment();
+
+                    return;
+                }
+
+
+                /* State loading */
+
+                btnProses.disabled = true;
+
+                btnProses.classList.add(
+                    'loading'
+                );
+
+                btnProses.textContent =
+                    '⏳ Memproses...';
+
+
+                /* =================================================
+                   SIMULASI TRANSAKSI
+
+                   Nanti bagian ini dapat diganti
+                   dengan proses backend.
+                ================================================== */
+
+                setTimeout(
+                    function() {
+
+                        btnProses.classList.remove(
+                            'loading'
+                        );
+
+                        btnProses.textContent =
+                            '✅ Pembayaran Berhasil';
+
+
+                        /*
+                            Jika backend sudah siap,
+                            redirect dapat dilakukan:
+
+                            window.location.href =
+                                'transaksi-berhasil-cetak-struk.html';
+                        */
+
+                    },
+                    800
+                );
+
+            }
+        );
+
+
+        /* =======================================================
+           INITIAL STATE
+        ======================================================= */
+
+        updatePayment();
+
+    </script>
+
+</body>
+</html>

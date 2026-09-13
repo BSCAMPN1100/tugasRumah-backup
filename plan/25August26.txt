@@ -1,0 +1,130 @@
+yang akan saya berikan :
+1. struktur folder saya
+2. struktur tabel dari migration yang saya buat sebelumnya
+3. file yang saya buat sebelumnya beserta pathnya 
+jawab :
+1. /sdcard/Ya_gitu/tugasRumah/ujian
+
+2. nama database : laravel
+   data yang pernah dimasukkan di tabel : users
+   struktur tabelnya : 
+   
+   +-------------------+---------------------+------+-----+---------+----------------+
+| Field             | Type                | Null | Key | Default | Extra          |
++-------------------+---------------------+------+-----+---------+----------------+
+| id                | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| name              | varchar(255)        | NO   |     | NULL    |                |
+| email             | varchar(255)        | NO   | UNI | NULL    |                |
+| email_verified_at | timestamp           | YES  |     | NULL    |                |
+| password          | varchar(255)        | NO   |     | NULL    |                |
+| remember_token    | varchar(100)        | YES  |     | NULL    |                |
+| created_at        | timestamp           | YES  |     | NULL    |                |
+| updated_at        | timestamp           | YES  |     | NULL    |                |
++-------------------+---------------------+------+-----+---------+----------------+
+   
+   ATAU :
+  [
+  •Informasi Utama
+  Primary Key: id
+  Kolom Unik: email (Tidak boleh ada yang kembar)
+  •Daftar Kolom dan Tipe Data
+  1. id
+  Tipe: Angka besar positif (bigint unsigned)
+  Sifat: Isi otomatis (auto_increment), wajib diisi.
+  2. name
+  Tipe: Teks pendek (Maksimal 255 karakter)
+  Sifat: Wajib diisi.
+  3. email
+  Tipe: Teks pendek (Maksimal 255 karakter)
+  Sifat: Wajib diisi, harus unik (UNI).
+  4. email_verified_at
+  Tipe: Tanggal & Waktu (timestamp)
+  Sifat: Boleh kosong (NULL), mencatat kapan email diverifikasi.
+  5. password
+  Tipe: Teks pendek enkripsi (Maksimal 255 karakter)
+  Sifat: Wajib diisi.
+  6. remember_token
+  Tipe: Teks pendek (Maksimal 100 karakter)
+  Sifat: Boleh kosong (NULL), digunakan untuk fitur "Remember Me".
+  7. created_at
+  Tipe: Tanggal & Waktu (timestamp)
+  Sifat: Boleh kosong (NULL), mencatat waktu data dibuat.
+  8. updated_at
+  Tipe: Tanggal & Waktu (timestamp)
+  Sifat: Boleh kosong (NULL), mencatat waktu data diubah.
+]
+
+3. ( mulai dari folder : /sdcard/Ya_gitu/tugasRumah
+1. path : ujian/routes/console.php
+   isi : 
+   <?php
+
+use Illuminate\Foundation\Inspiring;
+use Illuminate\Support\Facades\Artisan;
+
+Artisan::command('inspire', function () {
+    $this->comment(Inspiring::quote());
+})->purpose('Display an inspiring quote');
+
+2. path : ujian/routes/web.php
+   isi :
+   <?php
+
+use App\Http\Controllers\MasterController;
+use Illuminate\Support\Facades\Route;
+
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+Route::get('/master', [MasterController::class, 'index']);
+
+3. path : ujian/app/Http/Controllers/MasterController.php
+   isi :
+   <?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class MasterController extends Controller
+{
+    public function index()
+    {
+        $users = DB::table('users')->get();
+        return view('master', ['users' => $users]);
+    }
+}
+
+4. path : ujian/resources/master.blade.php
+   isi :
+   <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Data Pengguna</title>
+</head>
+<body>
+    <h1>Selamat Datang, Admin!</h1>
+    <h3>Data Pengguna</h3>
+    <table border="1" cellspacing="0" cellpadding="8">
+        <tr>
+            <th>Nama</th>
+            <th>Email</th>
+            <th>Password</th>
+        </tr>
+        @foreach ($users as $user)
+        <tr>
+            <td>{{ $user->name }}</td>
+            <td>{{ $user->email }}</td>
+            <td>{{ $user->password }}</td>
+        </tr>
+        @endforeach
+    </table>
+</body>
+</html>
+)
+

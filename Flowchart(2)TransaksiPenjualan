@@ -1,0 +1,31 @@
+flowchart TD
+    A([Mulai Catat Penjualan]) --> B[Tampilkan Daftar Barang]
+    B --> C[Sales Pilih Barang]
+    C --> D[Input Jumlah]
+    D --> E[Cek Ketersediaan Stok]
+
+    E --> F{Jumlah <= Stok?}
+
+    F -->|Tidak| G[Tampilkan: Stok Tidak Cukup]
+    G --> B
+
+    F -->|Ya| H[Ambil Harga Modal & Harga Jual]
+    H --> I[Hitung Total Harga]
+    I --> J[Hitung Keuntungan Kotor]
+    J --> K[Input Pembayaran Tunai]
+
+    K --> L{Pembayaran >= Total?}
+
+    L -->|Tidak| M[Tampilkan: Pembayaran Kurang]
+    M --> K
+
+    L -->|Ya| N[Hitung Kembalian]
+    N --> O[Simpan Transaksi + Snapshot Harga + Kurangi Stok]
+    O --> P[Transaksi Berhasil]
+
+    P --> Q{Cetak Struk?}
+
+    Q -->|Ya| R[Cetak Struk]
+    Q -->|Tidak| S([Selesai])
+
+    R --> S

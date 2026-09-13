@@ -1,0 +1,128 @@
+saya pikir saya terlalu terburu-buru saya harusnya merencanakan dahulu tentang :
+1. apa saja yang akan saya lakukan dan batasan mengenai hal apa saja yang tidak saya lakukan
+2. pahami situasi, bahwa saya adalah orang baru untuk mereka. tidak mudah untuk langsung mempercayai orang baru bahkan jika saya sering sholat dan pernah bertemu dengan mereka sebelumnya. saya sering bertemu mereka tetapi saya tidak pernah menyapa mereka, rasa janggal atau aneh tentu akan muncul
+3. sampainkan niat anda secara sederhana
+4. beri jeda 3 detik secara berkala untuk mengingatkan diri apakah ini sesuai dengan jalan menuju tujuan saya?
+
+
+
+
+
+FLUSH PRIVILEGES;
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY '1100';
+
+CREATE USER IF NOT EXISTS 'u0_a456'@'localhost' IDENTIFIED BY '1100';
+
+GRANT ALL PRIVILEGES ON *.* TO 'u0_a456'@'localhost' WITH GRANT OPTION;
+
+FLUSH PRIVILEGES;
+
+EXIT;
+
+
+
+masalah : 
+1. Kerusakan Tabel Sistem (mysql.db): Database internal MariaDB sempat rusak atau terhapus (biasanya karena aplikasi Termux tertutup paksa atau setelah update package) [MariaDB - Termux Wiki]. Hal ini membuat server panik dan langsung mati otomatis (crash) setiap kali dinyalakan.
+2. Penguncian Hak Akses (Access Denied): Setelah server berhasil dipulihkan, sistem keamanan MariaDB yang ketat di Termux menolak akses masuk karena user belum dikonfigurasi dengan benar [MariaDB - Termux Wiki]. Masalah selesai setelah Anda masuk lewat Safe Mode (--skip-grant-tables) untuk mendaftarkan user dan mengunci database menggunakan password baru (1100).
+
+penyelesaian :
+1. killall -9 mariadbd mariadb mysqld_safe mariadbd-safe 2>/dev/null
+2. mariadbd --skip-grant-tables --skip-networking &
+3. mariadb -u root
+4. FLUSH PRIVILEGES;
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY '1100';
+
+CREATE USER IF NOT EXISTS 'u0_a456'@'localhost' IDENTIFIED BY '1100';
+
+GRANT ALL PRIVILEGES ON *.* TO 'u0_a456'@'localhost' WITH GRANT OPTION;
+
+FLUSH PRIVILEGES;
+
+EXIT;
+
+5. killall -9 mariadbd
+6. mariadbd &
+
+sekarang kalau saya mau masuk ke mariadb harus ada tambahan -p1100 full : mariadb -u root -p1100
+
+
+
+App\Models\User::create([
+    'name' => 'admin',
+    'email' => 'admin@catatrezekimu.com',
+    'password' => bcrypt('admin123'),
+    'role' => 'admin'
+]);
+
+App\Models\User::create([
+    'name' => 'sales',
+    'email' => 'sales@catatrezekimu.com',
+    'password' => bcrypt('sales123'),
+    'role' => 'sales'
+]);
+
+
+
+
+
+App\Models\User::create([
+    'name' => 'admin',
+    'email' => 'admin@catatrezekimu.com',
+    'password' => bcrypt('admin123'),
+    'role' => 'admin'
+]);
+
+App\Models\User::create([
+    'name' => 'sales',
+    'email' => 'sales@catatrezekimu.com',
+    'password' => bcrypt('sales123'),
+    'role' => 'sales'
+]);
+
+
+
+
+
+
+
+
+> App\Models\User::query()->delete();
+
+
+   Symfony\Component\ErrorHandler\Error\FatalError
+
+  Namespace declaration statement has to be the very first statement or after any declare call in the script
+
+  at app/Models/User.php:3
+      1▕ =<?php
+      2▕
+  ➜   3▕ namespace App\Models;
+      4▕
+      5▕ // use Illuminate\Contracts\Auth\MustVerifyEmail;
+      6▕ use Database\Factories\UserFactory;
+      7▕ use Illuminate\Database\Eloquent\Attributes\Fillable;
+      8▕ use Illuminate\Database\Eloquent\Attributes\Hidden;
+      9▕ use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+
+   Whoops\Exception\ErrorException
+
+  Namespace declaration statement has to be the very first statement or after any declare call in the script
+
+  at app/Models/User.php:3
+      1▕ =<?php
+      2▕
+  ➜   3▕ namespace App\Models;
+      4▕
+      5▕ // use Illuminate\Contracts\Auth\MustVerifyEmail;
+      6▕ use Database\Factories\UserFactory;
+      7▕ use Illuminate\Database\Eloquent\Attributes\Fillable;
+      8▕ use Illuminate\Database\Eloquent\Attributes\Hidden;
+      9▕ use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+      +1 vendor frames
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()

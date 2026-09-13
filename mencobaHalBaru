@@ -1,0 +1,457 @@
+oke bro saya mau menjelaskan, kondisi saya, kondisi tugas saya, setelah itu saya memberikan tugas yang diberikan oleh guru saya
+1. kondisi saya, dari awal banyak yang saya tidak paham. saya tidak paham apa itu flowchart, use case, bagaimana merancang database, bagaimana mewawancarai dengan baik sehingga data² dapat dikumpulkan dengan lebih lengkap dan dapat dikelompokkan. jadi selama ini saya mengerjakan tugas dari guru saya itu jawabannya full berasal dari jawaban anda. ini fatal!
+2. kondisi tugas saya, saya sudah mengerjakan tugas saya sampai di : 
+
+AKTIVITAS 1 – Menentukan Ide Project
+
+Komponen Isi
+• Judul Project : 
+CatatRezekimu – Aplikasi Manajemen Keuangan & Stok untuk Distributor Sembako
+
+• Bidang Project : 
+Perdagangan / Distribusi Barang Kebutuhan Pokok (Sembako)
+
+• Permasalahan : 
+Pedagang/distributor kesulitan mencatat stok barang yang banyak, sering kehilangan catatan karena harga modal naik turun, dan sulit merekap keuntungan harian karena transaksi campur aduk dengan uang kasir.
+
+• Pengguna Aplikasi : 
+1. Pemilik Toko / Distributor (Ayah)   
+2. Kasir / Karyawan Toko
+
+• Manfaat : Membantu pemilik toko memantau stok secara real-time, menyesuaikan harga jual otomatis saat harga modal berubah, dan mencegah kerugian akibat selisih uang/stok.
+
+ AKTIVITAS 2 – Analisis Permasalahan
+
+Pertanyaan Jawaban (Berdasarkan Data Wawancara)
+• Mengapa aplikasi perlu dibuat?
+Karena selama ini ayah mencatat di 2 buku manual. Proses ini memakan waktu, rawan salah hitung, dan tidak memberikan informasi cepat seperti “stok gula sisa berapa?” atau “untung hari ini berapa?” saat dibutuhkan.
+
+• Masalah apa yang sering terjadi? 
+1. Stok kelewat: Banyak barang (gula, minyak, beras) terkadang terlewat tidak tercatat.   
+2. Harga modal naik: Ayah jadi bingung menentukan ulang harga jual dan membeli lebih sedikit.   
+3. Uang hilang/curang: Ada kasir yang tidak jujur dan pernah menerima uang palsu.
+
+• Bagaimana solusi aplikasi? 
+1. Aplikasi menyediakan fitur “Stok Opname” untuk mencocokkan stok fisik dengan catatan.   
+2. Fitur “Edit Harga Modal” yang otomatis menghitung ulang keuntungan.   
+3. Fitur “Riwayat Transaksi” yang mencatat semua pemasukan dari kasir, sehingga pemilik bisa mengecek selisih.
+
+• Apa dampaknya jika aplikasi tidak dibuat? 
+Ayah akan kesulitan untuk mendata akibat stok hilang tidak terdeteksi, tidak bisa mengambil keputusan cepat saat harga sembako naik, dan uang hasil penjualan terus-menerus rawan selisih di tangan kasir.
+
+ AKTIVITAS 3 – Analisis Kebutuhan
+
+A.	Kebutuhan Fungsional (Fitur – Minimal 10)
+
+1. Login (untuk membedakan Pemilik dan Kasir).
+2. Dashboard (menampilkan Total Saldo, Total Stok, dan Keuntungan Hari Ini).
+3. Tambah Barang (Input nama barang, harga modal, harga jual, dan stok awal).
+4. Edit Harga Modal (Mengubah harga beli saat terjadi kenaikan dari supplier).
+5. Catat Penjualan (Memilih barang, input jumlah terjual, otomatis mengurangi stok).
+6. Catat Pengeluaran (Untuk belanja stok baru atau biaya operasional toko).
+7. Riwayat Transaksi (Melihat semua pemasukan/pengeluaran per hari/per kasir).
+8. Stok Opname (Mencocokkan data stok di aplikasi dengan stok fisik di gudang).
+9. Laporan Keuangan (Melihat total laba/rugi dalam periode tertentu, misal mingguan/bulanan).
+10. Manajemen Kasir (Melihat total penjualan yang dilakukan oleh tiap kasir).
+
+B.	Kebutuhan Non-Fungsional
+
+Kategori Kebutuhan
+• Perangkat Keras (Hardware) Smartphone Android minimal OS 7.0 (Nougat), RAM 2GB, layar 5 inci.
+• Perangkat Lunak (Software) Android Studio (IDE), JDK 11, Emulator Android atau HP sungguhan untuk testing.
+• Database Menggunakan SQLite/Mariadb (offline, tidak butuh internet) agar mudah dan cepat.
+• Desain Antarmuka harus sederhana dengan tombol besar dan angka yang jelas (karena pengguna mungkin sudah tua seperti ayah).
+• Keamanan Data tersimpan lokal di HP, tidak perlu koneksi internet (untuk versi 1.0).
+
+ AKTIVITAS 4 – Identifikasi Pengguna & Hak Akses
+
+No Nama Pengguna (Aktor) Hak Akses (Fitur yang Bisa Digunakan)
+1 . Pemilik / Admin Akses penuh ke semua fitur: Dashboard, Tambah/Edit Barang, Edit Harga Modal, Lihat Semua Laporan, Manajemen Kasir, Hapus Data, Stok Opname.
+2.  Kasir / Karyawan Akses terbatas: Hanya bisa mengakses fitur Catat Penjualan, Lihat Daftar Barang (tidak bisa edit harga), dan Lihat Riwayat Penjualan miliknya sendiri (tidak bisa lihat laporan keuangan total).
+
+ AKTIVITAS 5 FLOWCHART
+ kode mermaid:
+flowchart TD
+    A([Mulai]) --> B[Halaman Login]
+    
+    %% Pilihan di halaman login
+    B --> C{Pilih Aksi}
+    
+    %% ==========================================
+    %% JALUR GUEST (BELUM LOGIN) - KHUSUS CATATAN
+    %% ==========================================
+    C -->|Lewati Login| G[Dashboard Catatan Tamu]
+    G --> G1[Lihat Daftar Catatan]
+    G1 --> G2{Buat Catatan Baru?}
+    G2 -->|Ya| G3[Input Judul & Isi Catatan]
+    G3 --> G4[Simpan Catatan di HP]
+    G4 --> G1
+    G2 -->|Tidak| G5[Kembali ke Login]
+    G5 --> B
+    
+    %% ==========================================
+    %% JALUR LOGIN (ADMIN / KASIR)
+    %% ==========================================
+    C -->|Login| D[Input Username & Password]
+    D --> E{Apakah Data Valid?}
+    E -->|Tidak| F[Tampilkan Pesan Error]
+    F --> B
+    E -->|Ya| H{Cek Role / Hak Akses}
+    
+    %% ==========================================
+    %% CABANG 1: ADMIN (Akses Penuh)
+    %% ==========================================
+    H -->|Admin| I[Dashboard Admin]
+    I --> I1[Kelola Transaksi]
+    I --> I2[Kelola Inventaris]
+    I --> I3[Lakukan Opname Stok]
+    I --> I4[Lihat Laporan Keuangan]
+    
+    %% Kembali ke Dashboard setelah selesai tugas
+    I1 --> I
+    I2 --> I
+    I3 --> I
+    I4 --> I
+    
+    %% Admin Logout
+    I -->|Logout| Z
+    
+    %% ==========================================
+    %% CABANG 2: KASIR (Akses Terbatas)
+    %% ==========================================
+    H -->|Kasir| J[Dashboard Kasir]
+    J --> J1[Catat Penjualan]
+    J --> J2[Lihat Riwayat Saya]
+    
+    %% Kembali ke Dashboard setelah selesai tugas
+    J1 --> J
+    J2 --> J
+    
+    %% Kasir Logout
+    J -->|Logout| Z
+    
+    %% ==========================================
+    %% SELESAI (Keluar Aplikasi)
+    %% ==========================================
+    C -->|Keluar Aplikasi| Z([Selesai])
+    
+ AKTIVITAS 6 USE CASE
+ kode html : 
+ <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Use Case Diagram - Rapi</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            background: #eef3f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 20px;
+        }
+        .diagram-wrapper {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 12px 40px rgba(0,20,40,0.15);
+            padding: 24px 20px 10px;
+            max-width: 1100px;
+            width: 100%;
+            overflow-x: auto;
+        }
+        svg {
+            display: block;
+            width: 100%;
+            height: auto;
+            background: #fbfdff;
+            border-radius: 16px;
+        }
+        .title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            color: #0b2a44;
+            padding-bottom: 8px;
+            letter-spacing: -0.2px;
+        }
+        .title small {
+            font-weight: 400;
+            font-size: 15px;
+            color: #4b6a8a;
+            background: #e9edf4;
+            padding: 2px 16px;
+            border-radius: 30px;
+            margin-left: 10px;
+        }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px 30px;
+            font-size: 13px;
+            color: #1d3b58;
+            padding-top: 12px;
+            border-top: 1px solid #dce5ef;
+            margin-top: 6px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .legend-line {
+            width: 28px;
+            height: 2px;
+            background: #1f4b72;
+            position: relative;
+        }
+        .legend-line::after {
+            content: '▶';
+            position: absolute;
+            right: -14px;
+            top: -8px;
+            font-size: 12px;
+            color: #1f4b72;
+        }
+        .legend-line.dashed {
+            border-top: 2px dashed #d35400;
+            background: none;
+            height: 0;
+        }
+        .legend-line.dashed::after {
+            content: '◀';
+            right: auto;
+            left: -14px;
+            top: -8px;
+            color: #d35400;
+        }
+        .legend-label {
+            background: #eef3f9;
+            padding: 1px 10px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #1f3b57;
+        }
+    </style>
+</head>
+<body>
+<div class="diagram-wrapper">
+    <div class="title">
+        📋 Use Case Diagram
+        <small>Sistem Catatan &amp; Penjualan</small>
+    </div>
+
+    <svg viewBox="0 0 1000 720" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', Roboto, sans-serif">
+        <defs>
+            <!-- Panah solid -->
+            <marker id="arrowSolid" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 Z" fill="#1f4b72" />
+            </marker>
+            <!-- Panah include (oranye) -->
+            <marker id="arrowInclude" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 Z" fill="#d35400" />
+            </marker>
+        </defs>
+
+        <!-- ===== AKTOR ===== -->
+
+        <!-- Admin (kiri atas) -->
+        <circle cx="120" cy="120" r="18" fill="#e74c3c" stroke="#1f4b72" stroke-width="2" />
+        <line x1="120" y1="138" x2="120" y2="180" stroke="#1f4b72" stroke-width="2.5" />
+        <line x1="100" y1="156" x2="140" y2="156" stroke="#1f4b72" stroke-width="2.5" />
+        <line x1="120" y1="180" x2="102" y2="206" stroke="#1f4b72" stroke-width="2.5" />
+        <line x1="120" y1="180" x2="138" y2="206" stroke="#1f4b72" stroke-width="2.5" />
+        <text x="120" y="230" text-anchor="middle" font-weight="bold" font-size="16" fill="#0b2a44">Admin</text>
+
+        <!-- Karyawan / Kasir (kanan atas) -->
+        <circle cx="800" cy="120" r="18" fill="#2ecc71" stroke="#1f4b72" stroke-width="2" />
+        <line x1="800" y1="138" x2="800" y2="180" stroke="#1f4b72" stroke-width="2.5" />
+        <line x1="780" y1="156" x2="820" y2="156" stroke="#1f4b72" stroke-width="2.5" />
+        <line x1="800" y1="180" x2="782" y2="206" stroke="#1f4b72" stroke-width="2.5" />
+        <line x1="800" y1="180" x2="818" y2="206" stroke="#1f4b72" stroke-width="2.5" />
+        <text x="800" y="230" text-anchor="middle" font-weight="bold" font-size="16" fill="#0b2a44">Karyawan / Kasir</text>
+
+        <!-- Tamu (bawah karyawan) -->
+        <circle cx="800" cy="470" r="18" fill="#3498db" stroke="#1f4b72" stroke-width="2" />
+        <line x1="800" y1="488" x2="800" y2="530" stroke="#1f4b72" stroke-width="2.5" />
+        <line x1="780" y1="506" x2="820" y2="506" stroke="#1f4b72" stroke-width="2.5" />
+        <line x1="800" y1="530" x2="782" y2="556" stroke="#1f4b72" stroke-width="2.5" />
+        <line x1="800" y1="530" x2="818" y2="556" stroke="#1f4b72" stroke-width="2.5" />
+        <text x="800" y="580" text-anchor="middle" font-weight="bold" font-size="16" fill="#0b2a44">Tamu</text>
+
+        <!-- ===== USE CASE ===== -->
+
+        <!-- Login (tengah bawah) -->
+        <ellipse cx="500" cy="620" rx="90" ry="38" fill="#f9e79f" stroke="#1f4b72" stroke-width="3" />
+        <text x="500" y="628" text-anchor="middle" font-weight="bold" font-size="20" fill="#0b2a44">Login</text>
+
+        <!-- Use case Admin -->
+        <ellipse cx="320" cy="90" rx="115" ry="30" fill="#ebf3fa" stroke="#1f4b72" stroke-width="2" />
+        <text x="320" y="96" text-anchor="middle" font-size="14" fill="#0b2a44">Kelola data Barang</text>
+
+        <ellipse cx="480" cy="90" rx="110" ry="30" fill="#ebf3fa" stroke="#1f4b72" stroke-width="2" />
+        <text x="480" y="96" text-anchor="middle" font-size="14" fill="#0b2a44">Catat penjualan</text>
+
+        <ellipse cx="320" cy="180" rx="115" ry="30" fill="#ebf3fa" stroke="#1f4b72" stroke-width="2" />
+        <text x="320" y="186" text-anchor="middle" font-size="14" fill="#0b2a44">Lakukan opname stock</text>
+
+        <ellipse cx="320" cy="270" rx="115" ry="30" fill="#ebf3fa" stroke="#1f4b72" stroke-width="2" />
+        <text x="320" y="276" text-anchor="middle" font-size="14" fill="#0b2a44">Lihat Laporan keuangan</text>
+
+        <!-- Use case Karyawan -->
+        <ellipse cx="640" cy="180" rx="110" ry="30" fill="#ebf3fa" stroke="#1f4b72" stroke-width="2" />
+        <text x="640" y="186" text-anchor="middle" font-size="14" fill="#0b2a44">Lihat Riwayat</text>
+
+        <!-- Use case Tamu (tanpa include) -->
+        <ellipse cx="640" cy="430" rx="115" ry="30" fill="#ebf3fa" stroke="#1f4b72" stroke-width="2" />
+        <text x="640" y="436" text-anchor="middle" font-size="14" fill="#0b2a44">Buat catatan Baru</text>
+
+        <ellipse cx="640" cy="510" rx="115" ry="30" fill="#ebf3fa" stroke="#1f4b72" stroke-width="2" />
+        <text x="640" y="516" text-anchor="middle" font-size="14" fill="#0b2a44">Lihat daftar catatan</text>
+
+        <!-- ===== GARIS AKTOR → USE CASE (solid) ===== -->
+
+        <!-- Admin → Kelola data Barang -->
+        <line x1="160" y1="120" x2="205" y2="90" stroke="#1f4b72" stroke-width="2" marker-end="url(#arrowSolid)" />
+        <!-- Admin → Catat penjualan (shared) -->
+        <line x1="160" y1="120" x2="370" y2="90" stroke="#1f4b72" stroke-width="2" marker-end="url(#arrowSolid)" />
+        <!-- Admin → Opname stock -->
+        <line x1="160" y1="120" x2="205" y2="180" stroke="#1f4b72" stroke-width="2" marker-end="url(#arrowSolid)" />
+        <!-- Admin → Laporan keuangan -->
+        <line x1="160" y1="120" x2="205" y2="270" stroke="#1f4b72" stroke-width="2" marker-end="url(#arrowSolid)" />
+
+        <!-- Karyawan → Catat penjualan (shared) -->
+        <line x1="740" y1="120" x2="590" y2="90" stroke="#1f4b72" stroke-width="2" marker-end="url(#arrowSolid)" />
+        <!-- Karyawan → Lihat Riwayat -->
+        <line x1="740" y1="120" x2="750" y2="180" stroke="#1f4b72" stroke-width="2" marker-end="url(#arrowSolid)" />
+
+        <!-- Tamu → Buat catatan Baru -->
+        <line x1="740" y1="470" x2="755" y2="430" stroke="#1f4b72" stroke-width="2" marker-end="url(#arrowSolid)" />
+        <!-- Tamu → Lihat daftar catatan -->
+        <line x1="740" y1="470" x2="755" y2="510" stroke="#1f4b72" stroke-width="2" marker-end="url(#arrowSolid)" />
+
+        <!-- ===== GARIS INCLUDE (putus-putus) DARI USE CASE KE LOGIN ===== -->
+        <!-- Hanya untuk use case yang memerlukan login: semua kecuali milik Tamu -->
+
+        <!-- Kelola data Barang → Login -->
+        <line x1="320" y1="120" x2="410" y2="585" stroke="#d35400" stroke-width="2" stroke-dasharray="7,5" marker-end="url(#arrowInclude)" />
+        <text x="350" y="360" fill="#d35400" font-size="12" font-weight="bold" transform="rotate(-20,350,360)">&lt;&lt;include&gt;&gt;</text>
+
+        <!-- Catat penjualan → Login -->
+        <line x1="480" y1="120" x2="500" y2="582" stroke="#d35400" stroke-width="2" stroke-dasharray="7,5" marker-end="url(#arrowInclude)" />
+        <text x="490" y="350" fill="#d35400" font-size="12" font-weight="bold" text-anchor="middle">&lt;&lt;include&gt;&gt;</text>
+
+        <!-- Opname stock → Login -->
+        <line x1="320" y1="210" x2="410" y2="585" stroke="#d35400" stroke-width="2" stroke-dasharray="7,5" marker-end="url(#arrowInclude)" />
+        <text x="350" y="400" fill="#d35400" font-size="12" font-weight="bold" transform="rotate(-18,350,400)">&lt;&lt;include&gt;&gt;</text>
+
+        <!-- Laporan keuangan → Login -->
+        <line x1="320" y1="300" x2="410" y2="585" stroke="#d35400" stroke-width="2" stroke-dasharray="7,5" marker-end="url(#arrowInclude)" />
+        <text x="350" y="440" fill="#d35400" font-size="12" font-weight="bold" transform="rotate(-15,350,440)">&lt;&lt;include&gt;&gt;</text>
+
+        <!-- Lihat Riwayat → Login -->
+        <line x1="640" y1="210" x2="560" y2="585" stroke="#d35400" stroke-width="2" stroke-dasharray="7,5" marker-end="url(#arrowInclude)" />
+        <text x="620" y="400" fill="#d35400" font-size="12" font-weight="bold" transform="rotate(15,620,400)">&lt;&lt;include&gt;&gt;</text>
+
+        <!-- Catatan: Use case Tamu tidak ada panah ke Login -->
+
+    </svg>
+
+    <div class="legend">
+        <span class="legend-item">
+            <span class="legend-line"></span> Asosiasi
+        </span>
+        <span class="legend-item">
+            <span class="legend-line dashed"></span>
+            <span class="legend-label">&lt;&lt;include&gt;&gt;</span> memerlukan Login
+        </span>
+        <span class="legend-item">
+            <span style="background:#f9e79f; padding:0 12px; border-radius:20px; border:2px solid #1f4b72;">Login</span> Use case pusat
+        </span>
+    </div>
+</div>
+</body>
+</html>
+
+ AKTIVITAS 7 WIREFRAME
+untuk wire frame saya akan buat lagi nanti berdasarkan flowchart.
+
+ AKTIVITAS 8 TABEL DATABASE
+saya perlu merancang dan memahaminya jadi saya akan membuatnya nanti.
+
+AKTIVITAS 9 REFLEKSI
+Pertanyaan Jawaban Saya
+• Apa yang paling mudah dari perencanaan ini? Membuat daftar fitur dan kebutuhan pengguna, karena saya sudah punya data wawancara langsung dari ayah saya, jadi saya tahu persis apa yang menjadi masalahnya.
+• Apa yang masih membingungkan? 
+1.	Saya agak bingung menentukan relasi antar tabel database, terutama bagaimana menghubungkan transaksi dengan stok agar stok otomatis berkurang. Saya juga bingung cara membuat harga jual otomatis menyesuaikan saat harga modal diubah.
+2.	Saya sedikit kesulitan membuat flowchart dan usecase yang pada akhirnya saya dibantu AI, sampai pada akhirnya saya memahami konsep flowchart sejarahnya sedikit dan apa tujuan dari flowchart, (tujuannya adalah memetakan konsep yang rumit dan mencari bagian bagian yang dapat di efisiensikan)
+
+• Apa yang akan saya pelajari sebelum mulai membuat aplikasi (coding)? 
+1.	Ini yang menurut saya paling penting, saya harus belajar lebih dalam untuk membuat flowchart dan usecase saya akhirnya paham apa itu flowchart dan usecase.
+2.  Saya harus belajar lebih dalam tentang SQLite& Mariadb (cara query update dan delete), Logika Aritmatika di pemrograman (pengurangan stok saat transaksi), dan Desain UI sederhana agar tombolnya besar-besar dan mudah dipahami/dibaca oleh pengguna seperti ayah saya.
+
+
+
+
+
+
+
+
+
+
+3. Ini adalah versi full dari tugas yang diberikan guru saya: 
+
+LEMBAR KERJA PESERTA DIDIK (LKPD)Mata Pelajaran : KK PTGM
+Kelas : XII RPL
+Materi : Analisis dan Perancangan Sistem
+Alokasi Waktu : 6 JP x 45 menit
+Judul Kegiatan
+Menyusun Analisis dan Perancangan Project IndividuTujuan Pembelajaran
+
+Setelah mengerjakan LKPD ini, peserta didik mampu:
+1. Menentukan ide project.
+2. Mengidentifikasi permasalahan.
+3. Menentukan kebutuhan sistem.
+4. Menyusun alur sistem.
+5. Mendesain database sederhana.
+6. Mendesain wireframe aplikasi.
+7. Menyusun dokumen analisis sebagai dasar pembuatan project.
+Petunjuk
+- Kerjakan secara individu.
+- Gunakan Microsoft Word atau Google Docs atau buku maple atau kertas.
+- Diagram dapat dibuat dengan Draw.io/Canva atau digambar rapi.
+- Kumpulkan sesuai arahan guru.
+
+Apersepsi
+
+Jawablah:
+1. Mengapa aplikasi perlu dirancang sebelum dibuat?
+2. Apa akibat jika programmer langsung membuat aplikasi tanpa analisis?
+3. Mengapa kebutuhan pengguna harus diketahui terlebih dahulu?
+
+Studi Kasus
+Bayangkan kamu adalah Software Developer yang diminta membuat satu aplikasi untuk menyelesaikan masalah di sekolah, rumah, usaha kecil, atau masyarakat. Project ini akan dikembangkan sebagai project individu.
+Aktivitas 1 – Menentukan Ide Project Judul Project Bidang Project Permasalahan Pengguna Aplikasi Manfaat
+Aktivitas 2 – Analisis Permasalahan Mengapa aplikasi perlu dibuat? Masalah apa yang sering terjadi? Bagaimana solusi aplikasi? Apa dampaknya jika aplikasi tidak dibuat?
+Aktivitas 3 – Analisis Kebutuhan Tuliskan minimal 10 kebutuhan fungsional/fitur. Tuliskan kebutuhan nonfungsional (hardware, software, dll.).
+
+Aktivitas 4 – Identifikasi Pengguna 
+Buat tabel pengguna dan hak aksesnya.
+Aktivitas 5 – Flowchart 
+Buat flowchart alur aplikasi.
+Aktivitas 6 – Use Case Diagram 
+Minimal 2 aktor dan 5 use case.
+Aktivitas 7 – Perancangan Database 
+Buat tabel, field, tipe data, PK, FK.
+Aktivitas 8 – Wireframe 
+Buat sketsa Login (jika ada), Dashboard, Halaman Data, Form Tambah Data.
+
+Aktivitas 9 – Refleksi 
+Apa yang paling mudah? Apa yang masih membingungkan? Apa yang akan dipelajari sebelum mulai membuat aplikasi?
+
+Produk yang Dikumpulkan Identitas Project Analisis Permasalahan Analisis Kebutuhan Flowchart Use Case Diagram Rancangan Database Wireframe RefleksiRubrik PenilaianAspek BobotKetepatan identifikasi masalah 20Analisis kebutuhan sistem 20Flowchart 15Use Case Diagram 15Perancangan Database 15Wireframe 10Refleksi 5Total 100CatatanProject yang dianalisis pada LKPD ini akan menjadi project individu yang dikembangkan selama pembelajaran di kelas XII. Pilihlah ide yang realistis, bermanfaat, dan dapat diselesaikan hingga menjadi aplikasi yang berfungsi.

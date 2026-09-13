@@ -1,0 +1,275 @@
+Tapi saya akan cukup kritis: belum saya beri 100/100, karena masih ada beberapa ketidakkonsistenan konsep yang sebaiknya dibereskan sekarang sebelum kamu membuat Use Case, Flowchart, ERD, dan akhirnya coding.
+1. Nilai keseluruhan
+Aspek
+Nilai
+Identifikasi masalah
+93/100
+Visi & tujuan
+90/100
+Kesesuaian masalah dengan solusi
+94/100
+Scope & batasan sistem
+92/100
+Aturan bisnis
+95/100
+Kejelasan aktor/pengguna
+82/100
+Konsistensi istilah
+80/100
+Kesiapan sebagai fondasi pengembangan
+91/100
+Nilai keseluruhan
+90/100
+Verdict saya:
+🟢 LAYAK LANJUT KE TAHAP ANALISIS SISTEM
+Bukan berarti BAB 1 harus sempurna. Justru sekarang sudah cukup matang untuk dijadikan baseline, dan sisanya bisa kita kunci ketika membuat Use Case dan Flowchart.
+2. Bagian yang sekarang sudah sangat kuat
+Yang paling saya apresiasi secara teknis adalah bagian 1.6 poin 2:
+sistem menyimpan harga modal dan harga jual pada saat transaksi terjadi (sebagai snapshot)
+Ini sudah menunjukkan kamu mulai berpikir bukan hanya sebagai pembuat UI, tetapi sebagai orang yang memahami integritas data.
+Contohnya:
+Hari Senin:
+Modal = Rp10.000
+Jual = Rp12.000
+Terjual = 10
+Keuntungan:
+(12.000 − 10.000) × 10 = Rp20.000
+Kemudian hari Selasa modal berubah:
+Rp11.000
+Transaksi Senin tetap menggunakan Rp10.000.
+Itu benar.
+Dan konsekuensinya nanti akan sangat penting terhadap database dan ERD.
+3. Aturan stok juga sudah tepat
+Kamu menulis:
+Sistem WAJIB menolak transaksi penjualan jika jumlah yang dibeli melebihi stok yang tersedia.
+Ini bagus karena sudah berubah dari sekadar:
+"Stok otomatis berkurang."
+menjadi business rule yang dapat diuji.
+Misalnya:
+Plain text
+Stok = 10
+Pembelian = 7
+→ BOLEH
+
+Stok = 10
+Pembelian = 10
+→ BOLEH
+
+Stok = 10
+Pembelian = 11
+→ DITOLAK
+Ini nantinya bisa langsung menjadi:
+Flowchart → pseudocode → kode → test case.
+Itulah yang kita inginkan.
+4. Tetapi ada masalah TERBESAR di dokumenmu
+⚠️ Role-mu masih tidak konsisten
+Di 1.4 kamu mengatakan:
+Pemilik (Admin) dan Kasir
+Tetapi di 1.7 kamu mengatakan:
+Admin (Pemilik Distributor) dan Karyawan/Sales
+Ini bukan sekadar masalah kata-kata.
+Karena Kasir dan Sales memiliki pekerjaan yang berbeda.
+Kasir
+Biasanya:
+berada di toko → menerima pembayaran → mencatat transaksi penjualan.
+Sales
+Biasanya:
+pergi/berkeliling ke toko pelanggan → mengambil pesanan → melakukan penjualan/penagihan.
+Kalau aplikasi kamu memang untuk distributor yang menjual barang ke toko-toko, istilah Sales justru bisa lebih masuk akal daripada Kasir.
+Tapi konsekuensinya besar.
+Misalnya:
+Plain text
+Sales
+ ├── Login
+ ├── Melihat produk
+ ├── Membuat transaksi
+ └── Melihat transaksi miliknya
+
+Admin
+ ├── Produk
+ ├── Stok
+ ├── Harga
+ ├── Semua transaksi
+ ├── Laporan
+ └── User
+Ini berbeda dengan sistem kasir toko biasa.
+Jadi sebelum lanjut:
+Kamu harus memilih satu model bisnis.
+A. Distributor → Sales → Toko pelanggan
+atau
+B. Toko sembako → Kasir → Pembeli
+Dari BAB 1 terbaru yang kamu tulis, saya melihat A lebih sesuai.
+Kalau memang A, saya sarankan jangan lagi menggunakan kata Kasir di dokumen utama.
+Gunakan konsisten:
+Admin/Pemilik
+Sales/Karyawan
+5. Ada masalah kedua: "Pemilik toko" masih tersisa
+Di 1.6 poin 1 kamu menulis:
+Pemilik toko dapat melihat jumlah stok...
+Padahal sekarang aplikasinya untuk distributor.
+Ini harus konsisten menjadi:
+Pemilik distributor
+atau cukup:
+Admin/Pemilik
+Hal kecil, tetapi asesor akan melihat hal seperti ini karena menunjukkan apakah dokumentasi dan desain sistem dibuat secara konsisten.
+6. "Offline sehingga aman" juga perlu diperbaiki
+Di 1.4:
+Aplikasi bekerja secara offline (tanpa internet) sehingga aman dan cepat digunakan...
+Saya tidak menyarankan hubungan:
+Offline = aman
+karena secara teknis tidak selalu benar.
+Offline memang bisa memberikan keuntungan:
+tidak bergantung koneksi internet;
+respons lokal bisa cepat;
+data tidak perlu dikirim ke server/cloud.
+Tetapi keamanan tetap membutuhkan:
+autentikasi;
+authorization;
+perlindungan database;
+pengamanan perangkat;
+backup;
+validasi input.
+Lebih tepat:
+Aplikasi dirancang untuk bekerja secara offline sehingga dapat digunakan tanpa koneksi internet dan tetap responsif pada kondisi jaringan yang terbatas.
+Jangan klaim "aman karena offline."
+7. Ada satu istilah yang perlu kamu pikirkan: "keuntungan"
+Kamu berkali-kali menyebut:
+keuntungan
+Tetapi secara bisnis kamu perlu menentukan apakah yang dimaksud adalah:
+Keuntungan kotor
+Plain text
+Harga Jual - Harga Modal
+atau:
+Keuntungan bersih
+Plain text
+Pendapatan
+- Harga Modal
+- Biaya Operasional
+- Biaya lainnya
+Dari sistem yang kamu jelaskan, sepertinya yang kamu hitung adalah:
+Keuntungan kotor
+Karena belum ada modul:
+listrik
+transportasi
+gaji
+sewa
+biaya operasional
+dll.
+Jadi saya sangat menyarankan kamu menggunakan istilah:
+Keuntungan Kotor
+Contoh:
+Plain text
+Keuntungan Kotor =
+(Harga Jual - Harga Modal) × Jumlah Terjual
+Ini akan membuat sistemmu lebih akurat secara terminologi.
+8. Ada satu pertanyaan bisnis yang belum kamu jawab
+Misalnya distributor membeli:
+100 kg gula
+Kemudian menjual:
+20 kg ke Toko A
+30 kg ke Toko B
+10 kg ke Toko C
+Stok:
+100 − 20 − 30 − 10 = 40 kg
+Sampai sini aman.
+Tapi distributor juga membeli barang dari supplier.
+Pertanyaannya:
+Bagaimana stok bertambah?
+Saat ini BAB 1 menjelaskan dengan sangat detail:
+Penjualan → stok berkurang
+Tetapi belum menjelaskan:
+Pembelian → stok bertambah
+Padahal latar belakangmu secara eksplisit menyebut buku pertama mencatat:
+pembelian dan stok barang.
+Kalau aplikasi ingin benar-benar menggantikan sistem manual tersebut, kemungkinan besar kamu membutuhkan:
+Plain text
+Supplier
+    ↓
+Pembelian Barang
+    ↓
+Stok bertambah
+Ini menurut saya penting sekali untuk diputuskan sebelum database dibuat.
+9. Pertanyaan berikutnya: harga modal kalau pembelian baru masuk?
+Ini bahkan lebih menarik.
+Misalnya:
+Pembelian pertama:
+100 kg gula × Rp10.000
+Kemudian supplier naik harga:
+100 kg gula × Rp11.000
+Sekarang kamu punya stok:
+Plain text
+50 kg @ 10.000
+50 kg @ 11.000
+Pertanyaannya:
+Kalau menjual 10 kg, harga modalnya berapa?
+Apakah:
+Rp10.000?
+Rp11.000?
+Rata-rata?
+Ini sudah masuk ke aturan bisnis inventory.
+Untuk proyek SMK, kamu tidak harus membuat sistem inventory super kompleks. Bahkan saya justru menyarankan jangan terlalu kompleks.
+Kamu bisa menetapkan aturan sederhana, misalnya:
+Harga modal produk yang tersimpan adalah harga modal terbaru.
+Kemudian transaksi menyimpan snapshot harga modal ketika penjualan terjadi.
+Tetapi aturan ini harus kamu tulis secara eksplisit.
+10. Scope kamu sudah bagus, tapi ada satu hal yang saya sarankan
+Poin:
+Tidak ada fitur sinkronisasi cloud pada versi 1.0.
+Bagus.
+Ini contoh scope yang sehat.
+Artinya kamu mengatakan:
+"Saya tahu fitur itu ada, tetapi sengaja tidak saya kerjakan sekarang."
+Ini jauh lebih baik daripada mencoba membuat:
+offline + cloud + multi-device + sinkronisasi + login online
+untuk proyek SMK lalu semuanya setengah jadi.
+CATATREZEKIMU
+│
+├── 🔴 FOUNDATION
+│   ├── Masalah                 ✅
+│   ├── Tujuan                 ✅
+│   ├── Target pengguna        ⚠️ KONSISTENSI
+│   ├── Scope                  ✅
+│   └── Business Rules         ⚠️ PERLU DILENGKAPI
+│
+├── 🔴 ANALISIS
+│   ├── Use Case               ⏳ NEXT
+│   ├── Activity/Flowchart     ⏳ NEXT
+│   └── Business Flow          ⏳ NEXT
+│
+├── 🟠 DATABASE
+│   ├── ERD                    ⏳
+│   ├── User                   ⏳
+│   ├── Product                ⏳
+│   ├── Transaction            ⏳
+│   └── Transaction Detail     ⏳
+│
+├── 🟡 UI/UX
+│   └── Wireframe              ⏳
+│
+├── 🟡 IMPLEMENTATION
+│   └── Coding                 ⏳
+│
+└── 🟢 NICE TO HAVE
+    ├── Cloud Sync
+    ├── Export
+    └── Backup
+11. Saya akan mengubah status proyekmu menjadi seperti ini
+Plain text
+Dan saya justru menyarankan kamu mengikuti urutan tersebut.
+Jangan kembali ke wireframe dulu.
+12. Kesimpulan akhir saya sebagai asesor
+Kalau saya menerima BAB 1 ini sebagai bagian dari proyek RPL kelas XI/XII, saya akan memberikan:
+90/100 — Sangat layak dilanjutkan ke tahap analisis.
+Kekuatan utamanya sekarang adalah masalahnya nyata, tujuan jelas, scope sudah mulai dibatasi, dan business rule penting seperti snapshot harga modal serta validasi stok sudah mulai didefinisikan.
+Yang menahan nilainya dari 95+ terutama:
+1. Role Kasir vs Sales belum konsisten.
+2. Distributor vs toko masih bercampur di beberapa kalimat.
+3. "Offline = aman" perlu diperbaiki secara teknis.
+4. Keuntungan sebaiknya disebut keuntungan kotor.
+5. Mekanisme pembelian barang dan penambahan stok belum didefinisikan.
+6. Aturan harga modal ketika terjadi pembelian dengan harga berbeda masih perlu diputuskan.
+Dan yang paling penting:
+Jangan buru-buru coding.
+Fondasi berikutnya yang paling tepat adalah mengunci Business Rules, kemudian baru:
+Use Case → Flowchart → Database/ERD → Wireframe → Coding → Testing.
+Kalau kita mengerjakannya satu per satu seperti yang kamu inginkan, langkah berikutnya bukan HTML, bukan coding, dan bukan wireframe. Langkah berikutnya adalah membedah aktor dan Business Rules CatatRezekimu sampai tidak ada ambiguitas.

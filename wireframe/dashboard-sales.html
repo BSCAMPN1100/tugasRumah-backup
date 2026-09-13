@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Sales · CatatRezekimu</title>
+
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ----- RESET & GLOBAL ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* ----- CARD UTAMA (mockup HP) ----- */
+        .dashboard-card {
+            max-width: 420px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.10);
+            padding: 28px 20px 36px;
+            transition: box-shadow 0.2s;
+            margin: 0 auto;
+        }
+
+        /* ----- HEADER : Sapaan + Logout ----- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .header .greeting h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0b3b2c;
+            letter-spacing: -0.3px;
+        }
+
+        .header .greeting p {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .btn-logout {
+            background: #f1f5f9;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: default;
+            transition: background 0.15s;
+        }
+
+        .btn-logout span {
+            font-size: 16px;
+        }
+
+        .btn-logout:active {
+            background: #e2e8f0;
+        }
+
+        /* ----- MENU UTAMA (2 tombol besar) ----- */
+        .menu-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .menu-item {
+            background: #f8fafc;
+            border: 1px solid #eef2f6;
+            border-radius: 24px;
+            padding: 32px 20px;
+            text-align: center;
+            transition: background 0.15s, transform 0.1s;
+            cursor: default;
+        }
+
+        .menu-item:active {
+            transform: scale(0.97);
+            background: #f1f5f9;
+        }
+
+        .menu-item .icon {
+            font-size: 42px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .menu-item .label {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            letter-spacing: -0.2px;
+        }
+
+        .menu-item .sub-label {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 4px;
+            font-weight: 400;
+        }
+
+        /* ----- FOOTER (opsional) ----- */
+        .dashboard-footer {
+            margin-top: 16px;
+            text-align: center;
+            font-size: 12px;
+            color: #94a3b8;
+            border-top: 1px solid #eef2f6;
+            padding-top: 20px;
+        }
+
+        .dashboard-footer .version {
+            background: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 500;
+            color: #64748b;
+            display: inline-block;
+        }
+
+        /* ----- RESPONSIVE TWEAK ----- */
+        @media (max-width: 480px) {
+            .dashboard-card {
+                padding: 20px 16px 28px;
+                border-radius: 28px;
+            }
+
+            .header .greeting h2 {
+                font-size: 18px;
+            }
+
+            .btn-logout {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+
+            .menu-item {
+                padding: 26px 16px;
+            }
+
+            .menu-item .icon {
+                font-size: 36px;
+            }
+
+            .menu-item .label {
+                font-size: 16px;
+            }
+        }
+
+        /* ----- wireframe badge (opsional) ----- */
+        .wireframe-badge {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(4px);
+            color: #e2e8f0;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 40px;
+            letter-spacing: 0.4px;
+            pointer-events: none;
+            user-select: none;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ====== DASHBOARD SALES ====== -->
+    <div class="dashboard-card">
+
+        <!-- Header: sapaan & logout -->
+        <div class="header">
+            <div class="greeting">
+                <h2>👋 Halo, Sales</h2>
+                <p>Selamat bertugas, jangan lupa catat penjualan!</p>
+            </div>
+            <button class="btn-logout" type="button">
+                <span>⏻</span> Logout
+            </button>
+        </div>
+
+        <!-- Menu utama (2 tombol besar) -->
+        <div class="menu-grid">
+            <div class="menu-item">
+                <span class="icon">🛒</span>
+                <div class="label">Catat Penjualan</div>
+                <div class="sub-label">Tambah transaksi baru</div>
+            </div>
+            <div class="menu-item">
+                <span class="icon">📋</span>
+                <div class="label">Riwayat Penjualan Saya</div>
+                <div class="sub-label">Lihat transaksi yang sudah dicatat</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="dashboard-footer">
+            <span class="version">versi 1.0 · offline</span>
+        </div>
+
+    </div>
+
+    <!-- Wireframe keterangan -->
+    <div class="wireframe-badge">WIREFRAME · DASHBOARD SALES</div>
+
+</body>
+</html>

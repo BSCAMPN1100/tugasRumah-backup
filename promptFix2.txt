@@ -1,0 +1,5243 @@
+LKPD tugas : 
+
+Aktivitas 1 – Menentukan Ide Project
+• Judul Project
+• Bidang Project
+• Permasalahan
+• Pengguna Aplikasi
+• Manfaat
+
+Aktivitas 2 – Analisis Permasalahan
+• Mengapa aplikasi perlu dibuat?
+• Masalah apa yang sering terjadi?
+• Bagaimana solusi aplikasi?
+• Apa dampaknya jika aplikasi tidak dibuat?
+
+Aktivitas 3 – Analisis Kebutuhan
+• Tuliskan minimal 10 kebutuhan fungsional/fitur.
+• Tuliskan kebutuhan nonfungsional (hardware, software, dll.).
+
+Aktivitas 4 – Identifikasi Pengguna
+• Buat tabel pengguna dan hak aksesnya.
+
+Aktivitas 5 – Flowchart
+• Buat flowchart alur aplikasi.
+
+Aktivitas 6 – Use Case Diagram
+• Minimal 2 aktor dan 5 use case.
+
+Aktivitas 7 – Perancangan Database
+• Buat tabel, field, tipe data, PK, FK.
+
+Aktivitas 8 – Wireframe
+• Buat sketsa Login (jika ada), Dashboard, Halaman Data, Form Tambah Data.
+
+Aktivitas 9 – Refleksi
+• Apa yang paling mudah?
+• Apa yang masih membingungkan?
+• Apa yang akan dipelajari sebelum mulai membuat aplikasi?
+
+Produk yang Dikumpulkan
+• Identitas Project
+• Analisis Permasalahan
+• Analisis Kebutuhan
+• Flowchart
+• Use Case Diagram
+• Rancangan Database
+• Wireframe
+• Refleksi
+
+
+
+
+deskripsi yang menjadi fondasi aplikasi :
+
+
+BAB 1 – DESKRIPSI APLIKASI
+
+1.1 Latar Belakang
+
+Saat ini, Banyak distributor sembako skala kecil, termasuk ayah saya sendiri, yang bertugas membeli barang dari supplier dan menjualnya ke toko-toko, masih mengandalkan sistem pencatatan manual menggunakan dua buku besar. Buku pertama mencatat pembelian dan stok barang, buku kedua mencatat penjualan harian. Cara ini sudah terbukti tidak efektif. Setiap kali ayah ingin mengecek sisa stok gula atau keuntungan kotor hari ini, ia harus membuka puluhan halaman buku, menghitung ulang dengan kalkulator, dan seringkali hasilnya tidak akurat karena selisih catatan. Selain itu, ketika harga modal dari supplier naik, ayah harus mencari dan mencoret harga jual lama satu per satu di buku, yang memakan waktu dan berisiko terlewat. Pengalaman inilah yang melatarbelakangi saya untuk merancang sebuah aplikasi yang dapat membantu mengelola keuangan dan stok barang dagangan secara lebih terstruktur dan cepat.
+
+1.2 Visi Aplikasi
+
+Membangun aplikasi manajemen keuangan dan stok yang sederhana, mudah digunakan, dan dapat diandalkan oleh distributor  sembako khususnya yang sudah lanjut usia (non-teknologi) agar mereka tidak lagi bergantung pada catatan manual yang rumit.
+
+1.3 Misi Aplikasi
+
+1. Mengubah proses pencatatan manual menjadi digital yang terpusat dalam satu genggaman.
+2. Menyajikan informasi stok dan keuntungan kotor secara real-time tanpa perlu menghitung ulang.
+3. Memberikan batasan akses antara Admin/Pemilik Distributor dan Sales agar laporan keuangan lebih aman dan transparan.
+
+1.4 Gambaran Umum Aplikasi (Apa Itu "CatatRezekimu")
+
+CatatRezekimu adalah aplikasi berbasis mobile (Android) yang dirancang khusus untuk membantu distributor sembako dalam mengelola stok barang, mencatat transaksi penjualan harian, serta memantau keuntungan usaha. Aplikasi ini bekerja secara offline (tanpa internet) sehingga cepat digunakan di daerah dengan sinyal buruk. Aplikasi ini memiliki dua peran pengguna: Pemilik (Admin) yang memiliki akses penuh, dan Sales yang hanya bertugas mencatat penjualan.
+
+1.5 Masalah yang Diselesaikan (Mengapa Aplikasi Ini Dibuat?)
+
+Berdasarkan pengamatan langsung dan wawancara dengan ayah saya yang berprofesi sebagai distributor sembako, terdapat tiga masalah utama yang sering terjadi, yaitu:
+
+1. Stok Barang Sering Kelewat (Tidak Akurat): Karena barang yang dijual beragam (gula, minyak, beras, telur) dan jumlahnya banyak, sering terjadi selisih antara stok di buku dengan stok fisik di gudang. Hal ini menyebabkan ayah kehilangan kesempatan menjual karena stok ternyata habis, atau sebaliknya, kelebihan stok yang tidak diketahui.
+2. Kesulitan Menentukan Ulang Harga Jual Saat Harga Modal Naik: Harga sembako dari supplier sering berubah hampir setiap minggu. Setiap kali harga modal naik, ayah harus menghitung ulang margin keuntungan dan mengoreksi daftar harga jual di buku. Proses ini sangat membuang waktu dan seringkali ada barang yang terlewat tidak diupdate harganya, sehingga ayah merugi.
+3. Rawan Selisih Uang dan Kecurangan Sales: Karena transaksi dicampur aduk dengan uang Sales, ayah sering kesulitan mengetahui berapa sebenarnya total pendapatan dan keuntungan kotor pada hari tersebut. Pernah terjadi Sales yang tidak jujur dan uang palsu, tetapi ayah tidak memiliki bukti riwayat transaksi yang jelas untuk melakukan evaluasi.
+
+Selain berdasarkan pengalaman ayah saya, masalah serupa juga sering saya dengar dari distributor lain di sekitar tempat tinggal saya ketika mereka berbincang tentang kesulitan mencatat stok dan transaksi.
+
+1.6 Tujuan dan Manfaat (Dampak Jika Aplikasi Digunakan)
+
+Dengan hadirnya CatatRezekimu, diharapkan masalah-masalah di atas dapat teratasi. Berikut manfaat spesifik yang ditawarkan:
+
+1. Stok Terpantau Real-time: Admin/Distributor dapat melihat jumlah stok terkini kapan saja tanpa harus turun ke gudang atau membuka buku tebal. Setiap kali Sales menjual barang, stok otomatis berkurang di sistem.
+2. Penyesuaian Harga Jadi Cepat dan Tepat: Fitur ubah harga modal memungkinkan pemilik mengubah harga beli dalam hitungan detik. Sistem menyimpan harga modal dan harga jual pada saat transaksi terjadi (sebagai snapshot), sehingga keuntungan setiap transaksi yang sudah tercatat tidak akan berubah meskipun harga modal diubah di kemudian hari. Perubahan harga modal hanya berlaku untuk transaksi penjualan berikutnya.
+3. Data Penjualan Aman dan Transparan: Data penjualan tersimpan secara digital dan aksesnya dibatasi berdasarkan peran pengguna (Role-Based Access Control). Pemilik memiliki akses penuh, sedangkan Sales hanya bisa mencatat transaksi dan melihat riwayatnya sendiri. Hal ini membuat transparansi dan pengawasan terhadap Sales menjadi lebih baik.
+4. Memudahkan Pengambilan Keputusan: Dengan adanya dashboard yang menampilkan total keuntungan kotor hari ini, Admin/Distributor dapat dengan cepat memutuskan apakah perlu membeli stok tambahan atau menaikkan harga jual.
+
+1.7 Batasan Sistem dan Aturan Bisnis (Scope)
+
+1. Pengguna (Role): Aplikasi hanya memiliki 2 jenis pengguna, yaitu Admin (Pemilik Distributor) dan Sales/Karyawan yang bertugas mencatat penjualan ke toko-toko. Tidak ada role lain.
+2. Hak Akses Sales: Sales TIDAK diperbolehkan mengubah harga modal, menghapus barang, melihat laporan keuangan total, atau mengelola akun pengguna lain.
+3. Validasi Stok: Sistem WAJIB menolak transaksi penjualan jika jumlah yang dibeli melebihi stok yang tersedia. Stok tidak boleh bernilai negatif.
+4. Perhitungan Keuntungan Kotor: Keuntungan kotor setiap transaksi dihitung berdasarkan (Harga Jual - Harga Modal) pada saat transaksi itu terjadi dan disimpan langsung di tabel transaksi. Perubahan harga modal di kemudian hari tidak akan mengubah data transaksi lama.
+5. Koneksi Internet: Aplikasi dirancang untuk bekerja secara offline (tanpa internet). Tidak ada fitur sinkronisasi cloud pada versi 1.0.
+6. Platform: Aplikasi ini dikhususkan untuk perangkat Android (minimal OS 7.0 / Nougat). Tidak tersedia untuk iOS atau Web Browser pada tahap ini.
+7. Aturan Harga Modal: Pada versi 1.0, sistem hanya menyimpan satu harga modal per barang (harga modal terakhir yang diinput oleh Admin). Setiap kali Admin melakukan pembelian, harga modal yang diinput akan menggantikan harga modal sebelumnya dan berlaku untuk transaksi penjualan berikutnya. Sistem tidak menerapkan metode FIFO atau rata-rata pada versi ini untuk menjaga kesederhanaan.
+8. Jenis Transaksi: Pada versi 1.0, sistem hanya mendukung transaksi penjualan tunai. Sistem belum mencakup fitur piutang atau hutang pelanggan.
+9. Penyesuaian Stok: Pada versi 1.0, sistem belum menyediakan fitur penyesuaian stok manual (stok opname). Stok hanya berubah melalui dua mekanisme: bertambah saat pembelian dan berkurang saat penjualan.
+10. Barang yang baru ditambahkan ke sistem memiliki stok 0 dan harga modal 0. Sistem tidak mengizinkan transaksi penjualan untuk barang yang belum memiliki harga modal valid (harga modal > 0) dan stok mencukupi, untuk mencegah kesalahan perhitungan keuntungan kotor."
+11. Pada versi 1.0, fitur penghapusan data barang tidak tersedia. Barang yang sudah pernah tercatat dalam transaksi pembelian atau penjualan tidak dapat dihapus untuk menjaga integritas data histori, namun masih dapat diubah (edit) nama, satuan, atau harganya.
+
+---
+
+flowchart : 
+login & autentikasi :
+
+flowchart TD
+    A([Mulai]) --> B[Halaman Login]
+    B --> C[Input Username & Password]
+    C --> D{Validasi Login}
+
+    D -->|Tidak Valid| E[Tampilkan Pesan Error]
+    E --> B
+
+    D -->|Valid| F{Cek Role}
+
+    F -->|Admin| G[Dashboard Admin]
+    F -->|Sales| H[Dashboard Sales]
+
+    %% =========================
+    %% ADMIN
+    %% =========================
+    G --> G1[Pilih Menu]
+
+    G1 --> G2[Kelola Data Barang]
+    G1 --> G3[Catat Pembelian Stok]
+    G1 --> G4[Kelola Akun Sales]
+    G1 --> G5[Lihat Laporan Keuangan]
+    G1 --> G6[Lihat Semua Riwayat]
+    G1 --> G7[Logout]
+
+    G2 --> G2A[Tambah / Ubah / Hapus Barang]
+    G2A --> G
+
+    G3 --> G3A[Input Pembelian dari Supplier]
+    G3A --> G3B[Stok Bertambah]
+    G3B --> G3C[Update Harga Modal Terbaru]
+    G3C --> G
+
+    G4 --> G4A[Tambah / Ubah / Hapus Akun Sales]
+    G4A --> G
+
+    G5 --> G5A[Pilih Periode Laporan]
+    G5A --> G5B[Tampilkan Total Penjualan & Keuntungan Kotor]
+    G5B --> G
+
+    G6 --> G6A[Tampilkan Semua Transaksi]
+    G6A --> G
+
+    G7 --> Z([Selesai])
+
+    %% =========================
+    %% SALES
+    %% =========================
+    H --> H1[Pilih Menu]
+
+    H1 --> H2[Catat Penjualan]
+    H1 --> H3[Lihat Riwayat Saya]
+    H1 --> H4[Logout]
+
+    H2 --> H2A[Lanjut ke Flowchart Transaksi Penjualan]
+    H2A --> H
+
+    H3 --> H3A[Tampilkan Riwayat Transaksi Sendiri]
+    H3A --> H
+
+    H4 --> Z
+    
+transaksi penjualan :
+
+flowchart TD
+    A([Mulai Catat Penjualan]) --> B[Tampilkan Daftar Barang]
+    B --> C[Sales Pilih Barang]
+    C --> D[Input Jumlah]
+    D --> E[Cek Ketersediaan Stok]
+
+    E --> F{Jumlah <= Stok?}
+
+    F -->|Tidak| G[Tampilkan: Stok Tidak Cukup]
+    G --> B
+
+    F -->|Ya| H[Ambil Harga Modal & Harga Jual]
+    H --> I[Hitung Total Harga]
+    I --> J[Hitung Keuntungan Kotor]
+    J --> K[Input Pembayaran Tunai]
+
+    K --> L{Pembayaran >= Total?}
+
+    L -->|Tidak| M[Tampilkan: Pembayaran Kurang]
+    M --> K
+
+    L -->|Ya| N[Hitung Kembalian]
+    N --> O[Simpan Transaksi + Snapshot Harga + Kurangi Stok]
+    O --> P[Transaksi Berhasil]
+
+    P --> Q{Cetak Struk?}
+
+    Q -->|Ya| R[Cetak Struk]
+    Q -->|Tidak| S([Selesai])
+
+    R --> S
+    
+    
+    
+  use case :
+  
+  kode html : 
+  
+  <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=5,IE=9" ><![endif]-->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Diagram Tanpa Judul</title>
+<meta charset="utf-8"/>
+</head>
+<body><div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="{&quot;highlight&quot;:&quot;#0000ff&quot;,&quot;nav&quot;:true,&quot;resize&quot;:true,&quot;dark-mode&quot;:&quot;auto&quot;,&quot;toolbar&quot;:&quot;zoom layers tags lightbox&quot;,&quot;edit&quot;:&quot;_blank&quot;,&quot;xml&quot;:&quot;&lt;mxfile host=\&quot;app.diagrams.net\&quot;&gt;\n  &lt;diagram name=\&quot;Halaman-1\&quot; id=\&quot;ftRVRQVTwJWvCMxnuqRq\&quot;&gt;\n    &lt;mxGraphModel dx=\&quot;810\&quot; dy=\&quot;1395\&quot; grid=\&quot;1\&quot; gridSize=\&quot;10\&quot; guides=\&quot;1\&quot; tooltips=\&quot;1\&quot; connect=\&quot;1\&quot; arrows=\&quot;1\&quot; fold=\&quot;1\&quot; page=\&quot;1\&quot; pageScale=\&quot;1\&quot; pageWidth=\&quot;827\&quot; pageHeight=\&quot;1169\&quot; math=\&quot;0\&quot; shadow=\&quot;0\&quot;&gt;\n      &lt;root&gt;\n        &lt;mxCell id=\&quot;0\&quot; /&gt;\n        &lt;mxCell id=\&quot;1\&quot; parent=\&quot;0\&quot; /&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-27\&quot; parent=\&quot;1\&quot; style=\&quot;rounded=0;whiteSpace=wrap;html=1;\&quot; value=\&quot;\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;730\&quot; width=\&quot;1080\&quot; x=\&quot;160\&quot; y=\&quot;40\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-13\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-1\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-6\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;240\&quot; /&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;330\&quot; /&gt;\n            &lt;/Array&gt;\n            &lt;mxPoint x=\&quot;280\&quot; y=\&quot;320\&quot; as=\&quot;targetPoint\&quot; /&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-14\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-1\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-5\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;240\&quot; /&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;420\&quot; /&gt;\n            &lt;/Array&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-16\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-1\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-4\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;240\&quot; /&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;510\&quot; /&gt;\n            &lt;/Array&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-17\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-1\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-3\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;240\&quot; /&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;600\&quot; /&gt;\n            &lt;/Array&gt;\n            &lt;mxPoint x=\&quot;350\&quot; y=\&quot;610\&quot; as=\&quot;targetPoint\&quot; /&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-18\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-1\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-2\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;240\&quot; /&gt;\n              &lt;mxPoint x=\&quot;280\&quot; y=\&quot;690\&quot; /&gt;\n            &lt;/Array&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-33\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-1\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-67\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;215\&quot; y=\&quot;110\&quot; /&gt;\n            &lt;/Array&gt;\n            &lt;mxPoint x=\&quot;360\&quot; y=\&quot;240\&quot; as=\&quot;targetPoint\&quot; /&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-1\&quot; parent=\&quot;1\&quot; style=\&quot;shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;\&quot; value=\&quot;Admin\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;60\&quot; width=\&quot;30\&quot; x=\&quot;200\&quot; y=\&quot;210\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-2\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;Lihat semua riwayat&amp;amp;nbsp;\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;360\&quot; y=\&quot;650\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-3\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;Lihat laporan keuangan&amp;amp;nbsp;\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;360\&quot; y=\&quot;560\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-4\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;Kelola akun sales\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;360\&quot; y=\&quot;470\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-5\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;Catat Pembelian Stok\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;360\&quot; y=\&quot;380\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-6\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;Kelola Data Barang\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;360\&quot; y=\&quot;290\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-23\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-19\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-67\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;575\&quot; y=\&quot;110\&quot; /&gt;\n            &lt;/Array&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-48\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-19\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-21\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;680\&quot; y=\&quot;240\&quot; /&gt;\n              &lt;mxPoint x=\&quot;680\&quot; y=\&quot;360\&quot; /&gt;\n            &lt;/Array&gt;\n            &lt;mxPoint x=\&quot;720\&quot; y=\&quot;240\&quot; as=\&quot;targetPoint\&quot; /&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-56\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-19\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-22\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;680\&quot; y=\&quot;240\&quot; /&gt;\n              &lt;mxPoint x=\&quot;680\&quot; y=\&quot;520\&quot; /&gt;\n              &lt;mxPoint x=\&quot;680\&quot; y=\&quot;640\&quot; /&gt;\n            &lt;/Array&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-19\&quot; parent=\&quot;1\&quot; style=\&quot;shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;\&quot; value=\&quot;Sales\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;60\&quot; width=\&quot;30\&quot; x=\&quot;560\&quot; y=\&quot;210\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-61\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-21\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;dashed=1;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-29\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;1140\&quot; y=\&quot;360\&quot; /&gt;\n            &lt;/Array&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-64\&quot; connectable=\&quot;0\&quot; parent=\&quot;3qdqp03RIYtdZmV4y2fs-61\&quot; style=\&quot;edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;\&quot; value=\&quot;&amp;amp;lt;&amp;amp;lt;Extend&amp;amp;gt;&amp;amp;gt;\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; x=\&quot;0.7271\&quot; y=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;mxPoint as=\&quot;offset\&quot; /&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-21\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;Catat penjualan\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;760\&quot; y=\&quot;320\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-22\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;Lihat riwayat penjualan saya\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;760\&quot; y=\&quot;600\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-28\&quot; parent=\&quot;1\&quot; style=\&quot;text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;\&quot; value=\&quot;Sistem CatatRejekimu\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;40\&quot; width=\&quot;200\&quot; x=\&quot;160\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-52\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-35\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-21\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot; /&gt;\n            &lt;mxPoint x=\&quot;790\&quot; y=\&quot;530\&quot; as=\&quot;targetPoint\&quot; /&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-29\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;&amp;lt;div&amp;gt;Cetak Struk&amp;lt;/div&amp;gt;\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;1080\&quot; y=\&quot;480\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-49\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-35\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;startArrow=none;startFill=0;endArrow=none;endFill=0;dashed=1;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-21\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-53\&quot; connectable=\&quot;0\&quot; parent=\&quot;3qdqp03RIYtdZmV4y2fs-49\&quot; style=\&quot;edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;\&quot; value=\&quot;&amp;amp;lt;&amp;amp;lt;Include&amp;amp;gt;&amp;amp;gt;\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; x=\&quot;0.1139\&quot; y=\&quot;6\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;mxPoint as=\&quot;offset\&quot; /&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-50\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;3qdqp03RIYtdZmV4y2fs-36\&quot; style=\&quot;edgeStyle=none;curved=0;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=none;endFill=0;strokeWidth=1;dashed=1;\&quot; target=\&quot;3qdqp03RIYtdZmV4y2fs-21\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;980\&quot; y=\&quot;360\&quot; /&gt;\n            &lt;/Array&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-54\&quot; connectable=\&quot;0\&quot; parent=\&quot;3qdqp03RIYtdZmV4y2fs-50\&quot; style=\&quot;edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;\&quot; value=\&quot;&amp;amp;lt;&amp;amp;lt;Include&amp;amp;gt;&amp;amp;gt;\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; x=\&quot;-0.5639\&quot; y=\&quot;3\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;mxPoint as=\&quot;offset\&quot; /&gt;\n          &lt;/mxGeometry&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-36\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;&amp;lt;div&amp;gt;Simpan snapshot harga&amp;lt;/div&amp;gt;\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;920\&quot; y=\&quot;480\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-35\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;&amp;lt;div&amp;gt;Cek ketersediaan&amp;amp;nbsp; stok&amp;amp;nbsp;&amp;lt;/div&amp;gt;\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;760\&quot; y=\&quot;480\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n        &lt;mxCell id=\&quot;3qdqp03RIYtdZmV4y2fs-67\&quot; parent=\&quot;1\&quot; style=\&quot;ellipse;whiteSpace=wrap;html=1;shapeInside=1;\&quot; value=\&quot;Login\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry height=\&quot;80\&quot; width=\&quot;120\&quot; x=\&quot;360\&quot; y=\&quot;70\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;/mxCell&gt;\n      &lt;/root&gt;\n    &lt;/mxGraphModel&gt;\n  &lt;/diagram&gt;\n&lt;/mxfile&gt;\n&quot;}"></div>
+<script type="text/javascript" src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
+</body>
+</html>
+
+
+ERD :
+
+erDiagram
+    users {
+        int id PK
+        varchar name
+        varchar username
+        varchar password
+        enum role
+        datetime created_at
+        datetime updated_at
+    }
+
+    barang {
+        int id PK
+        varchar nama
+        varchar satuan
+        decimal harga_modal
+        decimal harga_jual
+        int stok
+        datetime created_at
+        datetime updated_at
+    }
+
+    pembelian {
+        int id PK
+        int user_id FK
+        datetime tanggal
+        decimal total
+    }
+
+    pembelian_detail {
+        int id PK
+        int pembelian_id FK
+        int barang_id FK
+        int qty
+        decimal harga_saat_beli
+    }
+
+    penjualan {
+        int id PK
+        int user_id FK
+        datetime tanggal
+        decimal total_harga
+        decimal uang_dibayar
+        decimal kembalian
+    }
+
+    penjualan_detail {
+        int id PK
+        int penjualan_id FK
+        int barang_id FK
+        int qty
+        decimal harga_jual_snapshot
+        decimal harga_modal_snapshot
+        decimal subtotal
+        decimal keuntungan_kotor
+    }
+
+    %% RELASI (1 : N)
+    users ||--o{ pembelian : "1 Admin melakukan banyak Pembelian"
+    users ||--o{ penjualan : "1 Sales melakukan banyak Penjualan"
+    barang ||--o{ pembelian_detail : "1 Barang dibeli berkali-kali"
+    barang ||--o{ penjualan_detail : "1 Barang terjual berkali-kali"
+    pembelian ||--|{ pembelian_detail : "1 Pembelian terdiri dari banyak Detail"
+    penjualan ||--|{ penjualan_detail : "1 Penjualan terdiri dari banyak Detail"
+    
+        
+struktur tabel : 
+---
+
+Tabel 1: users (Data Pengguna)
+
+Field Tipe Data PK / FK Keterangan
+id INT PK Auto Increment, nomor unik user
+name VARCHAR(100) - Nama lengkap
+username VARCHAR(50) - Username untuk login
+password VARCHAR(255) - Password (disimpan dalam bentuk hash)
+role ENUM('admin','sales') - Hak akses (Admin atau Sales)
+created_at DATETIME - Waktu data dibuat
+updated_at DATETIME - Waktu data terakhir diubah
+
+---
+
+Tabel 2: barang (Data Produk)
+
+Field Tipe Data PK / FK Keterangan
+id INT PK Auto Increment, nomor unik barang
+nama VARCHAR(100) - Nama barang (misal: Gula Pasir)
+satuan VARCHAR(20) - Satuan barang (kg, liter, karung, dll)
+harga_modal DECIMAL(15,2) - Harga beli terbaru dari supplier
+harga_jual DECIMAL(15,2) - Harga jual ke toko
+stok INT - Jumlah stok tersedia (tidak boleh negatif)
+created_at DATETIME - Waktu data dibuat
+updated_at DATETIME - Waktu data terakhir diubah
+
+---
+
+Tabel 3: pembelian (Header Pembelian)
+
+Field Tipe Data PK / FK Keterangan
+id INT PK Auto Increment, nomor unik pembelian
+user_id INT FK (→ users.id) Admin yang melakukan pembelian
+tanggal DATETIME - Waktu transaksi pembelian
+total DECIMAL(15,2) - Total harga semua barang dalam pembelian
+
+---
+
+Tabel 4: pembelian_detail (Detail Pembelian)
+
+Field Tipe Data PK / FK Keterangan
+id INT PK Auto Increment, nomor unik detail
+pembelian_id INT FK (→ pembelian.id) Induk transaksi pembelian
+barang_id INT FK (→ barang.id) Barang yang dibeli
+qty INT - Jumlah barang yang dibeli
+harga_saat_beli DECIMAL(15,2) - Harga modal saat pembelian (histori)
+
+---
+
+Tabel 5: penjualan (Header Penjualan)
+
+Field Tipe Data PK / FK Keterangan
+id INT PK Auto Increment, nomor unik transaksi
+user_id INT FK (→ users.id) Sales yang melakukan penjualan
+tanggal DATETIME - Waktu transaksi penjualan
+total_harga DECIMAL(15,2) - Total semua barang
+uang_dibayar DECIMAL(15,2) - Uang tunai yang dibayar pembeli
+kembalian DECIMAL(15,2) - Kembalian (uang_dibayar - total_harga)
+
+---
+
+Tabel 6: penjualan_detail (Detail Penjualan & SNAPSHOT)
+
+Field Tipe Data PK / FK Keterangan
+id INT PK Auto Increment, nomor unik detail
+penjualan_id INT FK (→ penjualan.id) Induk transaksi penjualan
+barang_id INT FK (→ barang.id) Barang yang dijual
+qty INT - Jumlah barang terjual
+harga_jual_snapshot DECIMAL(15,2) - Harga jual SAAT TRANSAKSI
+harga_modal_snapshot DECIMAL(15,2) - Harga modal SAAT TRANSAKSI
+subtotal DECIMAL(15,2) - harga_jual_snapshot × qty
+keuntungan_kotor DECIMAL(15,2) - (harga_jual - harga_modal) × qty
+
+---
+
+
+ini adalah bagian yang akan kita kerjakan yaitu Wireframe dan ini rancangannya:
+---
+
+MASTER LIST RANCANGAN APLIKASI "CATATREZEKIMU"
+
+---
+
+A. Halaman WAJIB DIGAMBAR untuk Wireframe LKPD (7 Halaman Utama)
+
+Berikut adalah 7 halaman yang wajib Anda buat sketsanya untuk memenuhi tugas Aktivitas 8.
+
+---
+
+1. Halaman Login
+
+· Aktor: Admin dan Sales.
+· Fitur:
+  · Input Username.
+  · Input Password (tersembunyi).
+  · Tombol "Masuk".
+  · Validasi akun (jika salah, tampilkan pesan error).
+  · Setelah berhasil, sistem mengenali role (Admin/Sales).
+  · Redirect ke Dashboard Admin (jika role Admin) atau Dashboard Sales (jika role Sales).
+
+---
+
+2. Dashboard Admin
+
+· Aktor: Admin (Pemilik).
+· Fitur (Informasi + Navigasi):
+  · Menampilkan 3 kartu ringkasan bisnis:
+    · Total Penjualan Hari Ini.
+    · Keuntungan Kotor Hari Ini.
+    · Total Stok Seluruh Barang.
+  · Menu navigasi (5 tombol besar):
+    · Data Barang.
+    · Pembelian.
+    · Kelola Sales.
+    · Laporan Keuangan.
+    · Riwayat Transaksi.
+  · Tombol Logout (di pojok).
+
+---
+
+3. Dashboard Sales
+
+· Aktor: Sales (Karyawan).
+· Fitur:
+  · Sapaan sederhana (misal: "Halo, [Nama Sales]").
+  · 2 Tombol besar sebagai menu utama:
+    · Catat Penjualan.
+    · Riwayat Penjualan Saya.
+  · Tombol Logout (di pojok kanan atas sebagai ikon).
+
+---
+
+4. Halaman Data Barang (Memiliki 2 Versi Tampilan)
+
+· Aktor: Admin dan Sales.
+· Versi Admin:
+  · Menampilkan daftar barang dalam bentuk list/table.
+  · Kolom yang terlihat: Nama, Satuan, Harga Modal, Harga Jual, Stok.
+  · Tombol "Tambah" (+) untuk menambah barang baru.
+  · Tombol "Edit" pada setiap item barang (untuk mengubah data).
+  · Tidak ada tombol Hapus (karena di versi 1.0 fitur hapus ditiadakan).
+· Versi Sales (Daftar Harga & Stok - Read Only):
+  · Menampilkan daftar barang.
+  · Kolom yang terlihat: Nama, Satuan, Harga Jual, Stok.
+  · Tidak menampilkan kolom Harga Modal.
+  · Tidak ada tombol Tambah, Edit, atau Hapus. (Hanya untuk referensi cepat).
+
+---
+
+5. Form Tambah Barang
+
+· Aktor: Admin.
+· Fitur:
+  · Input field: Nama Barang, Satuan, Harga Jual.
+  · Tombol "Simpan" dan "Batal".
+  · Aturan otomatis (tidak perlu diinput): Saat disimpan, sistem otomatis mengisi stok = 0 dan harga_modal = 0.
+  · Catatan Khusus: Barang ini belum boleh dijual sampai Admin melakukan transaksi Pembelian pertama untuk barang tersebut (karena harga modal dan stoknya masih 0).
+
+---
+
+6. Halaman Catat Penjualan
+
+· Aktor: Sales.
+· Fitur (Alur Keranjang Belanja):
+  · Kolom Pencarian barang.
+  · Daftar barang yang tersedia (menampilkan Nama, Harga Jual, dan Stok).
+  · Tombol "Tambah" pada setiap barang untuk memasukkannya ke keranjang.
+  · Saat menekan Tambah, Sales bisa menginput jumlah (Qty).
+  · Validasi stok di awal: Jika Qty melebihi stok, muncul peringatan langsung.
+  · Keranjang belanja di bagian bawah:
+    · Menampilkan item yang sudah dipilih (Nama, Qty, Subtotal).
+    · Bisa mengubah jumlah atau menghapus item dari keranjang.
+  · Menampilkan Total harga semua item di keranjang.
+  · Tombol "Lanjut Pembayaran" untuk ke halaman berikutnya.
+
+---
+
+7. Halaman Pembayaran
+
+· Aktor: Sales.
+· Fitur:
+  · Menampilkan Total Harga yang harus dibayar (read-only, berasal dari keranjang).
+  · Input "Uang Dibayar" (diisi oleh Sales).
+  · Otomatis menampilkan "Kembalian" (hasil hitungan: Uang Dibayar - Total Harga).
+  · Validasi: Jika Uang Dibayar < Total Harga, muncul peringatan "Pembayaran Kurang" dan proses dihentikan.
+  · Validasi Stok FINAL: Saat tombol "Proses Bayar" ditekan, sistem mengecek stok satu kali lagi. Jika stok ternyata habis (karena faktor lain), transaksi dibatalkan dan muncul notifikasi.
+  · Jika semua validasi lolos, sistem menyimpan transaksi ke database (tabel penjualan & penjualan_detail, lengkap dengan snapshot harga), dan mengurangi stok barang.
+
+---
+
+8. [OPSIONAL] Transaksi Berhasil / Cetak Struk
+
+· Aktor: Sales.
+· Fitur:
+  · Tampilan "Transaksi Berhasil" dengan icon centang hijau.
+  · Ringkasan transaksi: Total, Uang Dibayar, Kembalian.
+  · Tombol "Cetak Struk" (jika tersedia printer thermal).
+  · Tombol "Selesai" (kembali ke Dashboard Sales).
+
+---
+
+B. Halaman / Fungsi SISTEM yang TIDAK DIGAMBAR (Tetapi Harus Ada di Rancangan)
+
+Halaman-halaman ini adalah bagian dari aplikasi yang sudah kita sepakati di use case dan database, tetapi tidak wajib dibuat wireframe-nya untuk tugas LKPD. Namun, Anda tetap harus menyebutkannya di struktur sistem.
+
+---
+
+Untuk Admin:
+
+· Pembelian & Form Tambah Pembelian: Admin memilih barang, mengisi qty dan harga beli/modal, lalu menyimpan. Sistem otomatis menambah stok dan memperbarui harga modal di tabel barang.
+· Kelola Sales & Form Tambah/Edit Sales: Admin melihat daftar Sales, menambah akun baru, atau mengubah data Sales (username/password).
+· Laporan Keuangan: Admin memilih periode (tanggal), lalu melihat total penjualan dan total keuntungan kotor.
+· Riwayat Semua Transaksi: Admin melihat semua transaksi penjualan yang dilakukan oleh semua Sales.
+
+Untuk Sales:
+
+· Riwayat Penjualan Saya: Sales melihat daftar transaksi penjualan yang hanya dia lakukan sendiri.
+
+---
+
+Wireframe : 
+1. login.html
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login · CatatRezekimu</title>
+
+    <!-- Google Fonts (inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ----- RESET & GLOBAL ----- */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f5f9;
+            /* abu-abu terang */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* ----- CARD UTAMA (seperti mockup hp) ----- */
+        .login-card {
+            max-width: 400px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.10);
+            padding: 40px 28px 36px;
+            transition: box-shadow 0.2s;
+        }
+
+        /* ----- BRAND / HEADER ----- */
+        .brand {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .brand-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            background: #0b3b2c;
+            /* hijau tua */
+            border-radius: 20px;
+            margin-bottom: 14px;
+            color: #ffffff;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            box-shadow: 0 8px 18px rgba(11, 59, 44, 0.20);
+        }
+
+        .brand h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0b3b2c;
+            letter-spacing: -0.3px;
+        }
+
+        .brand .sub {
+            font-size: 14px;
+            font-weight: 400;
+            color: #64748b;
+            margin-top: 4px;
+            letter-spacing: 0.2px;
+        }
+
+        /* ----- FORM ELEMEN ----- */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+
+        .form-group .input-wrap {
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 15px;
+            font-weight: 400;
+            font-family: 'Inter', sans-serif;
+            color: #0f172a;
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 16px;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #0b3b2c;
+            box-shadow: 0 0 0 4px rgba(11, 59, 44, 0.10);
+            background: #ffffff;
+        }
+
+        .form-group input::placeholder {
+            color: #94a3b8;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        /* password field (eye icon hanya visual) */
+        .input-wrap .eye-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 20px;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* ----- PESAN ERROR (statis, untuk mockup) ----- */
+        .error-message {
+            background: #fef2f2;
+            border-left: 4px solid #dc2626;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #991b1b;
+        }
+
+        .error-message .icon {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .error-message.hidden {
+            display: none;
+        }
+
+        /* ----- TOMBOL LOGIN ----- */
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: #0b3b2c;
+            border: none;
+            border-radius: 16px;
+            color: #ffffff;
+            font-size: 17px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: default;
+            /* tidak ada fungsi, hanya desain */
+            transition: background 0.15s, transform 0.1s;
+            box-shadow: 0 6px 16px rgba(11, 59, 44, 0.25);
+            margin-top: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-login:active {
+            transform: scale(0.98);
+            background: #082f23;
+        }
+
+        /* ----- FOOTER ----- */
+        .login-footer {
+            text-align: center;
+            margin-top: 28px;
+            font-size: 13px;
+            color: #94a3b8;
+            border-top: 1px solid #eef2f6;
+            padding-top: 24px;
+        }
+
+        .login-footer .version {
+            display: inline-block;
+            background: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #64748b;
+        }
+
+        /* ----- RESPONSIVE TWEAK ----- */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 32px 20px 28px;
+                border-radius: 28px;
+            }
+
+            .brand h1 {
+                font-size: 24px;
+            }
+
+            .brand-icon {
+                width: 56px;
+                height: 56px;
+                font-size: 26px;
+            }
+
+            .form-group input {
+                padding: 13px 16px;
+                font-size: 15px;
+            }
+
+            .btn-login {
+                padding: 15px;
+                font-size: 16px;
+            }
+        }
+
+        /* ----- wireframe "outline" opsional (tidak mengganggu) ----- */
+        .wireframe-badge {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(4px);
+            color: #e2e8f0;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 40px;
+            letter-spacing: 0.4px;
+            pointer-events: none;
+            user-select: none;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ====== LOGIN CARD ====== -->
+    <div class="login-card">
+
+        <!-- Brand -->
+        <div class="brand">
+            <div class="brand-icon">📦</div>
+            <h1>CatatRezekimu</h1>
+            <div class="sub">Manajemen Stok &amp; Keuangan</div>
+        </div>
+
+        <!-- Pesan error (ditampilkan sebagai contoh) -->
+        <div class="error-message">
+            <span class="icon">⚠️</span>
+            <span>Username atau password salah. Coba lagi.</span>
+        </div>
+
+        <!-- Form -->
+        <form action="#" method="post" autocomplete="off">
+
+            <!-- Username -->
+            <div class="form-group">
+                <label for="username">Username</label>
+                <div class="input-wrap">
+                    <input type="text" id="username" name="username"
+                    placeholder="Masukkan username Anda"
+                    value="admin" />
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrap">
+                    <input type="password" id="password" name="password"
+                    placeholder="Masukkan password"
+                    value="123456" />
+                    <span class="eye-icon">👁️</span>
+                </div>
+            </div>
+
+            <!-- Tombol Login (hanya desain) -->
+            <button type="button" class="btn-login">Masuk</button>
+
+        </form>
+
+        <!-- Footer -->
+        <div class="login-footer">
+            <span class="version">versi 1.0 &bull; offline</span>
+        </div>
+
+    </div>
+
+    <!-- Wireframe keterangan (optional, tidak mengganggu) -->
+    <div class="wireframe-badge">WIREFRAME &bull; LOGIN</div>
+
+</body>
+</html>
+
+2. dashboard-admin.html
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Admin · CatatRezekimu</title>
+
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ----- RESET & GLOBAL ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* ----- CARD UTAMA (mockup HP) ----- */
+        .dashboard-card {
+            max-width: 420px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.10);
+            padding: 28px 20px 36px;
+            transition: box-shadow 0.2s;
+            margin: 0 auto;
+        }
+
+        /* ----- HEADER : Sapaan + Logout ----- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .header .greeting h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0b3b2c;
+            letter-spacing: -0.3px;
+        }
+
+        .header .greeting p {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .btn-logout {
+            background: #f1f5f9;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: default;
+            transition: background 0.15s;
+        }
+
+        .btn-logout span {
+            font-size: 16px;
+        }
+
+        .btn-logout:active {
+            background: #e2e8f0;
+        }
+
+        /* ----- KARTU RINGKASAN (3 kartu) ----- */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .summary-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #eef2f6;
+        }
+
+        .summary-card .label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 6px;
+        }
+
+        .summary-card .value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0b3b2c;
+        }
+
+        .summary-card .value small {
+            font-size: 12px;
+            font-weight: 400;
+            color: #94a3b8;
+            margin-left: 2px;
+        }
+
+        /* ----- MENU NAVIGASI (5 tombol besar) ----- */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-bottom: 8px;
+        }
+
+        .menu-item {
+            background: #f8fafc;
+            border: 1px solid #eef2f6;
+            border-radius: 20px;
+            padding: 20px 10px;
+            text-align: center;
+            transition: background 0.15s, transform 0.1s;
+            cursor: default;
+        }
+
+        .menu-item:active {
+            transform: scale(0.96);
+            background: #f1f5f9;
+        }
+
+        .menu-item .icon {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .menu-item .label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            letter-spacing: -0.2px;
+        }
+
+        /* item khusus yang memakan 2 kolom (opsional, kita buat item terakhir full width) */
+        .menu-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* ----- FOOTER (opsional) ----- */
+        .dashboard-footer {
+            margin-top: 28px;
+            text-align: center;
+            font-size: 12px;
+            color: #94a3b8;
+            border-top: 1px solid #eef2f6;
+            padding-top: 20px;
+        }
+
+        .dashboard-footer .version {
+            background: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 500;
+            color: #64748b;
+            display: inline-block;
+        }
+
+        /* ----- RESPONSIVE TWEAK ----- */
+        @media (max-width: 480px) {
+            .dashboard-card {
+                padding: 20px 16px 28px;
+                border-radius: 28px;
+            }
+
+            .summary-grid {
+                gap: 8px;
+            }
+
+            .summary-card {
+                padding: 12px 6px;
+            }
+
+            .summary-card .value {
+                font-size: 17px;
+            }
+
+            .menu-grid {
+                gap: 10px;
+            }
+
+            .menu-item {
+                padding: 16px 8px;
+            }
+
+            .menu-item .icon {
+                font-size: 24px;
+            }
+
+            .header .greeting h2 {
+                font-size: 18px;
+            }
+
+            .btn-logout {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+        }
+
+        /* ----- wireframe badge (opsional) ----- */
+        .wireframe-badge {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(4px);
+            color: #e2e8f0;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 40px;
+            letter-spacing: 0.4px;
+            pointer-events: none;
+            user-select: none;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ====== DASHBOARD ADMIN ====== -->
+    <div class="dashboard-card">
+
+        <!-- Header: sapaan & logout -->
+        <div class="header">
+            <div class="greeting">
+                <h2>👋 Halo, Admin</h2>
+                <p>Selamat datang di CatatRezekimu</p>
+            </div>
+            <button class="btn-logout" type="button">
+                <span>⏻</span> Logout
+            </button>
+        </div>
+
+        <!-- Ringkasan 3 kartu (dengan label yang diperbaiki) -->
+        <div class="summary-grid">
+            <div class="summary-card">
+                <div class="label">Omzet Hari Ini</div>
+                <div class="value">Rp 4.2 <small>juta</small></div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Keuntungan Kotor</div>
+                <div class="value">Rp 1.8 <small>juta</small></div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Jumlah Produk</div>
+                <div class="value">24 <small>produk</small></div>
+            </div>
+        </div>
+
+        <!-- Menu navigasi 5 tombol -->
+        <div class="menu-grid">
+            <div class="menu-item">
+                <span class="icon">📦</span>
+                <span class="label">Data Barang</span>
+            </div>
+            <div class="menu-item">
+                <span class="icon">🛒</span>
+                <span class="label">Pembelian</span>
+            </div>
+            <div class="menu-item">
+                <span class="icon">👥</span>
+                <span class="label">Kelola Sales</span>
+            </div>
+            <div class="menu-item">
+                <span class="icon">📊</span>
+                <span class="label">Laporan Keuangan</span>
+            </div>
+            <div class="menu-item full-width">
+                <span class="icon">📋</span>
+                <span class="label">Riwayat Transaksi</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="dashboard-footer">
+            <span class="version">versi 1.0 · offline</span>
+        </div>
+
+    </div>
+
+    <!-- Wireframe keterangan -->
+    <div class="wireframe-badge">WIREFRAME · DASHBOARD ADMIN</div>
+
+</body>
+</html>
+
+3. dashboard-sales.html
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Sales · CatatRezekimu</title>
+
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ----- RESET & GLOBAL ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* ----- CARD UTAMA (mockup HP) ----- */
+        .dashboard-card {
+            max-width: 420px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.10);
+            padding: 28px 20px 36px;
+            transition: box-shadow 0.2s;
+            margin: 0 auto;
+        }
+
+        /* ----- HEADER : Sapaan + Logout ----- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .header .greeting h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0b3b2c;
+            letter-spacing: -0.3px;
+        }
+
+        .header .greeting p {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .btn-logout {
+            background: #f1f5f9;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: default;
+            transition: background 0.15s;
+        }
+
+        .btn-logout span {
+            font-size: 16px;
+        }
+
+        .btn-logout:active {
+            background: #e2e8f0;
+        }
+
+        /* ----- MENU UTAMA (2 tombol besar) ----- */
+        .menu-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .menu-item {
+            background: #f8fafc;
+            border: 1px solid #eef2f6;
+            border-radius: 24px;
+            padding: 32px 20px;
+            text-align: center;
+            transition: background 0.15s, transform 0.1s;
+            cursor: default;
+        }
+
+        .menu-item:active {
+            transform: scale(0.97);
+            background: #f1f5f9;
+        }
+
+        .menu-item .icon {
+            font-size: 42px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .menu-item .label {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            letter-spacing: -0.2px;
+        }
+
+        .menu-item .sub-label {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 4px;
+            font-weight: 400;
+        }
+
+        /* ----- FOOTER (opsional) ----- */
+        .dashboard-footer {
+            margin-top: 16px;
+            text-align: center;
+            font-size: 12px;
+            color: #94a3b8;
+            border-top: 1px solid #eef2f6;
+            padding-top: 20px;
+        }
+
+        .dashboard-footer .version {
+            background: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 500;
+            color: #64748b;
+            display: inline-block;
+        }
+
+        /* ----- RESPONSIVE TWEAK ----- */
+        @media (max-width: 480px) {
+            .dashboard-card {
+                padding: 20px 16px 28px;
+                border-radius: 28px;
+            }
+
+            .header .greeting h2 {
+                font-size: 18px;
+            }
+
+            .btn-logout {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+
+            .menu-item {
+                padding: 26px 16px;
+            }
+
+            .menu-item .icon {
+                font-size: 36px;
+            }
+
+            .menu-item .label {
+                font-size: 16px;
+            }
+        }
+
+        /* ----- wireframe badge (opsional) ----- */
+        .wireframe-badge {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(4px);
+            color: #e2e8f0;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 40px;
+            letter-spacing: 0.4px;
+            pointer-events: none;
+            user-select: none;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ====== DASHBOARD SALES ====== -->
+    <div class="dashboard-card">
+
+        <!-- Header: sapaan & logout -->
+        <div class="header">
+            <div class="greeting">
+                <h2>👋 Halo, Sales</h2>
+                <p>Selamat bertugas, jangan lupa catat penjualan!</p>
+            </div>
+            <button class="btn-logout" type="button">
+                <span>⏻</span> Logout
+            </button>
+        </div>
+
+        <!-- Menu utama (2 tombol besar) -->
+        <div class="menu-grid">
+            <div class="menu-item">
+                <span class="icon">🛒</span>
+                <div class="label">Catat Penjualan</div>
+                <div class="sub-label">Tambah transaksi baru</div>
+            </div>
+            <div class="menu-item">
+                <span class="icon">📋</span>
+                <div class="label">Riwayat Penjualan Saya</div>
+                <div class="sub-label">Lihat transaksi yang sudah dicatat</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="dashboard-footer">
+            <span class="version">versi 1.0 · offline</span>
+        </div>
+
+    </div>
+
+    <!-- Wireframe keterangan -->
+    <div class="wireframe-badge">WIREFRAME · DASHBOARD SALES</div>
+
+</body>
+</html>
+
+4. form-tambah-barang.html
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Tambah Barang · CatatRezekimu</title>
+
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ----- RESET & GLOBAL ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* ----- CARD FORM ----- */
+        .form-card {
+            max-width: 420px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.10);
+            padding: 28px 24px 32px;
+            transition: box-shadow 0.2s;
+        }
+
+        /* ----- HEADER ----- */
+        .form-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .form-header .back-icon {
+            font-size: 24px;
+            line-height: 1;
+            cursor: default;
+            color: #64748b;
+        }
+
+        .form-header h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0b3b2c;
+            letter-spacing: -0.3px;
+        }
+
+        .form-header .badge {
+            margin-left: auto;
+            background: #eef2f6;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        /* ----- FORM GROUP ----- */
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 15px;
+            font-weight: 400;
+            font-family: 'Inter', sans-serif;
+            color: #0f172a;
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 16px;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #0b3b2c;
+            box-shadow: 0 0 0 4px rgba(11, 59, 44, 0.10);
+            background: #ffffff;
+        }
+
+        .form-group input::placeholder {
+            color: #94a3b8;
+            font-weight: 400;
+        }
+
+        /* ----- INFO OTOMATIS (stok & harga modal) ----- */
+        .auto-info {
+            background: #f1f5f9;
+            border-radius: 16px;
+            padding: 14px 18px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 24px;
+            font-size: 14px;
+            border: 1px dashed #dce1e8;
+        }
+
+        .auto-info .item {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+
+        .auto-info .item .label {
+            font-weight: 500;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .auto-info .item .value {
+            font-weight: 600;
+            color: #0b3b2c;
+            background: #e6f0ec;
+            padding: 0 10px;
+            border-radius: 40px;
+            font-size: 14px;
+        }
+
+        /* ----- TOMBOL AKSI ----- */
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 10px;
+            border: none;
+            border-radius: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: default;
+            transition: background 0.15s, transform 0.1s;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary {
+            background: #0b3b2c;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(11, 59, 44, 0.20);
+        }
+
+        .btn-primary:active {
+            background: #082f23;
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        .btn-secondary:active {
+            background: #e2e8f0;
+        }
+
+        /* ----- CATATAN KHUSUS ----- */
+        .note {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 20px;
+            text-align: center;
+            border-top: 1px solid #eef2f6;
+            padding-top: 18px;
+            line-height: 1.5;
+        }
+
+        .note strong {
+            color: #0b3b2c;
+            font-weight: 600;
+        }
+
+        /* ----- RESPONSIVE ----- */
+        @media (max-width: 480px) {
+            .form-card {
+                padding: 24px 18px 28px;
+                border-radius: 28px;
+            }
+
+            .form-header h2 {
+                font-size: 19px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .auto-info {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+
+        /* ----- wireframe badge (opsional) ----- */
+        .wireframe-badge {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(4px);
+            color: #e2e8f0;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 40px;
+            letter-spacing: 0.4px;
+            pointer-events: none;
+            user-select: none;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ====== FORM TAMBAH BARANG ====== -->
+    <div class="form-card">
+
+        <!-- Header -->
+        <div class="form-header">
+            <span class="back-icon">‹</span>
+            <h2>Tambah Barang</h2>
+            <span class="badge">Admin</span>
+        </div>
+
+        <!-- Form (hanya desain) -->
+        <form action="#" method="post">
+
+            <!-- Nama Barang -->
+            <div class="form-group">
+                <label for="nama">Nama Barang</label>
+                <input type="text" id="nama" name="nama" placeholder="Contoh: Gula Pasir" value="" />
+            </div>
+
+            <!-- Satuan -->
+            <div class="form-group">
+                <label for="satuan">Satuan</label>
+                <input type="text" id="satuan" name="satuan" placeholder="kg, liter, karung, dll." value="" />
+            </div>
+
+            <!-- Harga Jual -->
+            <div class="form-group">
+                <label for="harga_jual">Harga Jual</label>
+                <input type="text" id="harga_jual" name="harga_jual" placeholder="Misal: 16000" value="" />
+            </div>
+
+            <!-- Info otomatis (stok & harga modal) -->
+            <div class="auto-info">
+                <span class="item">
+                    <span class="label">Stok awal:</span>
+                    <span class="value">0</span>
+                </span>
+                <span class="item">
+                    <span class="label">Harga modal:</span>
+                    <span class="value">0</span>
+                </span>
+                <span class="item" style="margin-left:auto; color:#94a3b8; font-size:13px;">
+                    ⚡ otomatis
+                </span>
+            </div>
+
+            <!-- Tombol -->
+            <div class="btn-group">
+                <button class="btn btn-secondary" type="button">Batal</button>
+                <button class="btn btn-primary" type="button">Simpan</button>
+            </div>
+
+        </form>
+
+        <!-- Catatan -->
+        <div class="note">
+            <strong>Perhatian:</strong> Barang baru memiliki stok 0 dan harga modal 0.<br />
+            Barang belum bisa dijual sebelum dilakukan pembelian pertama.
+        </div>
+
+    </div>
+
+    <!-- Wireframe badge -->
+    <div class="wireframe-badge">WIREFRAME · FORM TAMBAH BARANG</div>
+
+</body>
+</html>
+
+5. halaman-catat-penjualan.html
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Catat penjualan dan kelola keranjang transaksi." />
+    <title>Catat Penjualan · CatatRezekimu</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+        rel="stylesheet"
+    />
+
+    <style>
+        /* ==============================
+           RESET & GLOBAL
+        ============================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0b3b2c;
+            --primary-dark: #082f23;
+            --primary-soft: #e6f0ec;
+
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --placeholder: #94a3b8;
+
+            --background: #f1f5f9;
+            --surface: #ffffff;
+            --surface-soft: #f8fafc;
+
+            --border: #e2e8f0;
+            --border-soft: #eef2f6;
+
+            --danger-bg: #fee2e2;
+            --danger-text: #991b1b;
+
+            --disabled: #cbd5e1;
+
+            --radius-card: 32px;
+            --radius-section: 20px;
+            --radius-item: 16px;
+        }
+
+        body {
+            font-family:
+                'Inter',
+                -apple-system,
+                BlinkMacSystemFont,
+                'Segoe UI',
+                Roboto,
+                sans-serif;
+
+            background: var(--background);
+            color: var(--text);
+
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* ==============================
+           CARD
+        ============================== */
+        .card {
+            max-width: 420px;
+            width: 100%;
+
+            background: var(--surface);
+
+            border-radius: var(--radius-card);
+
+            box-shadow:
+                0 20px 60px rgba(0, 20, 40, 0.10);
+
+            padding: 24px 18px 28px;
+        }
+
+        /* ==============================
+           HEADER
+        ============================== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            line-height: 1.3;
+            font-weight: 700;
+
+            color: var(--primary);
+            letter-spacing: -0.3px;
+        }
+
+        .header .badge {
+            flex-shrink: 0;
+
+            background: #eef2f6;
+
+            padding: 4px 12px;
+            border-radius: 40px;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            color: #1e293b;
+        }
+
+        /* ==============================
+           SEARCH
+        ============================== */
+        .search-box {
+            margin-bottom: 18px;
+        }
+
+        .search-box label {
+            display: block;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            color: var(--text-secondary);
+
+            margin-bottom: 6px;
+        }
+
+        .search-box input {
+            width: 100%;
+
+            padding: 14px 16px;
+
+            font-size: 15px;
+
+            background: var(--surface-soft);
+
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-item);
+
+            outline: none;
+
+            color: var(--text);
+
+            transition:
+                border-color 0.2s,
+                box-shadow 0.2s,
+                background 0.2s;
+        }
+
+        .search-box input::placeholder {
+            color: var(--placeholder);
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 4px rgba(11, 59, 44, 0.10);
+
+            background: var(--surface);
+        }
+
+        /* ==============================
+           DAFTAR BARANG
+        ============================== */
+        .barang-list {
+            display: flex;
+            flex-direction: column;
+
+            gap: 10px;
+
+            margin-bottom: 24px;
+
+            max-height: 300px;
+
+            overflow-y: auto;
+
+            padding-right: 4px;
+        }
+
+        .barang-list::-webkit-scrollbar,
+        .keranjang-items::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .barang-list::-webkit-scrollbar-thumb,
+        .keranjang-items::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .barang-item {
+            background: var(--surface-soft);
+
+            border: 1px solid var(--border-soft);
+
+            border-radius: var(--radius-item);
+
+            padding: 12px 14px;
+
+            display: flex;
+            flex-wrap: wrap;
+
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 10px;
+        }
+
+        .barang-info {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 6px 12px;
+
+            flex: 1;
+            min-width: 0;
+        }
+
+        .barang-info .field {
+            display: flex;
+            align-items: baseline;
+
+            gap: 4px;
+
+            font-size: 14px;
+        }
+
+        .barang-info .field .label {
+            font-weight: 500;
+
+            color: var(--text-muted);
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.3px;
+        }
+
+        .barang-info .field .value {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .barang-info .field .value.stok {
+            color: var(--primary);
+
+            background: var(--primary-soft);
+
+            padding: 2px 8px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+        }
+
+        /* ==============================
+           BUTTON TAMBAH
+        ============================== */
+        .btn-tambah {
+            background: var(--primary);
+
+            border: none;
+
+            color: #ffffff;
+
+            padding: 8px 14px;
+
+            border-radius: 40px;
+
+            font-weight: 600;
+            font-size: 13px;
+
+            cursor: pointer;
+
+            white-space: nowrap;
+
+            transition:
+                background 0.15s,
+                transform 0.1s;
+        }
+
+        .btn-tambah:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-tambah:active {
+            transform: scale(0.97);
+        }
+
+        .btn-tambah:focus-visible {
+            outline: 3px solid rgba(11, 59, 44, 0.20);
+            outline-offset: 2px;
+        }
+
+        /* ==============================
+           KERANJANG
+        ============================== */
+        .keranjang-section {
+            background: var(--surface-soft);
+
+            border-radius: var(--radius-section);
+
+            padding: 16px 14px;
+
+            border: 1px solid var(--border-soft);
+
+            margin-bottom: 16px;
+        }
+
+        .keranjang-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 12px;
+        }
+
+        .keranjang-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+
+            color: #1e293b;
+        }
+
+        .keranjang-header .item-count {
+            flex-shrink: 0;
+
+            font-size: 13px;
+
+            color: var(--text-muted);
+
+            background: #eef2f6;
+
+            padding: 3px 12px;
+
+            border-radius: 40px;
+        }
+
+        .keranjang-items {
+            display: flex;
+            flex-direction: column;
+
+            gap: 8px;
+
+            max-height: 160px;
+
+            overflow-y: auto;
+        }
+
+        .keranjang-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 10px;
+
+            background: var(--surface);
+
+            padding: 10px 12px;
+
+            border-radius: 12px;
+
+            border: 1px solid var(--border);
+
+            font-size: 14px;
+        }
+
+        .keranjang-item .detail {
+            display: flex;
+            align-items: center;
+
+            gap: 8px 12px;
+
+            flex-wrap: wrap;
+
+            min-width: 0;
+        }
+
+        .keranjang-item .detail .nama {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .keranjang-item .detail .qty {
+            color: var(--text-muted);
+        }
+
+        .keranjang-item .detail .subtotal {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* ==============================
+           AKSI KERANJANG
+        ============================== */
+        .keranjang-item .aksi {
+            display: flex;
+            gap: 5px;
+
+            flex-shrink: 0;
+        }
+
+        .keranjang-item .aksi button {
+            min-width: 32px;
+            min-height: 32px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #eef2f6;
+
+            border: none;
+
+            border-radius: 30px;
+
+            padding: 4px 8px;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            color: #1e293b;
+
+            cursor: pointer;
+
+            transition:
+                background 0.15s,
+                transform 0.1s;
+        }
+
+        .keranjang-item .aksi button:hover {
+            background: #e2e8f0;
+        }
+
+        .keranjang-item .aksi button:active {
+            transform: scale(0.94);
+        }
+
+        .keranjang-item .aksi button:focus-visible {
+            outline: 3px solid rgba(11, 59, 44, 0.20);
+            outline-offset: 2px;
+        }
+
+        .keranjang-item .aksi button.hapus {
+            background: var(--danger-bg);
+            color: var(--danger-text);
+        }
+
+        .keranjang-item .aksi button.hapus:hover {
+            background: #fecaca;
+        }
+
+        /* ==============================
+           TOTAL
+        ============================== */
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 12px 0 8px;
+
+            border-top: 2px solid var(--border);
+
+            margin-top: 8px;
+        }
+
+        .total-row .label {
+            font-size: 16px;
+            font-weight: 600;
+
+            color: #1e293b;
+        }
+
+        .total-row .value {
+            font-size: 20px;
+            font-weight: 700;
+
+            color: var(--primary);
+        }
+
+        /* ==============================
+           LANJUT PEMBAYARAN
+        ============================== */
+        .btn-lanjut {
+            width: 100%;
+
+            padding: 16px;
+
+            background: var(--primary);
+
+            color: #ffffff;
+
+            border: none;
+
+            border-radius: 16px;
+
+            font-family: 'Inter', sans-serif;
+
+            font-size: 16px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            margin-top: 8px;
+
+            box-shadow:
+                0 4px 12px rgba(11, 59, 44, 0.20);
+
+            transition:
+                background 0.15s,
+                transform 0.1s,
+                box-shadow 0.15s;
+        }
+
+        .btn-lanjut:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-lanjut:active {
+            transform: scale(0.99);
+        }
+
+        .btn-lanjut:focus-visible {
+            outline: 3px solid rgba(11, 59, 44, 0.20);
+            outline-offset: 3px;
+        }
+
+        .btn-lanjut.disabled {
+            background: var(--disabled);
+
+            box-shadow: none;
+
+            cursor: not-allowed;
+        }
+
+        /* ==============================
+           CATATAN
+        ============================== */
+        .note {
+            font-size: 12px;
+
+            color: var(--placeholder);
+
+            text-align: center;
+
+            margin-top: 16px;
+
+            border-top: 1px solid var(--border-soft);
+
+            padding-top: 16px;
+
+            line-height: 1.5;
+        }
+
+        /* ==============================
+           WIREFRAME BADGE
+        ============================== */
+        .wireframe-badge {
+            position: fixed;
+
+            bottom: 16px;
+            right: 16px;
+
+            background: rgba(15, 23, 42, 0.7);
+
+            backdrop-filter: blur(4px);
+
+            color: #e2e8f0;
+
+            font-size: 11px;
+            font-weight: 500;
+
+            padding: 6px 14px;
+
+            border-radius: 40px;
+
+            letter-spacing: 0.4px;
+
+            pointer-events: none;
+            user-select: none;
+
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        /* ==============================
+           RESPONSIVE
+        ============================== */
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+
+            .card {
+                padding: 20px 14px 24px;
+
+                border-radius: 28px;
+            }
+
+            .header h1 {
+                font-size: 19px;
+            }
+
+            .barang-item {
+                flex-direction: column;
+
+                align-items: stretch;
+
+                gap: 10px;
+            }
+
+            .barang-info {
+                width: 100%;
+            }
+
+            .btn-tambah {
+                align-self: flex-end;
+            }
+
+            .keranjang-item {
+                flex-direction: column;
+
+                align-items: stretch;
+
+                gap: 8px;
+            }
+
+            .keranjang-item .aksi {
+                justify-content: flex-end;
+            }
+
+            .total-row .value {
+                font-size: 18px;
+            }
+
+            .wireframe-badge {
+                bottom: 10px;
+                right: 10px;
+
+                font-size: 10px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="card">
+
+        <!-- Header -->
+        <header class="header">
+            <h1>🛒 Catat Penjualan</h1>
+            <span class="badge">Sales</span>
+        </header>
+
+        <!-- Pencarian -->
+        <div class="search-box">
+            <label for="cari-barang">Cari barang</label>
+
+            <input
+                id="cari-barang"
+                type="search"
+                placeholder="Cari nama barang ..."
+                autocomplete="off"
+                aria-label="Cari barang"
+            />
+        </div>
+
+        <!-- Daftar Barang -->
+        <section
+            class="barang-list"
+            aria-label="Daftar barang"
+        >
+
+            <article class="barang-item">
+                <div class="barang-info">
+
+                    <span class="field">
+                        <span class="label">Nama</span>
+                        <span class="value">Gula Pasir</span>
+                    </span>
+
+                    <span class="field">
+                        <span class="label">Jual</span>
+                        <span class="value">Rp 16.000</span>
+                    </span>
+
+                    <span class="field">
+                        <span class="label">Stok</span>
+                        <span class="value stok">120</span>
+                    </span>
+
+                </div>
+
+                <button
+                    class="btn-tambah"
+                    type="button"
+                    aria-label="Tambah Gula Pasir ke keranjang"
+                >
+                    + Tambah
+                </button>
+            </article>
+
+
+            <article class="barang-item">
+                <div class="barang-info">
+
+                    <span class="field">
+                        <span class="label">Nama</span>
+                        <span class="value">Minyak Goreng</span>
+                    </span>
+
+                    <span class="field">
+                        <span class="label">Jual</span>
+                        <span class="value">Rp 20.500</span>
+                    </span>
+
+                    <span class="field">
+                        <span class="label">Stok</span>
+                        <span class="value stok">85</span>
+                    </span>
+
+                </div>
+
+                <button
+                    class="btn-tambah"
+                    type="button"
+                    aria-label="Tambah Minyak Goreng ke keranjang"
+                >
+                    + Tambah
+                </button>
+            </article>
+
+
+            <article class="barang-item">
+                <div class="barang-info">
+
+                    <span class="field">
+                        <span class="label">Nama</span>
+                        <span class="value">Beras Premium</span>
+                    </span>
+
+                    <span class="field">
+                        <span class="label">Jual</span>
+                        <span class="value">Rp 350.000</span>
+                    </span>
+
+                    <span class="field">
+                        <span class="label">Stok</span>
+                        <span class="value stok">40</span>
+                    </span>
+
+                </div>
+
+                <button
+                    class="btn-tambah"
+                    type="button"
+                    aria-label="Tambah Beras Premium ke keranjang"
+                >
+                    + Tambah
+                </button>
+            </article>
+
+
+            <article class="barang-item">
+                <div class="barang-info">
+
+                    <span class="field">
+                        <span class="label">Nama</span>
+                        <span class="value">Telur Ayam</span>
+                    </span>
+
+                    <span class="field">
+                        <span class="label">Jual</span>
+                        <span class="value">Rp 24.000</span>
+                    </span>
+
+                    <span class="field">
+                        <span class="label">Stok</span>
+                        <span class="value stok">200</span>
+                    </span>
+
+                </div>
+
+                <button
+                    class="btn-tambah"
+                    type="button"
+                    aria-label="Tambah Telur Ayam ke keranjang"
+                >
+                    + Tambah
+                </button>
+            </article>
+
+        </section>
+
+
+        <!-- Keranjang -->
+        <section
+            class="keranjang-section"
+            aria-label="Keranjang penjualan"
+        >
+
+            <header class="keranjang-header">
+                <h2>🛍️ Keranjang</h2>
+
+                <span class="item-count">
+                    2 produk
+                </span>
+            </header>
+
+
+            <div class="keranjang-items">
+
+                <!-- Keranjang Item 1 -->
+                <article class="keranjang-item">
+
+                    <div class="detail">
+
+                        <span class="nama">
+                            Gula Pasir
+                        </span>
+
+                        <span class="qty">
+                            2 kg
+                        </span>
+
+                        <span class="subtotal">
+                            Rp 32.000
+                        </span>
+
+                    </div>
+
+                    <div class="aksi">
+
+
+                        <button
+                            type="button"
+                            aria-label="Kurangi Gula Pasir"
+                        >
+                            −
+                        </button>
+
+                        <button
+                            type="button"
+                            aria-label="Tambah Gula Pasir"
+                        >
+                            +
+                        </button>
+
+                        <button
+                            class="hapus"
+                            type="button"
+                            aria-label="Hapus Gula Pasir dari keranjang"
+                        >
+                            ✕
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <!-- Keranjang Item 2 -->
+                <article class="keranjang-item">
+
+                    <div class="detail">
+
+                        <span class="nama">
+                            Minyak Goreng
+                        </span>
+
+                        <span class="qty">
+                            1 liter
+                        </span>
+
+                        <span class="subtotal">
+                            Rp 20.500
+                        </span>
+
+                    </div>
+
+                    <div class="aksi">
+
+                        <button
+                            type="button"
+                            aria-label="Kurangi Minyak Goreng"
+                        >
+                            −
+                        </button>
+
+                        <button
+                            type="button"
+                            aria-label="Tambah Minyak Goreng"
+                        >
+                            +
+                        </button>
+
+                        <button
+                            class="hapus"
+                            type="button"
+                            aria-label="Hapus Minyak Goreng dari keranjang"
+                        >
+                            ✕
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- Total -->
+            <div class="total-row">
+
+                <span class="label">
+                    Total
+                </span>
+
+                <span class="value">
+                    Rp 52.500
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- Lanjut Pembayaran -->
+        <button
+            class="btn-lanjut"
+            type="button"
+            aria-label="Lanjut ke pembayaran"
+        >
+            Lanjut Pembayaran →
+        </button>
+
+
+        <!-- Catatan -->
+        <p class="note">
+            Stok divalidasi saat jumlah barang diubah dan
+            diperiksa kembali saat pembayaran diproses.
+        </p>
+
+    </main>
+
+
+    <!-- Wireframe badge -->
+    <div
+        class="wireframe-badge"
+        aria-hidden="true"
+    >
+        WIREFRAME · CATAT PENJUALAN
+    </div>
+
+</body>
+</html>
+
+6. halaman-data-barang.html
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Barang · CatatRezekimu</title>
+
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ----- RESET & GLOBAL ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+            gap: 30px;
+        }
+
+        /* ----- CARD UTAMA (masing-masing versi) ----- */
+        .card {
+            max-width: 420px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.10);
+            padding: 24px 18px 30px;
+            transition: box-shadow 0.2s;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .card-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0b3b2c;
+            letter-spacing: -0.3px;
+        }
+
+        .card-header .badge {
+            background: #eef2f6;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        /* ----- TOMBOL TAMBAH (khusus Admin) ----- */
+        .btn-tambah {
+            background: #0b3b2c;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: default;
+            transition: background 0.15s;
+            margin-bottom: 16px;
+        }
+
+        .btn-tambah span {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .btn-tambah:active {
+            background: #082f23;
+        }
+
+        /* ----- DAFTAR BARANG (list/table) ----- */
+        .barang-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .barang-item {
+            background: #f8fafc;
+            border: 1px solid #eef2f6;
+            border-radius: 16px;
+            padding: 14px 16px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Kolom informasi */
+        .barang-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 14px;
+            flex: 1;
+        }
+
+        .barang-info .field {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+            font-size: 14px;
+        }
+
+        .barang-info .field .label {
+            font-weight: 500;
+            color: #64748b;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .barang-info .field .value {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .barang-info .field .value.stok {
+            color: #0b3b2c;
+            background: #e6f0ec;
+            padding: 0 8px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        /* ----- TOMBOL AKSI (Admin) ----- */
+        .aksi-admin {
+            display: flex;
+            gap: 8px;
+            margin-left: 8px;
+        }
+
+        .btn-edit {
+            background: #eef2f6;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #1e293b;
+            cursor: default;
+            transition: background 0.15s;
+        }
+
+        .btn-edit:active {
+            background: #dce1e8;
+        }
+
+        .btn-hapus {
+            background: #fee2e2;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #991b1b;
+            cursor: default;
+            transition: background 0.15s;
+            display: none;
+            /* disembunyikan sesuai aturan versi 1.0 */
+        }
+
+        /* ----- VERSI SALES (tanpa aksi) ----- */
+        .sales-only .barang-item {
+            padding: 12px 16px;
+        }
+
+        .sales-only .barang-info .field .label {
+            font-size: 11px;
+        }
+
+        /* ----- PISAH ANTAR VERSI (judul) ----- */
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 6px 0 14px;
+            padding-bottom: 6px;
+            border-bottom: 2px dashed #dce1e8;
+        }
+
+        .note {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 16px;
+            text-align: center;
+            border-top: 1px solid #eef2f6;
+            padding-top: 16px;
+        }
+
+        /* ----- RESPONSIVE ----- */
+        @media (max-width: 480px) {
+            .card {
+                padding: 20px 14px 24px;
+                border-radius: 28px;
+            }
+
+            .barang-item {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            .barang-info {
+                gap: 4px 12px;
+            }
+
+            .aksi-admin {
+                margin-left: 0;
+                justify-content: flex-end;
+            }
+
+            .btn-tambah {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* ----- wireframe badge (opsional) ----- */
+        .wireframe-badge {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(4px);
+            color: #e2e8f0;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 40px;
+            letter-spacing: 0.4px;
+            pointer-events: none;
+            user-select: none;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ====== VERSI ADMIN ====== -->
+    <div class="card">
+        <div class="card-header">
+            <h2>📦 Data Barang</h2>
+            <span class="badge">Admin</span>
+        </div>
+
+        <!-- Tombol Tambah -->
+        <button class="btn-tambah" type="button">
+            <span>➕</span> Tambah Barang
+        </button>
+
+        <!-- Daftar barang -->
+        <div class="barang-list">
+            <!-- Item 1 -->
+            <div class="barang-item">
+                <div class="barang-info">
+                    <span class="field"><span class="label">Nama</span><span class="value">Gula Pasir</span></span>
+                    <span class="field"><span class="label">Satuan</span><span class="value">kg</span></span>
+                    <span class="field"><span class="label">Modal</span><span class="value">Rp 14.500</span></span>
+                    <span class="field"><span class="label">Jual</span><span class="value">Rp 16.000</span></span>
+                    <span class="field"><span class="label">Stok</span><span class="value stok">120</span></span>
+                </div>
+                <div class="aksi-admin">
+                    <button class="btn-edit" type="button">✏️ Edit</button>
+                    <!-- tombol hapus disembunyikan -->
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="barang-item">
+                <div class="barang-info">
+                    <span class="field"><span class="label">Nama</span><span class="value">Minyak Goreng</span></span>
+                    <span class="field"><span class="label">Satuan</span><span class="value">liter</span></span>
+                    <span class="field"><span class="label">Modal</span><span class="value">Rp 18.000</span></span>
+                    <span class="field"><span class="label">Jual</span><span class="value">Rp 20.500</span></span>
+                    <span class="field"><span class="label">Stok</span><span class="value stok">85</span></span>
+                </div>
+                <div class="aksi-admin">
+                    <button class="btn-edit" type="button">✏️ Edit</button>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="barang-item">
+                <div class="barang-info">
+                    <span class="field"><span class="label">Nama</span><span class="value">Beras Premium</span></span>
+                    <span class="field"><span class="label">Satuan</span><span class="value">karung</span></span>
+                    <span class="field"><span class="label">Modal</span><span class="value">Rp 320.000</span></span>
+                    <span class="field"><span class="label">Jual</span><span class="value">Rp 350.000</span></span>
+                    <span class="field"><span class="label">Stok</span><span class="value stok">40</span></span>
+                </div>
+                <div class="aksi-admin">
+                    <button class="btn-edit" type="button">✏️ Edit</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="note">* Hapus data tidak tersedia (versi 1.0)</div>
+    </div>
+
+    <!-- ====== VERSI SALES (Read-Only) ====== -->
+    <div class="card sales-only">
+        <div class="card-header">
+            <h2>📦 Daftar Harga &amp; Stok</h2>
+            <span class="badge">Sales</span>
+        </div>
+
+        <!-- Daftar barang (tanpa aksi) -->
+        <div class="barang-list">
+            <!-- Item 1 -->
+            <div class="barang-item">
+                <div class="barang-info">
+                    <span class="field"><span class="label">Nama</span><span class="value">Gula Pasir</span></span>
+                    <span class="field"><span class="label">Satuan</span><span class="value">kg</span></span>
+                    <span class="field"><span class="label">Jual</span><span class="value">Rp 16.000</span></span>
+                    <span class="field"><span class="label">Stok</span><span class="value stok">120</span></span>
+                </div>
+                <!-- tidak ada tombol -->
+            </div>
+
+            <!-- Item 2 -->
+            <div class="barang-item">
+                <div class="barang-info">
+                    <span class="field"><span class="label">Nama</span><span class="value">Minyak Goreng</span></span>
+                    <span class="field"><span class="label">Satuan</span><span class="value">liter</span></span>
+                    <span class="field"><span class="label">Jual</span><span class="value">Rp 20.500</span></span>
+                    <span class="field"><span class="label">Stok</span><span class="value stok">85</span></span>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="barang-item">
+                <div class="barang-info">
+                    <span class="field"><span class="label">Nama</span><span class="value">Beras Premium</span></span>
+                    <span class="field"><span class="label">Satuan</span><span class="value">karung</span></span>
+                    <span class="field"><span class="label">Jual</span><span class="value">Rp 350.000</span></span>
+                    <span class="field"><span class="label">Stok</span><span class="value stok">40</span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="note">* Sales hanya dapat melihat data (read-only)</div>
+    </div>
+
+    <!-- Wireframe badge -->
+    <div class="wireframe-badge">WIREFRAME · DATA BARANG</div>
+
+</body>
+</html>
+
+7. halaman-pembayaran.html
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b3b2c" />
+
+    <title>Pembayaran · CatatRezekimu</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+        rel="stylesheet"
+    />
+<style>
+    /* =========================================================
+       RESET & GLOBAL
+    ========================================================= */
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --primary: #0b3b2c;
+        --primary-dark: #082f23;
+        --primary-soft: #e6f0ec;
+
+        --text: #0f172a;
+        --text-secondary: #475569;
+        --text-muted: #64748b;
+        --text-light: #94a3b8;
+
+        --surface: #ffffff;
+        --surface-soft: #f8fafc;
+        --background: #f1f5f9;
+
+        --border: #e2e8f0;
+        --border-soft: #eef2f6;
+
+        --danger: #dc2626;
+        --danger-dark: #991b1b;
+        --danger-soft: #fef2f2;
+
+        --success: #0b3b2c;
+        --success-soft: #e6f0ec;
+
+        --radius-card: 30px;
+        --radius-section: 20px;
+        --radius-input: 16px;
+    }
+
+    body {
+        font-family:
+            'Inter',
+            -apple-system,
+            BlinkMacSystemFont,
+            'Segoe UI',
+            Roboto,
+            sans-serif;
+
+        background: var(--background);
+        color: var(--text);
+
+        min-height: 100vh;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 20px;
+    }
+
+    button,
+    input {
+        font: inherit;
+    }
+
+    button {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* =========================================================
+       CARD
+    ========================================================= */
+
+    .card {
+        width: 100%;
+        max-width: 420px;
+
+        background: var(--surface);
+
+        border-radius: var(--radius-card);
+
+        box-shadow:
+            0 20px 60px rgba(0, 20, 40, 0.10),
+            0 2px 8px rgba(0, 20, 40, 0.04);
+
+        padding: 28px 20px 28px;
+    }
+
+    /* =========================================================
+       HEADER
+    ========================================================= */
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 12px;
+
+        margin-bottom: 22px;
+    }
+
+    .header h1 {
+        font-size: 20px;
+        line-height: 1.25;
+
+        font-weight: 700;
+
+        color: var(--primary);
+
+        letter-spacing: -0.3px;
+    }
+
+    .badge {
+        flex-shrink: 0;
+
+        background: #eef2f6;
+
+        color: #1e293b;
+
+        padding: 5px 12px;
+
+        border-radius: 999px;
+
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    /* =========================================================
+       RINGKASAN TRANSAKSI
+    ========================================================= */
+
+    .ringkasan {
+        background: var(--surface-soft);
+
+        border: 1px solid var(--border-soft);
+
+        border-radius: var(--radius-section);
+
+        padding: 15px 16px;
+
+        margin-bottom: 22px;
+    }
+
+    .ringkasan-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        margin-bottom: 8px;
+    }
+
+    .ringkasan-title h2 {
+        font-size: 14px;
+        font-weight: 600;
+
+        color: var(--text);
+    }
+
+    .ringkasan-title span {
+        font-size: 12px;
+        color: var(--text-muted);
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        gap: 16px;
+
+        padding: 6px 0;
+
+        font-size: 14px;
+    }
+
+    .summary-row .label {
+        color: var(--text-muted);
+        font-weight: 500;
+    }
+
+    .summary-row .value {
+        color: var(--text);
+        font-weight: 600;
+        text-align: right;
+    }
+
+    .summary-total {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 16px;
+
+        border-top: 2px solid var(--border);
+
+        margin-top: 7px;
+        padding-top: 12px;
+    }
+
+    .summary-total .label {
+        color: var(--primary);
+
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .summary-total .value {
+        color: var(--primary);
+
+        font-size: 20px;
+        font-weight: 700;
+
+        white-space: nowrap;
+    }
+
+    /* =========================================================
+       FORM PEMBAYARAN
+    ========================================================= */
+
+    .payment-section {
+        margin-bottom: 18px;
+    }
+
+    .form-group {
+        margin-bottom: 12px;
+    }
+
+    .form-label-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 10px;
+
+        margin-bottom: 7px;
+    }
+
+    .form-label {
+        font-size: 14px;
+        font-weight: 600;
+
+        color: var(--text);
+    }
+
+    .form-helper {
+        font-size: 11px;
+        color: var(--text-light);
+    }
+
+    .input-wrapper {
+        position: relative;
+    }
+
+    .currency-prefix {
+        position: absolute;
+
+        left: 16px;
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        color: var(--text-muted);
+
+        font-size: 16px;
+        font-weight: 600;
+
+        pointer-events: none;
+    }
+
+    .payment-input {
+        width: 100%;
+
+        padding: 15px 16px 15px 50px;
+
+        background: var(--surface-soft);
+
+        border: 1.5px solid var(--border);
+
+        border-radius: var(--radius-input);
+
+        outline: none;
+
+        color: var(--text);
+
+        font-size: 20px;
+        font-weight: 600;
+
+        transition:
+            border-color 0.2s,
+            box-shadow 0.2s,
+            background 0.2s;
+    }
+
+    .payment-input::placeholder {
+        color: var(--text-light);
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    .payment-input:focus {
+        background: var(--surface);
+
+        border-color: var(--primary);
+
+        box-shadow:
+            0 0 0 4px rgba(11, 59, 44, 0.10);
+    }
+
+    .payment-input.invalid {
+        border-color: var(--danger);
+
+        box-shadow:
+            0 0 0 4px rgba(220, 38, 38, 0.08);
+    }
+
+    .payment-input::-webkit-outer-spin-button,
+    .payment-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .payment-input[type="number"] {
+        -moz-appearance: textfield;
+    }
+
+    /* =========================================================
+       QUICK NOMINAL
+    ========================================================= */
+
+    .quick-payment {
+        display: flex;
+        gap: 8px;
+
+        overflow-x: auto;
+
+        padding: 2px 1px 4px;
+
+        margin-bottom: 18px;
+
+        scrollbar-width: none;
+    }
+
+    .quick-payment::-webkit-scrollbar {
+        display: none;
+    }
+
+    .quick-btn {
+        flex-shrink: 0;
+
+        background: var(--surface);
+
+        border: 1px solid var(--border);
+
+        color: var(--text-secondary);
+
+        padding: 8px 12px;
+
+        border-radius: 999px;
+
+        font-size: 12px;
+        font-weight: 600;
+
+        cursor: pointer;
+
+        transition:
+            background 0.15s,
+            border-color 0.15s,
+            color 0.15s;
+    }
+
+    .quick-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+    }
+
+    .quick-btn:active {
+        transform: scale(0.97);
+    }
+
+    /* =========================================================
+       STATUS PEMBAYARAN
+    ========================================================= */
+
+    .payment-status {
+        min-height: 20px;
+
+        margin-top: 7px;
+
+        font-size: 12px;
+        line-height: 1.4;
+
+        color: var(--text-muted);
+    }
+
+    .payment-status.error {
+        color: var(--danger-dark);
+    }
+
+    .payment-status.success {
+        color: var(--primary);
+    }
+
+    /* =========================================================
+       KEMBALIAN
+    ========================================================= */
+
+    .kembalian-box {
+        background: var(--success-soft);
+
+        border: 1px solid #c9ddd5;
+
+        border-radius: var(--radius-input);
+
+        padding: 15px 16px;
+
+        margin-top: 4px;
+        margin-bottom: 20px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 16px;
+    }
+
+    .kembalian-info {
+        display: flex;
+        flex-direction: column;
+
+        gap: 3px;
+    }
+
+    .kembalian-label {
+        color: var(--primary);
+
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .kembalian-helper {
+        color: #527468;
+
+        font-size: 11px;
+    }
+
+    .kembalian-value {
+        color: var(--primary);
+
+        font-size: 21px;
+        font-weight: 700;
+
+        white-space: nowrap;
+    }
+
+    .kembalian-box.insufficient {
+        background: var(--danger-soft);
+        border-color: #fecaca;
+    }
+
+    .kembalian-box.insufficient .kembalian-label,
+    .kembalian-box.insufficient .kembalian-value {
+        color: var(--danger-dark);
+    }
+
+    .kembalian-box.insufficient .kembalian-helper {
+        color: #b45353;
+    }
+
+    /* =========================================================
+       ERROR
+    ========================================================= */
+
+    .error-message {
+        display: flex;
+        align-items: flex-start;
+
+        gap: 10px;
+
+        background: var(--danger-soft);
+
+        border: 1px solid #fecaca;
+
+        border-left: 4px solid var(--danger);
+
+        border-radius: 12px;
+
+        padding: 11px 13px;
+
+        margin-bottom: 16px;
+
+        color: var(--danger-dark);
+
+        font-size: 13px;
+        line-height: 1.4;
+        font-weight: 500;
+    }
+
+    .error-message[hidden] {
+        display: none;
+    }
+
+    .error-icon {
+        flex-shrink: 0;
+
+        font-size: 16px;
+        line-height: 1.2;
+    }
+
+    /* =========================================================
+       TOMBOL PROSES
+    ========================================================= */
+
+    .btn-proses {
+        width: 100%;
+
+        min-height: 54px;
+
+        padding: 15px 16px;
+
+        border: none;
+        border-radius: var(--radius-input);
+
+        background: var(--primary);
+
+        color: #ffffff;
+
+        font-size: 16px;
+        font-weight: 600;
+
+        cursor: pointer;
+
+        box-shadow:
+            0 5px 14px rgba(11, 59, 44, 0.20);
+
+        transition:
+            background 0.15s,
+            transform 0.1s,
+            box-shadow 0.15s,
+            opacity 0.15s;
+    }
+
+    .btn-proses:hover:not(:disabled) {
+        background: var(--primary-dark);
+    }
+
+    .btn-proses:active:not(:disabled) {
+        transform: scale(0.985);
+    }
+
+    .btn-proses:disabled {
+        background: #cbd5e1;
+
+        color: #ffffff;
+
+        box-shadow: none;
+
+        cursor: not-allowed;
+
+        opacity: 0.9;
+    }
+
+    .btn-proses.loading {
+        cursor: wait;
+        opacity: 0.85;
+    }
+
+    /* =========================================================
+       CATATAN
+    ========================================================= */
+
+    .note {
+        border-top: 1px solid var(--border-soft);
+
+        margin-top: 18px;
+        padding-top: 15px;
+
+        text-align: center;
+
+        color: var(--text-light);
+
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+    /* =========================================================
+       WIREFRAME BADGE
+    ========================================================= */
+
+    .wireframe-badge {
+        position: fixed;
+
+        right: 16px;
+        bottom: 16px;
+
+        background: rgba(15, 23, 42, 0.72);
+
+        backdrop-filter: blur(4px);
+
+        color: #e2e8f0;
+
+        font-size: 10px;
+        font-weight: 500;
+
+        padding: 6px 12px;
+
+        border-radius: 999px;
+
+        letter-spacing: 0.4px;
+
+        pointer-events: none;
+        user-select: none;
+
+        border: 1px solid rgba(255, 255, 255, 0.10);
+    }
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 480px) {
+
+        body {
+            align-items: flex-start;
+            padding: 12px;
+        }
+
+        .card {
+            margin-top: 8px;
+
+            padding: 22px 15px 24px;
+
+            border-radius: 26px;
+        }
+
+        .header {
+            margin-bottom: 18px;
+        }
+
+        .header h1 {
+            font-size: 19px;
+        }
+
+        .ringkasan {
+            padding: 14px;
+        }
+
+        .summary-total .label {
+            font-size: 14px;
+        }
+
+        .summary-total .value {
+            font-size: 18px;
+        }
+
+        .payment-input {
+            font-size: 19px;
+        }
+
+        .kembalian-value {
+            font-size: 19px;
+        }
+
+        .wireframe-badge {
+            display: none;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+        *,
+        *::before,
+        *::after {
+            scroll-behavior: auto !important;
+            transition: none !important;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         HALAMAN PEMBAYARAN
+    ========================================================== -->
+
+    <main class="card">
+
+        <!-- HEADER -->
+        <header class="header">
+            <h1>💳 Pembayaran</h1>
+            <span class="badge">Sales</span>
+        </header>
+
+
+        <!-- =====================================================
+             RINGKASAN TRANSAKSI
+        ====================================================== -->
+
+        <section
+            class="ringkasan"
+            aria-labelledby="ringkasan-title"
+        >
+
+            <div class="ringkasan-title">
+                <h2 id="ringkasan-title">
+                    Ringkasan Transaksi
+                </h2>
+
+                <span>2 produk</span>
+            </div>
+
+            <div class="summary-row">
+                <span class="label">
+                    Total Belanja
+                </span>
+
+                <span class="value">
+                    Rp 52.500
+                </span>
+            </div>
+
+            <div class="summary-row">
+                <span class="label">
+                    Jumlah Item
+                </span>
+
+                <span class="value">
+                    3 item
+                </span>
+            </div>
+
+            <div class="summary-total">
+
+                <span class="label">
+                    Total Pembayaran
+                </span>
+
+                <span
+                    class="value"
+                    id="totalPembayaran"
+                    data-total="52500"
+                >
+                    Rp 52.500
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PEMBAYARAN
+        ====================================================== -->
+
+        <section
+            class="payment-section"
+            aria-labelledby="payment-title"
+        >
+
+            <div class="form-group">
+
+                <div class="form-label-row">
+
+                    <label
+                        class="form-label"
+                        id="payment-title"
+                        for="uang_dibayar"
+                    >
+                        Uang Dibayar
+                    </label>
+
+                    <span class="form-helper">
+                        Masukkan nominal tunai
+                    </span>
+
+                </div>
+
+
+                <div class="input-wrapper">
+
+                    <span
+                        class="currency-prefix"
+                        aria-hidden="true"
+                    >
+                        Rp
+                    </span>
+
+                    <input
+                        class="payment-input"
+                        type="number"
+                        id="uang_dibayar"
+                        name="uang_dibayar"
+                        inputmode="numeric"
+                        min="0"
+                        step="500"
+                        placeholder="0"
+                        autocomplete="off"
+                        aria-describedby="payment-status"
+                        required
+                    />
+
+                </div>
+
+
+                <div
+                    class="payment-status"
+                    id="payment-status"
+                    aria-live="polite"
+                >
+                    Masukkan jumlah uang yang diterima
+                    dari pelanggan.
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 NOMINAL CEPAT
+            ================================================== -->
+
+            <div
+                class="quick-payment"
+                aria-label="Pilihan nominal pembayaran"
+            >
+
+                <button
+                    type="button"
+                    class="quick-btn"
+                    data-amount="52500"
+                >
+                    Uang Pas
+                </button>
+
+                <button
+                    type="button"
+                    class="quick-btn"
+                    data-amount="60000"
+                >
+                    Rp 60.000
+                </button>
+
+                <button
+                    type="button"
+                    class="quick-btn"
+                    data-amount="100000"
+                >
+                    Rp 100.000
+                </button>
+
+            </div>
+
+
+            <!-- =================================================
+                 KEMBALIAN
+            ================================================== -->
+
+            <div
+                class="kembalian-box"
+                id="kembalianBox"
+                aria-live="polite"
+            >
+
+                <div class="kembalian-info">
+
+                    <span class="kembalian-label">
+                        💵 Kembalian
+                    </span>
+
+                    <span
+                        class="kembalian-helper"
+                        id="kembalianHelper"
+                    >
+                        Akan dihitung otomatis
+                    </span>
+
+                </div>
+
+
+                <span
+                    class="kembalian-value"
+                    id="kembalianValue"
+                >
+                    Rp 0
+                </span>
+
+            </div>
+
+
+            <!-- =================================================
+                 ERROR
+            ================================================== -->
+
+            <div
+                class="error-message"
+                id="errorMessage"
+                role="alert"
+                hidden
+            >
+
+                <span
+                    class="error-icon"
+                    aria-hidden="true"
+                >
+                    ⚠️
+                </span>
+
+                <span id="errorText">
+                    Pembayaran kurang.
+                </span>
+
+            </div>
+
+
+            <!-- =================================================
+                 TOMBOL PROSES
+            ================================================== -->
+
+            <form
+                id="paymentForm"
+                action="#"
+                method="post"
+            >
+
+                <button
+                    class="btn-proses"
+                    id="btnProses"
+                    type="submit"
+                    disabled
+                >
+                    ✅ Proses Bayar
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- =====================================================
+             CATATAN
+        ====================================================== -->
+
+        <footer class="note">
+
+            Pastikan nominal pembayaran sudah benar.
+
+            <br />
+
+            Stok akan dikurangi setelah transaksi
+            berhasil diproses.
+
+        </footer>
+
+    </main>
+
+
+    <!-- =========================================================
+         WIREFRAME BADGE
+    ========================================================== -->
+
+    <div class="wireframe-badge">
+        WIREFRAME · PEMBAYARAN
+    </div>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script>
+
+        /* =======================================================
+           DATA TRANSAKSI
+        ======================================================= */
+
+        const total = Number(
+            document
+                .getElementById('totalPembayaran')
+                .dataset.total
+        );
+
+
+        /* =======================================================
+           ELEMENT
+        ======================================================= */
+
+        const paymentInput =
+            document.getElementById(
+                'uang_dibayar'
+            );
+
+        const paymentStatus =
+            document.getElementById(
+                'payment-status'
+            );
+
+        const kembalianBox =
+            document.getElementById(
+                'kembalianBox'
+            );
+
+        const kembalianValue =
+            document.getElementById(
+                'kembalianValue'
+            );
+
+        const kembalianHelper =
+            document.getElementById(
+                'kembalianHelper'
+            );
+
+        const errorMessage =
+            document.getElementById(
+                'errorMessage'
+            );
+
+        const errorText =
+            document.getElementById(
+                'errorText'
+            );
+
+        const btnProses =
+            document.getElementById(
+                'btnProses'
+            );
+
+        const paymentForm =
+            document.getElementById(
+                'paymentForm'
+            );
+
+        const quickButtons =
+            document.querySelectorAll(
+                '.quick-btn'
+            );
+
+
+        /* =======================================================
+           FORMAT RUPIAH
+        ======================================================= */
+
+        function formatRupiah(value) {
+
+            return new Intl.NumberFormat(
+                'id-ID',
+                {
+                    style: 'currency',
+                    currency: 'IDR',
+                    maximumFractionDigits: 0
+                }
+            ).format(value);
+
+        }
+
+
+        /* =======================================================
+           UPDATE STATUS PEMBAYARAN
+        ======================================================= */
+
+        function updatePayment() {
+
+            const amount =
+                Number(paymentInput.value) || 0;
+
+            const difference =
+                amount - total;
+
+
+            /* Reset */
+
+            errorMessage.hidden = true;
+
+            paymentInput.classList.remove(
+                'invalid'
+            );
+
+            kembalianBox.classList.remove(
+                'insufficient'
+            );
+
+            btnProses.disabled = true;
+
+
+            /* ===================================================
+               BELUM ADA NOMINAL
+            =================================================== */
+
+            if (amount <= 0) {
+
+                kembalianValue.textContent =
+                    'Rp 0';
+
+                kembalianHelper.textContent =
+                    'Akan dihitung otomatis';
+
+                paymentStatus.textContent =
+                    'Masukkan jumlah uang yang diterima dari pelanggan.';
+
+                paymentStatus.className =
+                    'payment-status';
+
+                return;
+            }
+
+
+            /* ===================================================
+               PEMBAYARAN KURANG
+            =================================================== */
+
+            if (difference < 0) {
+
+                const kurang =
+                    Math.abs(difference);
+
+
+                paymentInput.classList.add(
+                    'invalid'
+                );
+
+                kembalianBox.classList.add(
+                    'insufficient'
+                );
+
+
+                kembalianValue.textContent =
+                    formatRupiah(kurang);
+
+                kembalianHelper.textContent =
+                    'Jumlah yang masih kurang';
+
+
+                paymentStatus.textContent =
+                    'Pembayaran belum mencukupi.';
+
+                paymentStatus.className =
+                    'payment-status error';
+
+
+                errorText.textContent =
+                    'Pembayaran kurang ' +
+                    formatRupiah(kurang) +
+                    '. Silakan tambahkan uang.';
+
+                errorMessage.hidden = false;
+
+                return;
+            }
+
+
+            /* ===================================================
+               PEMBAYARAN CUKUP
+            =================================================== */
+
+            kembalianValue.textContent =
+                formatRupiah(difference);
+
+
+            kembalianHelper.textContent =
+                difference === 0
+                    ? 'Uang pas'
+                    : 'Dikembalikan kepada pelanggan';
+
+
+            paymentStatus.textContent =
+                difference === 0
+                    ? 'Nominal pembayaran pas.'
+                    : 'Pembayaran mencukupi.';
+
+            paymentStatus.className =
+                'payment-status success';
+
+
+            btnProses.disabled = false;
+
+        }
+
+
+        /* =======================================================
+           INPUT PEMBAYARAN
+        ======================================================= */
+
+        paymentInput.addEventListener(
+            'input',
+            updatePayment
+        );
+
+
+        /* =======================================================
+           NOMINAL CEPAT
+        ======================================================= */
+
+        quickButtons.forEach(
+            function(button) {
+
+                button.addEventListener(
+                    'click',
+                    function() {
+
+                        const amount =
+                            Number(
+                                button.dataset.amount
+                            );
+
+
+                        paymentInput.value =
+                            amount;
+
+
+                        updatePayment();
+
+
+                        paymentInput.focus();
+
+                    }
+                );
+
+            }
+        );
+
+
+        /* =======================================================
+           PROSES BAYAR
+        ======================================================= */
+
+        paymentForm.addEventListener(
+            'submit',
+            function(event) {
+
+                event.preventDefault();
+
+
+                const amount =
+                    Number(paymentInput.value) || 0;
+
+
+                /* Validasi */
+
+                if (amount < total) {
+
+                    updatePayment();
+
+                    return;
+                }
+
+
+                /* State loading */
+
+                btnProses.disabled = true;
+
+                btnProses.classList.add(
+                    'loading'
+                );
+
+                btnProses.textContent =
+                    '⏳ Memproses...';
+
+
+                /* =================================================
+                   SIMULASI TRANSAKSI
+
+                   Nanti bagian ini dapat diganti
+                   dengan proses backend.
+                ================================================== */
+
+                setTimeout(
+                    function() {
+
+                        btnProses.classList.remove(
+                            'loading'
+                        );
+
+                        btnProses.textContent =
+                            '✅ Pembayaran Berhasil';
+
+
+                        /*
+                            Jika backend sudah siap,
+                            redirect dapat dilakukan:
+
+                            window.location.href =
+                                'transaksi-berhasil-cetak-struk.html';
+                        */
+
+                    },
+                    800
+                );
+
+            }
+        );
+
+
+        /* =======================================================
+           INITIAL STATE
+        ======================================================= */
+
+        updatePayment();
+
+    </script>
+
+</body>
+</html>
+
+
+
+8. transaksi-berhasil-cetak-struk.html
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Transaksi Berhasil · CatatRezekimu</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+        rel="stylesheet"
+    />
+
+    <style>
+        /* =========================================================
+           RESET & GLOBAL
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family:
+                'Inter',
+                -apple-system,
+                BlinkMacSystemFont,
+                'Segoe UI',
+                Roboto,
+                sans-serif;
+
+            background: #f1f5f9;
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+
+        /* =========================================================
+           CARD
+        ========================================================= */
+
+        .card {
+            max-width: 420px;
+            width: 100%;
+
+            background: #ffffff;
+
+            border-radius: 32px;
+
+            box-shadow:
+                0 20px 60px rgba(0, 20, 40, 0.10);
+
+            padding: 28px 22px 28px;
+
+            text-align: center;
+        }
+
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 28px;
+        }
+
+        .header h2 {
+            font-size: 20px;
+            font-weight: 700;
+
+            color: #0b3b2c;
+
+            letter-spacing: -0.3px;
+        }
+
+        .header .badge {
+            background: #eef2f6;
+
+            padding: 4px 12px;
+
+            border-radius: 40px;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            color: #1e293b;
+        }
+
+
+        /* =========================================================
+           SUCCESS STATE
+        ========================================================= */
+
+        .success-icon {
+            width: 76px;
+            height: 76px;
+
+            margin: 0 auto 16px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #e6f0ec;
+
+            color: #0b3b2c;
+
+            font-size: 42px;
+            font-weight: 700;
+
+            box-shadow:
+                0 8px 20px rgba(11, 59, 44, 0.12);
+        }
+
+        .success-title {
+            font-size: 24px;
+            font-weight: 700;
+
+            color: #0b3b2c;
+
+            margin-bottom: 8px;
+        }
+
+        .success-sub {
+            font-size: 14px;
+            line-height: 1.5;
+
+            color: #64748b;
+
+            margin-bottom: 22px;
+        }
+
+
+        /* =========================================================
+           NOMOR TRANSAKSI
+        ========================================================= */
+
+        .transaction-meta {
+            background: #f8fafc;
+
+            border: 1px solid #eef2f6;
+
+            border-radius: 14px;
+
+            padding: 10px 14px;
+
+            margin-bottom: 20px;
+
+            text-align: center;
+        }
+
+        .transaction-number {
+            font-size: 13px;
+            font-weight: 600;
+
+            color: #334155;
+        }
+
+        .transaction-date {
+            margin-top: 3px;
+
+            font-size: 12px;
+
+            color: #94a3b8;
+        }
+
+
+        /* =========================================================
+           RINGKASAN TRANSAKSI
+        ========================================================= */
+
+        .ringkasan {
+            background: #f8fafc;
+
+            border-radius: 20px;
+
+            padding: 16px 18px;
+
+            border: 1px solid #eef2f6;
+
+            margin-bottom: 24px;
+
+            text-align: left;
+        }
+
+        .ringkasan .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 16px;
+
+            padding: 7px 0;
+
+            font-size: 14px;
+        }
+
+        .ringkasan .row .label {
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .ringkasan .row .value {
+            color: #0f172a;
+            font-weight: 600;
+
+            text-align: right;
+        }
+
+        .ringkasan .row.kembalian .value {
+            color: #0b3b2c;
+            font-weight: 700;
+        }
+
+
+        /* =========================================================
+           STATUS LUNAS
+        ========================================================= */
+
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            border-top: 1px solid #e2e8f0;
+
+            margin-top: 8px;
+            padding-top: 12px;
+        }
+
+        .status-label {
+            font-size: 14px;
+            font-weight: 600;
+
+            color: #334155;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+
+            background: #dcfce7;
+            color: #166534;
+
+            padding: 5px 10px;
+
+            border-radius: 40px;
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+
+        /* =========================================================
+           TOTAL
+        ========================================================= */
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-top: 14px;
+            padding-top: 14px;
+
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .total-row .label {
+            font-size: 16px;
+            font-weight: 700;
+
+            color: #1e293b;
+        }
+
+        .total-row .value {
+            font-size: 20px;
+            font-weight: 700;
+
+            color: #0b3b2c;
+        }
+
+
+        /* =========================================================
+           BUTTON
+        ========================================================= */
+
+        .btn-group {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 4px;
+        }
+
+        .btn {
+            flex: 1;
+
+            min-height: 52px;
+
+            padding: 14px 12px;
+
+            border: none;
+            border-radius: 16px;
+
+            font-family: 'Inter', sans-serif;
+
+            font-size: 15px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                background 0.15s,
+                transform 0.1s;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+
+        /* Primary */
+
+        .btn-primary {
+            background: #0b3b2c;
+
+            color: #ffffff;
+
+            box-shadow:
+                0 4px 12px rgba(11, 59, 44, 0.20);
+        }
+
+        .btn-primary:hover {
+            background: #0d4635;
+        }
+
+        .btn-primary:active {
+            background: #082f23;
+        }
+
+
+        /* Secondary */
+
+        .btn-secondary {
+            background: #f1f5f9;
+
+            color: #1e293b;
+
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+
+        /* =========================================================
+           CATATAN
+        ========================================================= */
+
+        .note {
+            font-size: 12px;
+
+            line-height: 1.5;
+
+            color: #94a3b8;
+
+            margin-top: 20px;
+
+            border-top: 1px solid #eef2f6;
+
+            padding-top: 16px;
+        }
+
+
+        /* =========================================================
+           WIREFRAME BADGE
+        ========================================================= */
+
+        .wireframe-badge {
+            position: fixed;
+
+            bottom: 16px;
+            right: 16px;
+
+            background: rgba(15, 23, 42, 0.7);
+
+            backdrop-filter: blur(4px);
+
+            color: #e2e8f0;
+
+            font-size: 11px;
+            font-weight: 500;
+
+            padding: 6px 14px;
+
+            border-radius: 40px;
+
+            letter-spacing: 0.4px;
+
+            pointer-events: none;
+            user-select: none;
+
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 14px;
+            }
+
+            .card {
+                padding: 24px 16px 24px;
+
+                border-radius: 28px;
+            }
+
+            .success-icon {
+                width: 66px;
+                height: 66px;
+
+                font-size: 36px;
+            }
+
+            .success-title {
+                font-size: 21px;
+            }
+
+            .success-sub {
+                margin-bottom: 18px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .wireframe-badge {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- =========================================================
+         HALAMAN TRANSAKSI BERHASIL
+    ========================================================= -->
+
+    <main class="card">
+
+        <!-- Header -->
+
+        <header class="header">
+
+            <h2>Transaksi Selesai</h2>
+
+            <span class="badge">
+                Sales
+            </span>
+
+        </header>
+
+
+        <!-- =====================================================
+             SUCCESS
+        ===================================================== -->
+
+        <section aria-labelledby="success-title">
+
+            <div
+                class="success-icon"
+                aria-hidden="true"
+            >
+                ✓
+            </div>
+
+            <h1
+                id="success-title"
+                class="success-title"
+            >
+                Pembayaran Diterima
+            </h1>
+
+            <p class="success-sub">
+                Transaksi berhasil disimpan.
+                Harga transaksi telah dicatat.
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             INFORMASI TRANSAKSI
+        ===================================================== -->
+
+        <section class="transaction-meta">
+
+            <div class="transaction-number">
+                No. Transaksi #TRX-20260820-001
+            </div>
+
+            <div class="transaction-date">
+                20 Agustus 2026 · 14:32
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             RINGKASAN
+        ===================================================== -->
+
+        <section
+            class="ringkasan"
+            aria-label="Ringkasan transaksi"
+        >
+
+            <div class="row">
+
+                <span class="label">
+                    Total Belanja
+                </span>
+
+                <span class="value">
+                    Rp 52.500
+                </span>
+
+            </div>
+
+
+            <div class="row">
+
+                <span class="label">
+                    Uang Dibayar
+                </span>
+
+                <span class="value">
+                    Rp 60.000
+                </span>
+
+            </div>
+
+
+            <div class="row kembalian">
+
+                <span class="label">
+                    Kembalian
+                </span>
+
+                <span class="value">
+                    Rp 7.500
+                </span>
+
+            </div>
+
+
+            <div class="status-row">
+
+                <span class="status-label">
+                    Status Pembayaran
+                </span>
+
+                <span class="status-badge">
+                    ✓ Lunas
+                </span>
+
+            </div>
+
+
+            <div class="total-row">
+
+                <span class="label">
+                    Total Transaksi
+                </span>
+
+                <span class="value">
+                    Rp 52.500
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             AKSI
+        ===================================================== -->
+
+        <div class="btn-group">
+
+            <button
+                class="btn btn-secondary"
+                type="button"
+            >
+                🖨️ Cetak Struk
+            </button>
+
+            <button
+                class="btn btn-primary"
+                type="button"
+            >
+                Selesai
+            </button>
+
+        </div>
+
+
+        <!-- =====================================================
+             CATATAN
+        ===================================================== -->
+
+        <p class="note">
+            Stok telah dikurangi secara otomatis.
+            <br />
+            Struk dapat dicetak jika printer tersedia.
+        </p>
+
+    </main>
+
+
+    <!-- Wireframe badge -->
+
+    <div class="wireframe-badge">
+        WIREFRAME · TRANSAKSI BERHASIL
+    </div>
+
+</body>
+</html>
+
+
+
+sekarang saya mau membuat aplikasi real berdasarkan data data ini.
+
+saya akan membuat aplikasi menggunakan device Android, menggunakan aplikasi Termux, Laravel dan composer saya sudah menginstall pkg nya di termux dan saya sudah membuat file :
+
+1. isi dari .env : 
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=base64:1C4KbVhdtuIfyrK2itTNce8ptX394xbmd1luTRqRKfU=
+APP_DEBUG=true
+APP_URL=http://localhost                                   
+APP_LOCALE=en
+APP_FALLBACK_LOCALE=en
+APP_FAKER_LOCALE=en_US
+
+APP_MAINTENANCE_DRIVER=file
+# APP_MAINTENANCE_STORE=database
+
+# PHP_CLI_SERVER_WORKERS=4
+
+BCRYPT_ROUNDS=12
+
+LOG_CHANNEL=stack
+LOG_STACK=single
+LOG_DEPRECATIONS_CHANNEL=null
+LOG_LEVEL=debug
+                                                  DB_CONNECTION=mysql # ini berubah awalnya sqlite
+ DB_HOST=127.0.0.1
+ DB_PORT=3306
+ DB_DATABASE=laravel
+ DB_USERNAME=root
+ DB_PASSWORD=
+
+SESSION_DRIVER=database
+SESSION_LIFETIME=120
+SESSION_ENCRYPT=false
+SESSION_PATH=/
+SESSION_DOMAIN=null
+
+BROADCAST_CONNECTION=log
+FILESYSTEM_DISK=local
+QUEUE_CONNECTION=database
+
+CACHE_STORE=database
+# CACHE_PREFIX=
+
+MEMCACHED_HOST=127.0.0.1
+
+REDIS_CLIENT=phpredis
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+
+MAIL_MAILER=log
+MAIL_SCHEME=null
+MAIL_HOST=127.0.0.1
+MAIL_PORT=2525
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_FROM_ADDRESS="hello@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=
+AWS_USE_PATH_STYLE_ENDPOINT=false
+
+VITE_APP_NAME="${APP_NAME}"
+
+2. isi dari app/Http/Controllers/MasterController.php :
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class MasterController extends Controller
+{
+    public function index() {
+                return view('master');
+        }
+}
+
+3. isi dari routes/web.php :
+
+<?php
+
+use App\Http\Controllers\MasterController;
+use Illuminate\Support\Facades\Route;
+
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+Route::get('/master', [MasterController::class, 'index']);
+
+4. isi dari resources/views/master.blade.php :
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Halaman User</title>
+</head>
+<body>
+    <h1>Ini adalah halaman User</h1>
+    <p>Selamat datang di aplikasi CatatRezekimu!</p>
+</body>
+</html>
+
+5. pembuatan db menggunakan xampp (mungkin kita bisa pakai mariadb di termux atau yang lebih powerfull lagi) bagian ini yang di ubah di file .env:
+DB_CONNECTION=mysql
+ DB_HOST=127.0.0.1
+ DB_PORT=3306
+ DB_DATABASE=laravel
+ DB_USERNAME=root
+ DB_PASSWORD=
+
+
+6. di suruh untuk migrasikan database : php artisan migrate
+
+7. merubah file master.blade.php menjadi : 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Selamat Datang, Admin!</h1>
+  <h3>Data Pengguna</h3>
+  <table border="1" cellspacing='0' cellpadding='8'>
+    <tr>
+      <th>Nama</th>
+      <th>Email</th>
+      <th>Password</th>
+    </tr>
+  </table>
+  @php
+  $getData = DB::table('users')->get();
+  @endphp
+  @foreach ($collection as $item)
+    <tr>
+      <td>{{ $data->name }}</td>
+      <td>{{ $data->email }}</td>
+      <td>{{ $data->password }}</td>
+    </tr>
+  @endforeach
+</body>
+</html>
+
+untuk keperluan file² didalam folder ini dapat di ubah, struktur folder saya :
+
+di termux : cd isalifolder/ujian2 #disini folder yang menampung project laravel tapi saya ngga akan gunain path ini, hanya sebagai salinan saja/backup#
+di penyimpanan internal: cd /sdcard/Ya_gitu/tugasRumah #disini adalah folder induk yang menampung file² yang berkaitan dengan project saya.
+
+didalam folder tugasRumah terdapat folder DB, ujian, usecase, wireframe
+
+untu laravel berada didalam folder ujian : /sdcard/Ya_gitu/tugasRumah/ujian
+
+
+
+kode html pada wireframe akan di kembangkan menjadi website projek asli.
+tambahan dalam mendesain setiap halaman (opsional) :
+1. Tema Minimalis & Modern (Paling Direkomendasikan)Fokus pada kenyamanan membaca dengan sentuhan warna pastel yang menenangkan.
+2. Latar Belakang: Putih Tulang / Off-White (#F8F9FA atau #F4F6F9) – Tidak sesilau putih pekat.
+3. Warna Teks: Abu-abu Sangat Gelap (#212529) 
+  – Lebih lembut di mata dibanding hitam pekat.
+4. Warna Aksen (Tombol Tambah/Simpan): Biru Lembut (#4A90E2) atau Hijau Teal (#2EC4B6).

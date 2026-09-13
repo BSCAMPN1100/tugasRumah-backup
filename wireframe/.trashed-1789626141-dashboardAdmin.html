@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireframe - Dashboard Admin</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eeeeee;
+            display: flex;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        /* FRAME ANDROID */
+        .phone {
+            width: 390px;
+            min-height: 844px;
+            background: white;
+            border: 3px solid #222;
+            border-radius: 25px;
+            overflow: hidden;
+        }
+
+        /* HEADER */
+        .header {
+            padding: 25px 22px 20px;
+            border-bottom: 2px solid #222;
+        }
+
+        .app-name {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .greeting {
+            margin-top: 18px;
+            font-size: 17px;
+        }
+
+        /* CONTENT */
+        .content {
+            padding: 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* RINGKASAN */
+        .summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .card {
+            border: 2px solid #222;
+            padding: 18px 10px;
+            min-height: 90px;
+        }
+
+        .card-title {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .card-value {
+            margin-top: 12px;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .stock-card {
+            margin-top: 12px;
+        }
+
+        /* MENU */
+        .menu-section {
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 2px solid #222;
+        }
+
+        .menu {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .menu-button {
+            border: 2px solid #222;
+            background: white;
+            min-height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .menu-button:last-child {
+            grid-column: 1 / 2;
+        }
+
+        /* LOGOUT */
+        .logout-section {
+            padding: 20px;
+            margin-top: 10px;
+            border-top: 2px solid #222;
+        }
+
+        .logout {
+            width: 100%;
+            border: 2px solid #222;
+            background: white;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* LABEL */
+        .wireframe-label {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <div class="phone">
+
+            <!-- HEADER -->
+            <header class="header">
+                <div class="app-name">
+                    CATATREZEKIMU
+                </div>
+
+                <div class="greeting">
+                    Halo, Admin!
+                </div>
+            </header>
+
+
+            <!-- CONTENT -->
+            <main class="content">
+
+                <!-- RINGKASAN -->
+                <section>
+                    <div class="section-title">
+                        RINGKASAN HARI INI
+                    </div>
+
+                    <div class="summary">
+
+                        <div class="card">
+                            <div class="card-title">
+                                TOTAL PENJUALAN
+                            </div>
+
+                            <div class="card-value">
+                                Rp 5.000.000
+                            </div>
+                        </div>
+
+
+                        <div class="card">
+                            <div class="card-title">
+                                KEUNTUNGAN
+                            </div>
+
+                            <div class="card-value">
+                                Rp 750.000
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="card stock-card">
+                        <div class="card-title">
+                            TOTAL STOK
+                        </div>
+
+                        <div class="card-value">
+                            1.250 Barang
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <!-- MENU -->
+                <section class="menu-section">
+
+                    <div class="section-title">
+                        MENU UTAMA
+                    </div>
+
+                    <div class="menu">
+
+                        <div class="menu-button">
+                            Data Barang
+                        </div>
+
+                        <div class="menu-button">
+                            Pembelian Stok
+                        </div>
+
+                        <div class="menu-button">
+                            Kelola Sales
+                        </div>
+
+                        <div class="menu-button">
+                            Laporan
+                        </div>
+
+                        <div class="menu-button">
+                            Semua Riwayat
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </main>
+
+
+            <!-- LOGOUT -->
+            <section class="logout-section">
+
+                <div class="logout">
+                    LOGOUT
+                </div>
+
+            </section>
+
+        </div>
+
+        <div class="wireframe-label">
+            Wireframe — Dashboard Admin
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,6267 @@
+1. mysql -u root -p1100 -e "USE laravel; SHOW TABLES;" hasil :
++-----------------------+
+| Tables_in_laravel     |
++-----------------------+
+| cache                 |
+| cache_locks           |
+| failed_jobs           |
+| job_batches           |
+| jobs                  |
+| migrations            |
+| password_reset_tokens |
+| sessions              |
+| users                 |
++-----------------------+
+
+
+2. php artisan migrate:status hasil :
+
+
+  Migration name .............................. Batch / Status
+  0001_01_01_000000_create_users_table ............... [1] Ran
+  0001_01_01_000001_create_cache_table ............... [1] Ran
+  0001_01_01_000002_create_jobs_table ................ [1] Ran
+  2026_08_25_071551_add_role_to_users_table .......... [2] Ran
+
+
+3. mysql -u root -p1100 -e "USE laravel; DESCRIBE users;" hasil :
+
++-------------------+-----------------------+------+-----+---------+----------------+
+| Field             | Type                  | Null | Key | Default | Extra          |
++-------------------+-----------------------+------+-----+---------+----------------+
+| id                | bigint(20) unsigned   | NO   | PRI | NULL    | auto_increment |
+| name              | varchar(255)          | NO   |     | NULL    |                |
+| email             | varchar(255)          | NO   | UNI | NULL    |                |
+| email_verified_at | timestamp             | YES  |     | NULL    |                |
+| password          | varchar(255)          | NO   |     | NULL    |                |
+| role              | enum('admin','sales') | NO   |     | sales   |                |
+| remember_token    | varchar(100)          | YES  |     | NULL    |                |
+| created_at        | timestamp             | YES  |     | NULL    |                |
+| updated_at        | timestamp             | YES  |     | NULL    |                |
++-------------------+-----------------------+------+-----+---------+----------------+
+
+
+4. ls -la app/Models/ hasil :
+
+total 4
+-rw-rw----. 1 root everybody 1013 Aug 27 07:12 User.php
+
+5. ls -la app/Http/Controllers/ hasil :
+
+total 12
+drwxrwx---. 2 root everybody 3488 Aug 25 14:21 Auth
+-rw-rw----. 1 root everybody   77 Aug  6 10:37 Controller.php
+-rw-rw----. 1 root everybody  287 Aug 10 14:51 MasterController.php
+
+6. ls -la resources/views/ hasil :
+
+total 83
+drwxrwx---. 2 root everybody  3488 Aug 25 16:18 auth
+drwxrwx---. 2 root everybody  3488 Aug 25 16:19 dashboard
+-rw-rw----. 1 root everybody   709 Aug 10 14:52 master.blade.php
+-rw-rw----. 1 root everybody 72302 May 26 06:11 welcome.blade.php
+
+7. ls -la database/migrations/ hasil :
+
+total 16
+-rw-rw----. 1 root everybody 1473 May 26 06:11 0001_01_01_000000_create_users_table.php
+-rw-rw----. 1 root everybody  873 May 26 06:11 0001_01_01_000001_create_cache_table.php
+-rw-rw----. 1 root everybody 1883 May 26 06:11 0001_01_01_000002_create_jobs_table.php
+-rw-rw----. 1 root everybody  541 Aug 25 14:17 2026_08_25_071551_add_role_to_users_table.php
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+progress stop di 5.1 :
+1. php artisan migrate:status hasil :
+
+
+  Migration name .............................. Batch / Status
+  0001_01_01_000000_create_users_table ............... [1] Ran
+  0001_01_01_000001_create_cache_table ............... [1] Ran
+  0001_01_01_000002_create_jobs_table ................ [1] Ran
+  2026_08_25_071551_add_role_to_users_table .......... [2] Ran
+  2026_08_28_012449_create_barang_table .............. [3] Ran
+  2026_08_28_012733_create_pembelian_table ........... [4] Ran
+  2026_08_28_013044_create_transaksi_penjualan_table . [5] Ran
+
+
+2. mysql -u root -p1100 -e "USE laravel; DESCRIBE barang;" hasil :
+
++-------------+---------------------+------+-----+---------+----------------+
+| Field       | Type                | Null | Key | Default | Extra          |
++-------------+---------------------+------+-----+---------+----------------+
+| id          | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| nama        | varchar(255)        | NO   |     | NULL    |                |
+| stok        | int(11)             | NO   |     | 0       |                |
+| harga_modal | decimal(15,2)       | NO   |     | 0.00    |                |
+| harga_jual  | decimal(15,2)       | NO   |     | 0.00    |                |
+| created_at  | timestamp           | YES  |     | NULL    |                |
+| updated_at  | timestamp           | YES  |     | NULL    |                |
++-------------+---------------------+------+-----+---------+----------------+
+
+3. mysql -u root -p1100 -e "USE laravel; DESCRIBE pembelian;" hasil :
+
++-----------------------+---------------------+------+-----+---------+----------------+
+| Field                 | Type                | Null | Key | Default | Extra          |
++-----------------------+---------------------+------+-----+---------+----------------+
+| id                    | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| barang_id             | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| jumlah                | int(11)             | NO   |     | NULL    |                |
+| harga_modal_saat_beli | decimal(15,2)       | NO   |     | NULL    |                |
+| total_harga           | decimal(15,2)       | NO   |     | NULL    |                |
+| created_at            | timestamp           | YES  |     | NULL    |                |
+| updated_at            | timestamp           | YES  |     | NULL    |                |
++-----------------------+---------------------+------+-----+---------+----------------+
+
+4. mysql -u root -p1100 -e "USE laravel; DESCRIBE transaksi_penjualan;" hasil :
+
++---------------------------+---------------------+------+-----+---------+----------------+
+| Field                     | Type                | Null | Key | Default | Extra          |
++---------------------------+---------------------+------+-----+---------+----------------+
+| id                        | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| sales_id                  | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| barang_id                 | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| jumlah                    | int(11)             | NO   |     | NULL    |                |
+| harga_jual_saat_transaksi | decimal(15,2)       | NO   |     | NULL    |                |
+| total                     | decimal(15,2)       | NO   |     | NULL    |                |
+| keuntungan_kotor          | decimal(15,2)       | NO   |     | NULL    |                |
+| created_at                | timestamp           | YES  |     | NULL    |                |
+| updated_at                | timestamp           | YES  |     | NULL    |                |
++---------------------------+---------------------+------+-----+---------+----------------+
+
+5. mysql -u root -p1100 -e "USE laravel; SELECT * FROM barang;" hasil :
+
++----+------------------+------+-------------+------------+---------------------+---------------------+
+| id | nama             | stok | harga_modal | harga_jual | created_at          | updated_at          |
++----+------------------+------+-------------+------------+---------------------+---------------------+
+|  1 | Beras 5kg        |   10 |    50000.00 |   55000.00 | 2026-08-28 01:34:51 | 2026-08-28 01:34:51 |
+|  2 | Minyak Goreng 2L |    5 |    25000.00 |   28000.00 | 2026-08-28 01:34:51 | 2026-08-28 01:34:51 |
+|  3 | Gula 1kg         |    8 |    12000.00 |   15000.00 | 2026-08-28 01:34:51 | 2026-08-28 01:34:51 |
++----+------------------+------+-------------+------------+---------------------+---------------------+
+
+6. ls -la app/Models/ hasil :
+
+total 16
+-rw-rw----. 1 root everybody  324 Aug 28 08:26 Barang.php
+-rw-rw----. 1 root everybody  462 Aug 28 08:29 Pembelian.php
+-rw-rw----. 1 root everybody  602 Aug 28 08:33 TransaksiPenjualan.php
+-rw-rw----. 1 root everybody 1013 Aug 27 07:12 User.php
+
+
+cat app/Models/Barang.php hasil :
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Barang extends Model
+{
+    use HasFactory;
+
+    protected $table = 'barang';
+
+    protected $fillable = [
+        'nama',
+        'stok',
+        'harga_modal',
+        'harga_jual',
+    ];
+}
+
+7. ls -la app/Http/Controllers/ | grep Barang hasil : kosong 
+[stop] perbaikan :
+1. buat controller, php artisan make:controller BarangController --resource  hasil : selesai
+2. ls -la app/Http/Controllers/ | grep Barang hasil : -rw-rw----. 1 root everybody 1005 Aug 28 08:50 BarangController.php
+3. app/Http/Controllers/BarangController.php sudah di isi.
+4. mkdir -p resources/views/barang hasil : selesai
+5. resources/views/barang/index.blade.php hasil : sudah di isi
+6. tambah routes di routes/web.php hasil file keseluruhan :
+<?php
+
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth'])->group(function () {
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/dashboard/admin', function () {
+            // nanti kita isi dengan data nyata
+            return view('dashboard.admin');
+        })->name('dashboard.admin');
+
+        Route::resource('barang', BarangController::class);
+    });
+
+    Route::middleware(['role:sales'])->group(function () {
+        Route::get('/dashboard/sales', function () {
+            return view('dashboard.sales');
+        })->name('dashboard.sales');
+    });
+});
+
+7. mengganti pada file resources/views/dashboard/admin.blade.php hasil :
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Admin · CatatRezekimu</title>
+
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ----- RESET & GLOBAL ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* ----- CARD UTAMA (mockup HP) ----- */
+        .dashboard-card {
+            max-width: 420px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.10);
+            padding: 28px 20px 36px;
+            transition: box-shadow 0.2s;
+            margin: 0 auto;
+        }
+
+        /* ----- HEADER : Sapaan + Logout ----- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .header .greeting h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0b3b2c;
+            letter-spacing: -0.3px;
+        }
+
+        .header .greeting p {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .btn-logout {
+            background: #f1f5f9;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: default;
+            transition: background 0.15s;
+        }
+
+        .btn-logout span {
+            font-size: 16px;
+        }
+
+        .btn-logout:active {
+            background: #e2e8f0;
+        }
+
+        /* ----- KARTU RINGKASAN (3 kartu) ----- */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .summary-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #eef2f6;
+        }
+
+        .summary-card .label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 6px;
+        }
+
+        .summary-card .value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0b3b2c;
+        }
+
+        .summary-card .value small {
+            font-size: 12px;
+            font-weight: 400;
+            color: #94a3b8;
+            margin-left: 2px;
+        }
+
+        /* ----- MENU NAVIGASI (5 tombol besar) ----- */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-bottom: 8px;
+        }
+
+        .menu-item {
+            background: #f8fafc;
+            border: 1px solid #eef2f6;
+            border-radius: 20px;
+            padding: 20px 10px;
+            text-align: center;
+            transition: background 0.15s, transform 0.1s;
+            cursor: default;
+        }
+
+        .menu-item:active {
+            transform: scale(0.96);
+            background: #f1f5f9;
+        }
+
+        .menu-item .icon {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .menu-item .label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            letter-spacing: -0.2px;
+        }
+
+        /* item khusus yang memakan 2 kolom (opsional, kita buat item terakhir full width) */
+        .menu-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* ----- FOOTER (opsional) ----- */
+        .dashboard-footer {
+            margin-top: 28px;
+            text-align: center;
+            font-size: 12px;
+            color: #94a3b8;
+            border-top: 1px solid #eef2f6;
+            padding-top: 20px;
+        }
+
+        .dashboard-footer .version {
+            background: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 500;
+            color: #64748b;
+            display: inline-block;
+        }
+
+        /* ----- RESPONSIVE TWEAK ----- */
+        @media (max-width: 480px) {
+            .dashboard-card {
+                padding: 20px 16px 28px;
+                border-radius: 28px;
+            }
+
+            .summary-grid {
+                gap: 8px;
+            }
+
+            .summary-card {
+                padding: 12px 6px;
+            }
+
+            .summary-card .value {
+                font-size: 17px;
+            }
+
+            .menu-grid {
+                gap: 10px;
+            }
+
+            .menu-item {
+                padding: 16px 8px;
+            }
+
+            .menu-item .icon {
+                font-size: 24px;
+            }
+
+            .header .greeting h2 {
+                font-size: 18px;
+            }
+
+            .btn-logout {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+        }
+
+        /* ----- wireframe badge (opsional) ----- */
+        .wireframe-badge {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(4px);
+            color: #e2e8f0;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 40px;
+            letter-spacing: 0.4px;
+            pointer-events: none;
+            user-select: none;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ====== DASHBOARD ADMIN ====== -->
+    <div class="dashboard-card">
+
+        <!-- Header: sapaan & logout -->
+        <div class="header">
+            <div class="greeting">
+                <h2>👋 Halo, Admin</h2>
+                <p>Selamat datang di CatatRezekimu</p>
+            </div>
+            <button class="btn-logout" type="button">
+                <span>⏻</span> Logout
+            </button>
+        </div>
+
+        <!-- Ringkasan 3 kartu (dengan label yang diperbaiki) -->
+        <div class="summary-grid">
+            <div class="summary-card">
+                <div class="label">Omzet Hari Ini</div>
+                <div class="value">Rp 4.2 <small>juta</small></div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Keuntungan Kotor</div>
+                <div class="value">Rp 1.8 <small>juta</small></div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Jumlah Produk</div>
+                <div class="value">24 <small>produk</small></div>
+            </div>
+        </div>
+
+        <!-- Menu navigasi 5 tombol -->
+        <div class="menu-grid">
+<div class="menu-item">
+    <a href="{{ route('barang.index') }}" style="text-decoration: none; color: inherit;">
+        <span class="icon">📦</span>
+        <span class="label">Data Barang</span>
+    </a>
+</div>
+            <div class="menu-item">
+                <span class="icon">🛒</span>
+                <span class="label">Pembelian</span>
+            </div>
+            <div class="menu-item">
+                <span class="icon">👥</span>
+                <span class="label">Kelola Sales</span>
+            </div>
+            <div class="menu-item">
+                <span class="icon">📊</span>
+                <span class="label">Laporan Keuangan</span>
+            </div>
+            <div class="menu-item full-width">
+                <span class="icon">📋</span>
+                <span class="label">Riwayat Transaksi</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="dashboard-footer">
+            <span class="version">versi 1.0 · offline</span>
+        </div>
+
+    </div>
+
+    <!-- Wireframe keterangan -->
+    <div class="wireframe-badge">WIREFRAME · DASHBOARD ADMIN</div>
+
+</body>
+</html>
+
+sebenarnya isi file ini adalah isi dari halaman admin dari wireframe kalau yang sebelumnya hanya seperti ini :
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin</title>
+</head>
+<body>
+    <h1>Dashboard Admin</h1>
+    <p>Selamat datang, {{ Auth::user()->name }}!</p>
+    <form action="{{ url('/logout') }}" method="POST">
+        @csrf
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+routes/web.php old :
+<?php
+
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth'])->group(function () {
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/dashboard/admin', function () {
+            // nanti kita isi dengan data nyata
+            return view('dashboard.admin');
+        })->name('dashboard.admin');
+
+        Route::resource('barang', BarangController::class);
+    });
+
+    Route::middleware(['role:sales'])->group(function () {
+        Route::get('/dashboard/sales', function () {
+            return view('dashboard.sales');
+        })->name('dashboard.sales');
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+lanjut : 
+
+1. php artisan make:controller PembelianController
+
+2. app/Http/Controllers/PembelianController.php :
+
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Barang;
+use App\Models\Pembelian;
+use Illuminate\Http\Request;
+
+class PembelianController extends Controller
+{
+    // Tampilkan daftar pembelian
+    public function index()
+    {
+        $pembelian = Pembelian::with('barang')->orderBy('created_at', 'desc')->get();
+        return view('pembelian.index', compact('pembelian'));
+    }
+
+    // Tampilkan form tambah pembelian
+    public function create()
+    {
+        $barang = Barang::all();
+        return view('pembelian.create', compact('barang'));
+    }
+
+    // Simpan pembelian
+    public function store(Request $request)
+    {
+        $request->validate([
+            'barang_id' => 'required|exists:barang,id',
+            'jumlah' => 'required|integer|min:1',
+            'harga_modal_saat_beli' => 'required|numeric|min:0',
+        ]);
+
+        // Ambil data barang
+        $barang = Barang::findOrFail($request->barang_id);
+
+        // Hitung total harga
+        $totalHarga = $request->jumlah * $request->harga_modal_saat_beli;
+
+        // Simpan pembelian
+        Pembelian::create([
+            'barang_id' => $request->barang_id,
+            'jumlah' => $request->jumlah,
+            'harga_modal_saat_beli' => $request->harga_modal_saat_beli,
+            'total_harga' => $totalHarga,
+        ]);
+
+        // Update stok dan harga modal barang
+        $barang->stok += $request->jumlah;
+        $barang->harga_modal = $request->harga_modal_saat_beli;
+        $barang->save();
+
+        return redirect()->route('pembelian.index')->with('success', 'Pembelian berhasil dicatat!');
+    }
+}
+
+3. 
+
+
+
+mv ~/.ssh ~/.ssh_old
+ssh-keygen -t ed25519 -C "muhammadarifnurrohman96@gmail.com"
+cat ~/.ssh/id_ed25519.pub
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. hasil php artisan route:list :
+
+  GET|HEAD        barang barang.index › BarangController…
+  POST            barang barang.store › BarangController…
+  GET|HEAD        barang/create barang.create › BarangCo…
+  GET|HEAD        barang/{barang} barang.show › BarangCo…
+  PUT|PATCH       barang/{barang} barang.update › Barang…
+  DELETE          barang/{barang} barang.destroy › Baran…
+  GET|HEAD        barang/{barang}/edit barang.edit › Bar…
+  GET|HEAD        dashboard/admin dashboard.admin › rout…
+  GET|HEAD        dashboard/sales dashboard.sales › rout…
+  GET|HEAD        login login › Auth\LoginController@sho…
+  POST            login ...... Auth\LoginController@login
+  POST            logout logout › Auth\LoginController@l…
+  GET|HEAD        pembelian pembelian.index › PembelianC…
+  POST            pembelian pembelian.store › PembelianC…
+  GET|HEAD        pembelian/create pembelian.create › Pe…
+  GET|HEAD        storage/{path} storage.local › vendor/…
+  PUT             storage/{path} storage.local.upload › …
+  GET|HEAD        up vendor/laravel/framework/src/Illumi…
+
+                                      Showing [18] routes
+
+
+
+2. baru saya tambahkan isi dari bootstrap/app.php :
+
+<?php
+
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
+
+return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->alias([
+        'role' => \App\Http\Middleware\CheckRole::class,
+    ]);
+    })
+    ->withMiddleware(function (Middleware $middleware) {
+    $middleware->alias([
+        'role' => \App\Http\Middleware\CheckRole::class,
+    ]);
+})
+    ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->shouldRenderJsonWhen(
+            fn (Request $request) => $request->is('api/*'),
+        );
+    })->create();
+    
+3. cache sudah di clear 
+
+4. isi dari routes/web.php :
+
+<?php
+
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\PembelianController;
+use App\Models\Barang;
+use App\Models\TransaksiPenjualan;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth'])->group(function () {
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/dashboard/admin', function () {
+            // Data summary
+            $totalBarang = Barang::count();
+
+            // Omzet hari ini (dari transaksi penjualan hari ini)
+            $omzetHariIni = TransaksiPenjualan::whereDate('created_at', today())->sum('total') ?? 0;
+
+            // Keuntungan kotor hari ini
+            $keuntunganHariIni = TransaksiPenjualan::whereDate('created_at', today())->sum('keuntungan_kotor') ?? 0;
+
+            return view('dashboard.admin', compact('totalBarang', 'omzetHariIni', 'keuntunganHariIni'));
+        })->name('dashboard.admin');
+
+        Route::resource('barang', BarangController::class);
+        Route::resource('pembelian', PembelianController::class)->except(['show', 'edit', 'update', 'destroy']);
+    });
+
+    Route::middleware(['role:sales'])->group(function () {
+        Route::get('/dashboard/sales', function () {
+            return view('dashboard.sales');
+        })->name('dashboard.sales');
+    });
+});
+
+
+5.
+
+stop evaluasi keamanan
+
+1. php artisan route:list :
+
+
+  GET|HEAD        barang ....................... barang.index › BarangController@index
+  POST            barang ....................... barang.store › BarangController@store
+  GET|HEAD        barang/create .............. barang.create › BarangController@create
+  GET|HEAD        barang/{barang} ................ barang.show › BarangController@show
+  PUT|PATCH       barang/{barang} ............ barang.update › BarangController@update
+  DELETE          barang/{barang} .......... barang.destroy › BarangController@destroy
+  GET|HEAD        barang/{barang}/edit ........... barang.edit › BarangController@edit
+  GET|HEAD        dashboard/admin ................ dashboard.admin › routes/web.php:16
+  GET|HEAD        dashboard/sales ................ dashboard.sales › routes/web.php:34
+  GET|HEAD        login ................... login › Auth\LoginController@showLoginForm
+  POST            login ................................... Auth\LoginController@login
+  POST            logout ........................ logout › Auth\LoginController@logout
+  GET|HEAD        pembelian .............. pembelian.index › PembelianController@index
+  POST            pembelian .............. pembelian.store › PembelianController@store
+  GET|HEAD        pembelian/create ..... pembelian.create › PembelianController@create
+  GET|HEAD        storage/{path} storage.local › vendor/laravel/framework/src/Illumin…
+  PUT             storage/{path} storage.local.upload › vendor/laravel/framework/src/…
+  GET|HEAD        up vendor/laravel/framework/src/Illuminate/Foundation/Configuration…
+
+                                                                   Showing [18] routes
+
+2. php artisan route:list -v :
+
+
+  GET|HEAD        barang ....................... barang.index › BarangController@index
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  POST            barang ....................... barang.store › BarangController@store
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  GET|HEAD        barang/create .............. barang.create › BarangController@create
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  GET|HEAD        barang/{barang} ................ barang.show › BarangController@show
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  PUT|PATCH       barang/{barang} ............ barang.update › BarangController@update
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  DELETE          barang/{barang} .......... barang.destroy › BarangController@destroy
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  GET|HEAD        barang/{barang}/edit ........... barang.edit › BarangController@edit
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  GET|HEAD        dashboard/admin ................ dashboard.admin › routes/web.php:16
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  GET|HEAD        dashboard/sales ................ dashboard.sales › routes/web.php:34
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:sales
+  GET|HEAD        login ................... login › Auth\LoginController@showLoginForm
+                  ⇂ web
+  POST            login ................................... Auth\LoginController@login
+                  ⇂ web
+  POST            logout ........................ logout › Auth\LoginController@logout
+                  ⇂ web
+  GET|HEAD        pembelian .............. pembelian.index › PembelianController@index
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  POST            pembelian .............. pembelian.store › PembelianController@store
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  GET|HEAD        pembelian/create ..... pembelian.create › PembelianController@create
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  GET|HEAD        storage/{path} storage.local › vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:111
+  PUT             storage/{path} storage.local.upload › vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:119
+  GET|HEAD        up vendor/laravel/framework/src/Illuminate/Foundation/Configuration/ApplicationBuilder.php:224
+
+                                                                   Showing [18] routes
+
+3. php artisan route:list --verbose : 
+
+
+  GET|HEAD        barang ....................... barang.index › BarangController@index
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  POST            barang ....................... barang.store › BarangController@store
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  GET|HEAD        barang/create .............. barang.create › BarangController@create
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  GET|HEAD        barang/{barang} ................ barang.show › BarangController@show
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  PUT|PATCH       barang/{barang} ............ barang.update › BarangController@update
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  DELETE          barang/{barang} .......... barang.destroy › BarangController@destroy
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  GET|HEAD        barang/{barang}/edit ........... barang.edit › BarangController@edit
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  GET|HEAD        dashboard/admin ................ dashboard.admin › routes/web.php:16
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  GET|HEAD        dashboard/sales ................ dashboard.sales › routes/web.php:34
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:sales
+  GET|HEAD        login ................... login › Auth\LoginController@showLoginForm
+                  ⇂ web
+  POST            login ................................... Auth\LoginController@login
+                  ⇂ web
+  POST            logout ........................ logout › Auth\LoginController@logout
+                  ⇂ web
+  GET|HEAD        pembelian .............. pembelian.index › PembelianController@index
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  POST            pembelian .............. pembelian.store › PembelianController@store
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  GET|HEAD        pembelian/create ..... pembelian.create › PembelianController@create
+                  ⇂ web
+                  ⇂ auth
+                  ⇂ role:admin
+  GET|HEAD        storage/{path} storage.local › vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:111
+  PUT             storage/{path} storage.local.upload › vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:119
+  GET|HEAD        up vendor/laravel/framework/src/Illuminate/Foundation/Configuration/ApplicationBuilder.php:224
+
+                                                                   Showing [18] routes
+
+
+
+isi .env :
+
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=base64:1C4KbVhdtuIfyrK2itTNce8ptX394xbmd1luTRqRKfU=
+APP_DEBUG=true
+APP_URL=http://localhost
+
+APP_LOCALE=en
+APP_FALLBACK_LOCALE=en
+APP_FAKER_LOCALE=en_US
+
+APP_MAINTENANCE_DRIVER=file
+# APP_MAINTENANCE_STORE=database
+
+# PHP_CLI_SERVER_WORKERS=4
+
+BCRYPT_ROUNDS=12
+
+LOG_CHANNEL=stack
+LOG_STACK=single
+LOG_DEPRECATIONS_CHANNEL=null
+LOG_LEVEL=debug
+
+DB_CONNECTION=mysql
+ DB_HOST=127.0.0.1
+ DB_PORT=3306
+ DB_DATABASE=laravel
+ DB_USERNAME=root
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+routes/web.php :
+
+<?php
+
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\PembelianController;
+use App\Models\Barang;
+use App\Models\TransaksiPenjualan;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth'])->group(function () {
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/dashboard/admin', function () {
+            // Data summary
+            $totalBarang = Barang::count();
+
+            // Omzet hari ini (dari transaksi penjualan hari ini)
+            $omzetHariIni = TransaksiPenjualan::whereDate('created_at', today())->sum('total') ?? 0;
+
+            // Keuntungan kotor hari ini
+            $keuntunganHariIni = TransaksiPenjualan::whereDate('created_at', today())->sum('keuntungan_kotor') ?? 0;
+
+            return view('dashboard.admin', compact('totalBarang', 'omzetHariIni', 'keuntunganHariIni'));
+        })->name('dashboard.admin');
+
+        Route::resource('barang', BarangController::class);
+        Route::resource('pembelian', PembelianController::class)->except(['show', 'edit', 'update', 'destroy']);
+    });
+
+    Route::middleware(['role:sales'])->group(function () {
+        Route::get('/dashboard/sales', function () {
+            return view('dashboard.sales');
+        })->name('dashboard.sales');
+    });
+    Route::get('/test-auth', function () {
+    return 'Anda sudah login!';
+})->middleware('auth');
+});
+
+
+
+saya login terlebih dahulu baru saya masuk ke halaman http://0.0.0.0:8000/test-auth (saya lupa) saya mencoba untuk php artisan route:clear lalu mencoba masuk dan hasilnya sama seperti yang pertama "anda sudah login"
+
+tapi sebelumnnya saya mencoba untuk langsung ke dashboard admin dengan http://0.0.0.0:8000/dashboard/admin hasilnya saya langsung di arahkan ke halaman login begitu juga untuk http://0.0.0.0:8000/pembelian
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. selesai
+2. juga aman
+3. saya tidak bisa login dan masuk ke dashboard admin lalu muncul : 419 | Page Expired
+
+saya mencobanya pada mode incognito bro
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+RINGKASAN PROJECT CATATREZEKIMU
+
+Status: Development (Fungsi Utama Berjalan)
+Tujuan: Aplikasi web manajemen stok & keuangan untuk Admin dan Sales (proyek SMK RPL)
+
+---
+
+1. STACK & LINGKUNGAN
+
+· Framework: Laravel 13.23.0
+· PHP: 8.5.1
+· Database: MariaDB/MySQL (Termux)
+· Server: php artisan serve --host=0.0.0.0 --port=8000
+· Auth: Custom Login (username = kolom name, password = hashed)
+· Role: admin dan sales (enum di tabel users)
+
+---
+
+2. FITUR YANG SUDAH SELESAI & BERFUNGSI
+
+Fitur Status Keterangan
+✅ Login Berfungsi Username = admin / sales, Password = admin123 / sales123
+✅ Logout Berfungsi POST /logout dengan CSRF
+✅ Middleware Auth Berfungsi Route terproteksi, redirect ke /login jika belum login
+✅ Middleware Role Berfungsi role:admin dan role:sales terpasang
+✅ Dashboard Admin Berfungsi Summary dinamis (omzet, keuntungan, jumlah produk) dari database
+✅ Dashboard Sales Berfungsi Halaman sederhana (masih placeholder)
+✅ Data Barang (CRUD) Berfungsi Tambah, lihat, edit, hapus barang (stok & harga modal otomatis 0 untuk barang baru)
+✅ Pembelian Berfungsi Tambah pembelian → stok bertambah, harga modal terupdate, riwayat tersimpan
+
+---
+
+3. STRUKTUR DATABASE (TABEL YANG SUDAH DIBUAT)
+
+Tabel Kolom Penting Keterangan
+users id, name, email, password, role (enum admin/sales) Auth & role
+barang id, nama, stok, harga_modal, harga_jual Data produk
+pembelian id, barang_id, jumlah, harga_modal_saat_beli, total_harga Riwayat pembelian
+transaksi_penjualan id, sales_id, barang_id, jumlah, harga_jual_saat_transaksi, total, keuntungan_kotor Riwayat penjualan (nanti)
+sessions id, user_id, payload, last_activity Session driver database
+
+---
+
+4. FILE-FILE YANG DIBUAT/DIMODIFIKASI
+
+Path Status Fungsi
+routes/web.php Dimodifikasi Semua route + middleware
+app/Http/Controllers/Auth/LoginController.php Dibuat Logic login, logout, redirect by role
+app/Http/Controllers/BarangController.php Dibuat CRUD barang (index, create, store, edit, update, destroy)
+app/Http/Controllers/PembelianController.php Dibuat Index, create, store pembelian
+app/Http/Middleware/CheckRole.php Dibuat Middleware cek role admin/sales
+bootstrap/app.php Dimodifikasi Daftar middleware role
+app/Models/User.php Dimodifikasi Tambah role ke fillable
+app/Models/Barang.php Dibuat Model barang
+app/Models/Pembelian.php Dibuat Model pembelian
+app/Models/TransaksiPenjualan.php Dibuat Model transaksi penjualan
+database/migrations/..._add_role_to_users_table.php Dibuat Tambah kolom role
+database/migrations/..._create_barang_table.php Dibuat Tabel barang
+database/migrations/..._create_pembelian_table.php Dibuat Tabel pembelian
+database/migrations/..._create_transaksi_penjualan_table.php Dibuat Tabel transaksi penjualan
+database/migrations/..._create_sessions_table.php Dibuat Tabel session (untuk driver database)
+database/seeders/BarangSeeder.php Dibuat Data dummy barang
+resources/views/auth/login.blade.php Dibuat Halaman login (responsif)
+resources/views/dashboard/admin.blade.php Dibuat Dashboard admin (dinamis)
+resources/views/dashboard/sales.blade.php Dibuat Dashboard sales (placeholder)
+resources/views/barang/index.blade.php Dibuat Daftar barang
+resources/views/barang/create.blade.php Dibuat Form tambah barang
+resources/views/barang/edit.blade.php Dibuat Form edit barang
+resources/views/pembelian/index.blade.php Dibuat Riwayat pembelian
+resources/views/pembelian/create.blade.php Dibuat Form tambah pembelian
+
+---
+
+5. MASALAH YANG DIHADAPI & SOLUSI
+
+Masalah Penyebab Solusi
+Database connection refused MariaDB tidak berjalan Jalankan mysqld_safe &
+Access denied ke MariaDB User root belum diset Reset via --skip-grant-tables, set password 1100
+Seeder gagal (duplicate entry) Data user sudah ada User::truncate() lalu buat ulang via Tinker
+Role tidak tersimpan role tidak ada di $fillable Tambahkan 'role' ke $fillable di User.php
+User.php error namespace Ada karakter = di awal file Hapus karakter =
+Login gagal (username tidak cocok) Data user "Admin" bukan "admin" Buat ulang user dengan name admin dan sales
+Halaman dashboard bisa diakses tanpa login Duplikasi middleware di bootstrap/app.php Gabungkan ->withMiddleware() hanya satu kali
+Error 419 Page Expired Session driver file bermasalah Ganti ke SESSION_DRIVER=database, buat tabel sessions
+PembelianController not found Tidak ada use di route Tambahkan use App\Http\Controllers\PembelianController
+Method edit() undefined BarangController belum lengkap Tambahkan method edit, update, create, store, destroy
+
+---
+
+6. KEAMANAN SAAT INI
+
+Aspek Status Keterangan
+Middleware auth ✅ Terpasang Semua route dashboard & resource dilindungi
+Middleware role:admin ✅ Terpasang Admin only untuk /dashboard/admin, /barang/*, /pembelian/*
+Middleware role:sales ✅ Terpasang Sales only untuk /dashboard/sales
+CSRF Protection ✅ Aktif Semua form pakai @csrf
+Password hashing ✅ Aktif Pakai bcrypt() atau Hash::make()
+Mass Assignment ✅ Aman $fillable sudah diatur di semua model
+
+---
+
+7. STATUS & TODO LIST
+
+✅ SUDAH SELESAI
+
+· Login + Logout
+· Role middleware
+· Dashboard Admin (summary dinamis)
+· CRUD Barang
+· Fitur Pembelian (tambah, riwayat, update stok & harga modal)
+· Keamanan route (tidak bisa diakses tanpa login)
+
+⏳ BELUM DIKERJAKAN (FITUR SELANJUTNYA)
+
+· Kelola Sales (CRUD akun sales oleh Admin)
+· Laporan Keuangan (omzet & keuntungan per periode)
+· Riwayat Transaksi (daftar penjualan oleh sales)
+· Dashboard Sales (fitur untuk sales: lihat barang, catat penjualan)
+· UI/UX Refinement (desain lebih baik, responsive polish)
+
+🟡 CATATAN
+
+· Harga modal tidak boleh ditampilkan ke Sales (belum diimplementasikan).
+· Stok tidak boleh negatif saat penjualan (belum diimplementasikan).
+· Versi 1.0 hanya transaksi tunai (belum ada fitur piutang).
+
+---
+
+8. KREDENSIAL LOGIN UNTUK TESTING
+
+Role Username Password
+Admin admin admin123
+Sales sales sales123
+
+---
+
+9. CARA MENJALANKAN PROJECT
+
+```bash
+cd /sdcard/Ya_gitu/tugasRumah/ujian
+
+# Jalankan MariaDB (jika belum)
+mysqld_safe &
+
+# Jalankan server
+php artisan serve --host=0.0.0.0 --port=8000
+
+# Akses di browser
+http://localhost:8000/login
+```
+
+---
+
+10. CATATAN PENTING UNTUK AI/REVIEWER
+
+1. Project ini adalah web app, bukan Android native (walau dikembangkan di Termux).
+2. Fokus saat ini: fungsi berjalan, bukan UI sempurna.
+3. Role system sudah teruji: Admin tidak bisa akses dashboard sales, Sales tidak bisa akses dashboard admin.
+4. Semua route sudah dilindungi middleware auth dan role.
+5. Session menggunakan database (bukan file) untuk menghindari error 419.
+6. Business rule dasar sudah diikuti (stok 0, harga modal 0 untuk barang baru; stok bertambah saat pembelian).
+7. Belum ada fitur penjualan (ini yang akan dikerjakan setelah fitur Kelola Sales selesai).
+
+---
+
+
+
+sebenarnya untuk dashboard admin kita perlu membuat planning lagi karena fitur² didalamnya perlu di perjelas
+
+saya juga mengalami stuck dalam pembuatan dashboard admin ini karena kurangnya planning. stuck pada saat uji keamanan nya dengan mencoba langsung akses dashboard admin tanpa login (untuk hal ini kita tunda saja dulu nanti akan mengikuti bersama pembuatan fitur² nya)
+
+rencana saya dengan anda:
+1. memberikan anda data data perkembangan project saya.
+2. membuat planning untuk fitur-fitur pada dashboard admin, memperjelas setiap fitur dan membatasi scope nya (intinya setiap fitur jelas tujuan dan masalah yang di selesaikan)
+3. uji keamanan setiap halaman yang dibuat
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. find app routes resources/views database/migrations -type f | sort hasil :
+
+app/Http/Controllers/Auth/LoginController.php
+app/Http/Controllers/BarangController.php
+app/Http/Controllers/Controller.php
+app/Http/Controllers/MasterController.php
+app/Http/Controllers/PembelianController
+app/Http/Controllers/PembelianController.php
+app/Http/Middleware/CheckRole.php
+app/Models/Barang.php
+app/Models/Pembelian.php
+app/Models/TransaksiPenjualan.php
+app/Models/User.php
+app/Models/User.php.bak
+app/Providers/AppServiceProvider.php
+database/migrations/0001_01_01_000000_create_users_table.php
+database/migrations/0001_01_01_000001_create_cache_table.php
+database/migrations/0001_01_01_000002_create_jobs_table.php
+database/migrations/2026_08_25_071551_add_role_to_users_table.php
+database/migrations/2026_08_28_012449_create_barang_table.php
+database/migrations/2026_08_28_012733_create_pembelian_table.php
+database/migrations/2026_08_28_013044_create_transaksi_penjualan_table.php
+resources/views/auth/login.blade.php
+resources/views/barang/create.blade.php
+resources/views/barang/edit.blade.php
+resources/views/barang/index.blade.php
+resources/views/dashboard/admin.blade.php
+resources/views/dashboard/sales.blade.php
+resources/views/master.blade.php
+resources/views/pembelian/create.blade.php
+resources/views/pembelian/index.blade.php
+resources/views/welcome.blade.php
+routes/console.php
+routes/web.php
+
+
+
+2. php artisan route:list hasil :
+
+
+  GET|HEAD        barang barang.index › BarangController@index
+  POST            barang barang.store › BarangController@store
+  GET|HEAD        barang/create barang.create › BarangControl…
+  GET|HEAD        barang/{barang} barang.show › BarangControl…
+  PUT|PATCH       barang/{barang} barang.update › BarangContr…
+  DELETE          barang/{barang} barang.destroy › BarangCont…
+  GET|HEAD        barang/{barang}/edit barang.edit › BarangCo…
+  GET|HEAD        dashboard/admin dashboard.admin › routes/we…
+  GET|HEAD        dashboard/sales dashboard.sales › routes/we…
+  GET|HEAD        login login › Auth\LoginController@showLogi…
+  POST            login ........... Auth\LoginController@login
+  POST            logout logout › Auth\LoginController@logout
+  GET|HEAD        pembelian pembelian.index › PembelianContro…
+  POST            pembelian pembelian.store › PembelianContro…
+  GET|HEAD        pembelian/create pembelian.create › Pembeli…
+  GET|HEAD        storage/{path} storage.local › vendor/larav…
+  PUT             storage/{path} storage.local.upload › vendo…
+  GET|HEAD        test-auth ................ routes/web.php:38
+  GET|HEAD        up vendor/laravel/framework/src/Illuminate/…
+
+                                           Showing [19] routes
+
+
+
+
+3. php artisan migrate:status hasil :
+
+
+  Migration name .............................. Batch / Status
+  0001_01_01_000000_create_users_table ............... [1] Ran
+  0001_01_01_000001_create_cache_table ............... [1] Ran
+  0001_01_01_000002_create_jobs_table ................ [1] Ran
+  2026_08_25_071551_add_role_to_users_table .......... [2] Ran
+  2026_08_28_012449_create_barang_table .............. [3] Ran
+  2026_08_28_012733_create_pembelian_table ........... [4] Ran
+  2026_08_28_013044_create_transaksi_penjualan_table . [5] Ran
+  
+DESCRIBE users; hasil :
+
++-------------------+-----------------------+------+-----+---------+----------------+
+| Field             | Type                  | Null | Key | Default | Extra          |
++-------------------+-----------------------+------+-----+---------+----------------+
+| id                | bigint(20) unsigned   | NO   | PRI | NULL    | auto_increment |
+| name              | varchar(255)          | NO   |     | NULL    |                |
+| email             | varchar(255)          | NO   | UNI | NULL    |                |
+| email_verified_at | timestamp             | YES  |     | NULL    |                |
+| password          | varchar(255)          | NO   |     | NULL    |                |
+| role              | enum('admin','sales') | NO   |     | sales   |                |
+| remember_token    | varchar(100)          | YES  |     | NULL    |                |
+| created_at        | timestamp             | YES  |     | NULL    |                |
+| updated_at        | timestamp             | YES  |     | NULL    |                |
++-------------------+-----------------------+------+-----+---------+----------------+
+
+
+
+
+DESCRIBE barang; hasil :
+
++-------------+---------------------+------+-----+---------+----------------+
+| Field       | Type                | Null | Key | Default | Extra          |
++-------------+---------------------+------+-----+---------+----------------+
+| id          | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| nama        | varchar(255)        | NO   |     | NULL    |                |
+| stok        | int(11)             | NO   |     | 0       |                |
+| harga_modal | decimal(15,2)       | NO   |     | 0.00    |                |
+| harga_jual  | decimal(15,2)       | NO   |     | 0.00    |                |
+| created_at  | timestamp           | YES  |     | NULL    |                |
+| updated_at  | timestamp           | YES  |     | NULL    |                |
++-------------+---------------------+------+-----+---------+----------------+
+
+
+
+
+
+DESCRIBE pembelian; hasil :
+
++-----------------------+---------------------+------+-----+---------+----------------+
+| Field                 | Type                | Null | Key | Default | Extra          |
++-----------------------+---------------------+------+-----+---------+----------------+
+| id                    | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| barang_id             | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| jumlah                | int(11)             | NO   |     | NULL    |                |
+| harga_modal_saat_beli | decimal(15,2)       | NO   |     | NULL    |                |
+| total_harga           | decimal(15,2)       | NO   |     | NULL    |                |
+| created_at            | timestamp           | YES  |     | NULL    |                |
+| updated_at            | timestamp           | YES  |     | NULL    |                |
++-----------------------+---------------------+------+-----+---------+----------------+
+
+
+
+
+DESCRIBE transaksi_penjualan; hasil :
+
++---------------------------+---------------------+------+-----+---------+----------------+
+| Field                     | Type                | Null | Key | Default | Extra          |
++---------------------------+---------------------+------+-----+---------+----------------+
+| id                        | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
+| sales_id                  | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| barang_id                 | bigint(20) unsigned | NO   | MUL | NULL    |                |
+| jumlah                    | int(11)             | NO   |     | NULL    |                |
+| harga_jual_saat_transaksi | decimal(15,2)       | NO   |     | NULL    |                |
+| total                     | decimal(15,2)       | NO   |     | NULL    |                |
+| keuntungan_kotor          | decimal(15,2)       | NO   |     | NULL    |                |
+| created_at                | timestamp           | YES  |     | NULL    |                |
+| updated_at                | timestamp           | YES  |     | NULL    |                |
++---------------------------+---------------------+------+-----+---------+----------------+
+
+
+
+
+DESCRIBE sessions; hasil :
+
++---------------+---------------------+------+-----+---------+-------+
+| Field         | Type                | Null | Key | Default | Extra |
++---------------+---------------------+------+-----+---------+-------+
+| id            | varchar(255)        | NO   | PRI | NULL    |       |
+| user_id       | bigint(20) unsigned | YES  | MUL | NULL    |       |
+| ip_address    | varchar(45)         | YES  |     | NULL    |       |
+| user_agent    | text                | YES  |     | NULL    |       |
+| payload       | longtext            | NO   |     | NULL    |       |
+| last_activity | int(11)             | NO   | MUL | NULL    |       |
++---------------+---------------------+------+-----+---------+-------+
+
+
+
+
+4. cat app/Http/Controllers/BarangController.php hasil :
+
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Barang;
+use Illuminate\Http\Request;
+
+class BarangController extends Controller
+{
+    // Menampilkan daftar barang
+    public function index()
+    {
+        $barang = Barang::all();
+        return view('barang.index', compact('barang'));
+    }
+
+    // Menampilkan form tambah barang
+    public function create()
+    {
+        return view('barang.create');
+    }
+
+    // Menyimpan barang baru
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'harga_jual' => 'required|numeric|min:0',
+        ]);
+
+        Barang::create([
+            'nama' => $request->nama,
+            'stok' => 0,
+            'harga_modal' => 0,
+            'harga_jual' => $request->harga_jual,
+        ]);
+
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil ditambahkan!');
+    }
+
+    // Menampilkan form edit barang
+    public function edit($id)
+    {
+        $barang = Barang::findOrFail($id);
+        return view('barang.edit', compact('barang'));
+    }
+
+    // Mengupdate barang
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'harga_jual' => 'required|numeric|min:0',
+        ]);
+
+        $barang = Barang::findOrFail($id);
+        $barang->nama = $request->nama;
+        $barang->harga_jual = $request->harga_jual;
+        $barang->save();
+
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil diupdate!');
+    }
+
+    // Menghapus barang
+    public function destroy($id)
+    {
+        $barang = Barang::findOrFail($id);
+        $barang->delete();
+
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil dihapus!');
+    }
+}
+
+
+
+
+cat app/Http/Controllers/PembelianController.php hasil :
+
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Barang;
+use App\Models\Pembelian;
+use Illuminate\Http\Request;
+
+class PembelianController extends Controller
+{
+    // Tampilkan daftar pembelian
+    public function index()
+    {
+        $pembelian = Pembelian::with('barang')->orderBy('created_at', 'desc')->get();
+        return view('pembelian.index', compact('pembelian'));
+    }
+
+    // Tampilkan form tambah pembelian
+    public function create()
+    {
+        $barang = Barang::all();
+        return view('pembelian.create', compact('barang'));
+    }
+
+    // Simpan pembelian
+    public function store(Request $request)
+    {
+        $request->validate([
+            'barang_id' => 'required|exists:barang,id',
+            'jumlah' => 'required|integer|min:1',
+            'harga_modal_saat_beli' => 'required|numeric|min:0',
+        ]);
+
+        // Ambil data barang
+        $barang = Barang::findOrFail($request->barang_id);
+
+        // Hitung total harga
+        $totalHarga = $request->jumlah * $request->harga_modal_saat_beli;
+
+        // Simpan pembelian
+        Pembelian::create([
+            'barang_id' => $request->barang_id,
+            'jumlah' => $request->jumlah,
+            'harga_modal_saat_beli' => $request->harga_modal_saat_beli,
+            'total_harga' => $totalHarga,
+        ]);
+
+        // Update stok dan harga modal barang
+        $barang->stok += $request->jumlah;
+        $barang->harga_modal = $request->harga_modal_saat_beli;
+        $barang->save();
+
+        return redirect()->route('pembelian.index')->with('success', 'Pembelian berhasil dicatat!');
+    }
+}
+
+
+
+
+cat app/Http/Controllers/MasterController.php hasil :
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class MasterController extends Controller
+{
+    public function index()
+    {
+        $users = DB::table('users')->get();
+        return view('master', ['users' => $users]);
+    }
+}
+
+
+
+
+
+
+
+5. cat app/Models/User.php hasil :
+
+<?php
+
+namespace App\Models;
+
+use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
+class User extends Authenticatable
+{
+    use HasFactory, Notifiable;
+
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'role',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
+}
+
+
+
+
+cat app/Models/Barang.php hasil :
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Barang extends Model
+{
+    use HasFactory;
+
+    protected $table = 'barang';
+
+    protected $fillable = [
+        'nama',
+        'stok',
+        'harga_modal',
+        'harga_jual',
+    ];
+}
+
+
+
+
+cat app/Models/Pembelian.php hasil :
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Pembelian extends Model
+{
+    use HasFactory;
+
+    protected $table = 'pembelian';
+
+    protected $fillable = [
+        'barang_id',
+        'jumlah',
+        'harga_modal_saat_beli',
+        'total_harga',
+    ];
+
+    // Relasi ke barang
+    public function barang()
+    {
+        return $this->belongsTo(Barang::class);
+    }
+}
+
+
+
+
+cat app/Models/TransaksiPenjualan.php hasil :
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class TransaksiPenjualan extends Model
+{
+    use HasFactory;
+
+    protected $table = 'transaksi_penjualan';
+
+    protected $fillable = [
+        'sales_id',
+        'barang_id',
+        'jumlah',
+        'harga_jual_saat_transaksi',
+        'total',
+        'keuntungan_kotor',
+    ];
+
+    public function sales()
+    {
+        return $this->belongsTo(User::class, 'sales_id');
+    }
+
+    public function barang()
+    {
+        return $this->belongsTo(Barang::class);
+    }
+}
+
+
+
+
+6. cat routes/web.php hasil :
+
+<?php
+
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\PembelianController;
+use App\Models\Barang;
+use App\Models\TransaksiPenjualan;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth'])->group(function () {
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/dashboard/admin', function () {
+            // Data summary
+            $totalBarang = Barang::count();
+
+            // Omzet hari ini (dari transaksi penjualan hari ini)
+            $omzetHariIni = TransaksiPenjualan::whereDate('created_at', today())->sum('total') ?? 0;
+
+            // Keuntungan kotor hari ini
+            $keuntunganHariIni = TransaksiPenjualan::whereDate('created_at', today())->sum('keuntungan_kotor') ?? 0;
+
+            return view('dashboard.admin', compact('totalBarang', 'omzetHariIni', 'keuntunganHariIni'));
+        })->name('dashboard.admin');
+
+        Route::resource('barang', BarangController::class);
+        Route::resource('pembelian', PembelianController::class)->except(['show', 'edit', 'update', 'destroy']);
+    });
+
+    Route::middleware(['role:sales'])->group(function () {
+        Route::get('/dashboard/sales', function () {
+            return view('dashboard.sales');
+        })->name('dashboard.sales');
+    });
+    Route::get('/test-auth', function () {
+    return 'Anda sudah login!';
+})->middleware('auth');
+});
+
+
+
+
+cat resources/views/dashboard/admin.blade.php hasil :
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Admin · CatatRezekimu</title>
+
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ----- RESET & GLOBAL ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* ----- CARD UTAMA (mockup HP) ----- */
+        .dashboard-card {
+            max-width: 420px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.10);
+            padding: 28px 20px 36px;
+            transition: box-shadow 0.2s;
+            margin: 0 auto;
+        }
+
+        /* ----- HEADER : Sapaan + Logout ----- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .header .greeting h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0b3b2c;
+            letter-spacing: -0.3px;
+        }
+
+        .header .greeting p {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .btn-logout {
+            background: #f1f5f9;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: default;
+            transition: background 0.15s;
+        }
+
+        .btn-logout span {
+            font-size: 16px;
+        }
+
+        .btn-logout:active {
+            background: #e2e8f0;
+        }
+
+        /* ----- KARTU RINGKASAN (3 kartu) ----- */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .summary-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #eef2f6;
+        }
+
+        .summary-card .label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 6px;
+        }
+
+        .summary-card .value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0b3b2c;
+        }
+
+        .summary-card .value small {
+            font-size: 12px;
+            font-weight: 400;
+            color: #94a3b8;
+            margin-left: 2px;
+        }
+
+        /* ----- MENU NAVIGASI (5 tombol besar) ----- */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-bottom: 8px;
+        }
+
+        .menu-item {
+            background: #f8fafc;
+            border: 1px solid #eef2f6;
+            border-radius: 20px;
+            padding: 20px 10px;
+            text-align: center;
+            transition: background 0.15s, transform 0.1s;
+            cursor: default;
+        }
+
+        .menu-item:active {
+            transform: scale(0.96);
+            background: #f1f5f9;
+        }
+
+        .menu-item .icon {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .menu-item .label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            letter-spacing: -0.2px;
+        }
+
+        /* item khusus yang memakan 2 kolom (opsional, kita buat item terakhir full width) */
+        .menu-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* ----- FOOTER (opsional) ----- */
+        .dashboard-footer {
+            margin-top: 28px;
+            text-align: center;
+            font-size: 12px;
+            color: #94a3b8;
+            border-top: 1px solid #eef2f6;
+            padding-top: 20px;
+        }
+
+        .dashboard-footer .version {
+            background: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 500;
+            color: #64748b;
+            display: inline-block;
+        }
+
+        /* ----- RESPONSIVE TWEAK ----- */
+        @media (max-width: 480px) {
+            .dashboard-card {
+                padding: 20px 16px 28px;
+                border-radius: 28px;
+            }
+
+            .summary-grid {
+                gap: 8px;
+            }
+
+            .summary-card {
+                padding: 12px 6px;
+            }
+
+            .summary-card .value {
+                font-size: 17px;
+            }
+
+            .menu-grid {
+                gap: 10px;
+            }
+
+            .menu-item {
+                padding: 16px 8px;
+            }
+
+            .menu-item .icon {
+                font-size: 24px;
+            }
+
+            .header .greeting h2 {
+                font-size: 18px;
+            }
+
+            .btn-logout {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+        }
+
+        /* ----- wireframe badge (opsional) ----- */
+        .wireframe-badge {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(4px);
+            color: #e2e8f0;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 40px;
+            letter-spacing: 0.4px;
+            pointer-events: none;
+            user-select: none;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ====== DASHBOARD ADMIN ====== -->
+    <div class="dashboard-card">
+
+        <!-- Header: sapaan & logout -->
+        <div class="header">
+            <div class="greeting">
+                <h2>👋 Halo, Admin</h2>
+                <p>Selamat datang di CatatRezekimu</p>
+            </div>
+            <button class="btn-logout" type="button">
+                <span>⏻</span> Logout
+            </button>
+        </div>
+
+        <!-- Ringkasan 3 kartu (dengan label yang diperbaiki) -->
+<!-- Ringkasan 3 kartu (data dari database) -->
+<div class="summary-grid">
+    <div class="summary-card">
+        <div class="label">Omzet Hari Ini</div>
+        <div class="value">Rp {{ number_format($omzetHariIni, 0, ',', '.') }}</div>
+    </div>
+    <div class="summary-card">
+        <div class="label">Keuntungan Kotor</div>
+        <div class="value">Rp {{ number_format($keuntunganHariIni, 0, ',', '.') }}</div>
+    </div>
+    <div class="summary-card">
+        <div class="label">Jumlah Produk</div>
+        <div class="value">{{ $totalBarang }} <small>produk</small></div>
+    </div>
+</div>
+
+        <!-- Menu navigasi 5 tombol -->
+        <div class="menu-grid">
+<div class="menu-item">
+    <a href="{{ route('barang.index') }}" style="text-decoration: none; color: inherit;">
+        <span class="icon">📦</span>
+        <span class="label">Data Barang</span>
+    </a>
+</div>
+<div class="menu-item">
+    <a href="{{ route('pembelian.index') }}" style="text-decoration: none; color: inherit;">
+        <span class="icon">🛒</span>
+        <span class="label">Pembelian</span>
+    </a>
+</div>
+            <div class="menu-item">
+                <span class="icon">👥</span>
+                <span class="label">Kelola Sales</span>
+            </div>
+            <div class="menu-item">
+                <span class="icon">📊</span>
+                <span class="label">Laporan Keuangan</span>
+            </div>
+            <div class="menu-item full-width">
+                <span class="icon">📋</span>
+                <span class="label">Riwayat Transaksi</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="dashboard-footer">
+            <span class="version">versi 1.0 · offline</span>
+        </div>
+
+    </div>
+
+    <!-- Wireframe keterangan -->
+    <div class="wireframe-badge">WIREFRAME · DASHBOARD ADMIN</div>
+
+</body>
+
+
+
+
+cat resources/views/dashboard/sales.blade.php hasil :
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Sales</title>
+</head>
+<body>
+    <h1>Dashboard Sales</h1>
+    <p>Selamat datang, {{ Auth::user()->name }}!</p>
+    <form action="{{ url('/logout') }}" method="POST">
+        @csrf
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>
+
+
+
+
+7. cat resources/views/barang/index.blade.php hasil :
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Barang</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f1f5f9; }
+        table { border-collapse: collapse; width: 100%; background: white; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #0b3b2c; color: white; }
+        .btn { display: inline-block; padding: 6px 12px; background: #0b3b2c; color: white; text-decoration: none; border-radius: 4px; }
+        .btn-danger { background: #dc2626; }
+    </style>
+</head>
+<body>
+    <h1>Data Barang</h1>
+    @if(session('success'))
+    <div style="background: #dcfce7; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+        {{ session('success') }}
+    </div>
+@endif
+    <a href="{{ route('barang.create') }}" class="btn">Tambah Barang</a>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nama</th>
+            <th>Stok</th>
+            <th>Harga Modal</th>
+            <th>Harga Jual</th>
+            <th>Aksi</th>
+        </tr>
+        @foreach ($barang as $item)
+        <tr>
+            <td>{{ $item->id }}</td>
+            <td>{{ $item->nama }}</td>
+            <td>{{ $item->stok }}</td>
+            <td>Rp {{ number_format($item->harga_modal, 0, ',', '.') }}</td>
+            <td>Rp {{ number_format($item->harga_jual, 0, ',', '.') }}</td>
+            <td>
+                <a href="{{ route('barang.edit', $item->id) }}" class="btn">Edit</a>
+                <form action="{{ route('barang.destroy', $item->id) }}" method="POST" style="display:inline;">
+                    @csrf @method('DELETE')
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Yakin hapus?')">Hapus</button>
+                </form>
+            </td>
+        </tr>
+        @endforeach
+    </table>
+    <br>
+    <a href="{{ route('dashboard.admin') }}">Kembali ke Dashboard</a>
+</body>
+</html>
+
+
+
+
+cat resources/views/barang/create.blade.php hasil :
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Barang</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f1f5f9; }
+        .container { max-width: 500px; margin: 0 auto; background: white; padding: 24px; border-radius: 16px; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; font-weight: 600; margin-bottom: 4px; }
+        input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
+        .btn { display: inline-block; padding: 10px 20px; background: #0b3b2c; color: white; border: none; border-radius: 8px; cursor: pointer; }
+        .btn:hover { background: #0a3426; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tambah Barang</h1>
+        <form action="{{ route('barang.store') }}" method="POST">
+            @csrf
+            <div class="form-group">
+                <label for="nama">Nama Barang</label>
+                <input type="text" name="nama" id="nama" required>
+            </div>
+            <div class="form-group">
+                <label for="harga_jual">Harga Jual</label>
+                <input type="number" name="harga_jual" id="harga_jual" min="0" step="100" required>
+            </div>
+            <button type="submit" class="btn">Simpan</button>
+            <a href="{{ route('barang.index') }}">Kembali</a>
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+
+cat resources/views/barang/edit.blade.php hasil :
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Barang</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f1f5f9; }
+        .container { max-width: 500px; margin: 0 auto; background: white; padding: 24px; border-radius: 16px; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; font-weight: 600; margin-bottom: 4px; }
+        input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
+        .btn { display: inline-block; padding: 10px 20px; background: #0b3b2c; color: white; border: none; border-radius: 8px; cursor: pointer; }
+        .btn:hover { background: #0a3426; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Barang</h1>
+        <form action="{{ route('barang.update', $barang->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="form-group">
+                <label for="nama">Nama Barang</label>
+                <input type="text" name="nama" id="nama" value="{{ $barang->nama }}" required>
+            </div>
+            <div class="form-group">
+                <label for="harga_jual">Harga Jual</label>
+                <input type="number" name="harga_jual" id="harga_jual" value="{{ $barang->harga_jual }}" min="0" step="100" required>
+            </div>
+            <button type="submit" class="btn">Update</button>
+            <a href="{{ route('barang.index') }}">Kembali</a>
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+
+cat resources/views/pembelian/index.blade.php hasil :
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Pembelian</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f1f5f9; }
+        table { border-collapse: collapse; width: 100%; background: white; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #0b3b2c; color: white; }
+        .btn { display: inline-block; padding: 6px 12px; background: #0b3b2c; color: white; text-decoration: none; border-radius: 4px; }
+        .success { background: #dcfce7; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 16px; }
+    </style>
+</head>
+<body>
+    <h1>Riwayat Pembelian</h1>
+    <a href="{{ route('pembelian.create') }}" class="btn">Tambah Pembelian</a>
+
+    @if(session('success'))
+        <div class="success">{{ session('success') }}</div>
+    @endif
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Barang</th>
+            <th>Jumlah</th>
+            <th>Harga Modal</th>
+            <th>Total</th>
+            <th>Tanggal</th>
+        </tr>
+        @foreach ($pembelian as $item)
+        <tr>
+            <td>{{ $item->id }}</td>
+            <td>{{ $item->barang->nama }}</td>
+            <td>{{ $item->jumlah }}</td>
+            <td>Rp {{ number_format($item->harga_modal_saat_beli, 0, ',', '.') }}</td>
+            <td>Rp {{ number_format($item->total_harga, 0, ',', '.') }}</td>
+            <td>{{ $item->created_at->format('d/m/Y H:i') }}</td>
+        </tr>
+        @endforeach
+    </table>
+    <br>
+    <a href="{{ route('dashboard.admin') }}">Kembali ke Dashboard</a>
+</body>
+</html>
+
+
+
+
+8. cat resources/views/pembelian/create.blade.php hasil :
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Pembelian</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f1f5f9; }
+        .container { max-width: 500px; margin: 0 auto; background: white; padding: 24px; border-radius: 16px; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; font-weight: 600; margin-bottom: 4px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
+        .btn { display: inline-block; padding: 10px 20px; background: #0b3b2c; color: white; border: none; border-radius: 8px; cursor: pointer; }
+        .btn:hover { background: #0a3426; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tambah Pembelian</h1>
+        <form action="{{ route('pembelian.store') }}" method="POST">
+            @csrf
+
+            <div class="form-group">
+                <label for="barang_id">Pilih Barang</label>
+                <select name="barang_id" id="barang_id" required>
+                    <option value="">-- Pilih Barang --</option>
+                    @foreach ($barang as $item)
+                        <option value="{{ $item->id }}">
+                            {{ $item->nama }} (Stok: {{ $item->stok }})
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="jumlah">Jumlah</label>
+                <input type="number" name="jumlah" id="jumlah" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="harga_modal_saat_beli">Harga Modal</label>
+                <input type="number" name="harga_modal_saat_beli" id="harga_modal_saat_beli" min="0" step="100" required>
+            </div>
+
+            <button type="submit" class="btn">Simpan Pembelian</button>
+            <a href="{{ route('pembelian.index') }}" style="margin-left: 10px;">Kembali</a>
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. cat database/migrations/2026_08_28_012449_create_barang_table.php hasil :
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('barang', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama', 255);
+            $table->integer('stok')->default(0);
+            $table->decimal('harga_modal', 15, 2)->default(0);
+            $table->decimal('harga_jual', 15, 2)->default(0);
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('barang');
+    }
+};
+
+
+
+
+3. php artisan tinker lalu App\Models\Barang::all(); hasil :
+
+
+= Illuminate\Database\Eloquent\Collection {#8543
+    all: [
+      App\Models\Barang {#8546
+        id: 1,
+        nama: "Beras 5kg",
+        stok: 110,
+        harga_modal: "200000.00",
+        harga_jual: "55000.00",
+        created_at: "2026-08-28 01:34:51",
+        updated_at: "2026-08-31 00:09:31",
+      },
+      App\Models\Barang {#8547
+        id: 2,
+        nama: "Minyak Goreng 2L",
+        stok: 5,
+        harga_modal: "25000.00",
+        harga_jual: "28000.00",
+        created_at: "2026-08-28 01:34:51",
+        updated_at: "2026-08-28 01:34:51",
+      },
+      App\Models\Barang {#8544
+        id: 3,
+        nama: "Gula 1kg",
+        stok: 8,
+        harga_modal: "12000.00",
+        harga_jual: "15000.00",
+        created_at: "2026-08-28 01:34:51",
+        updated_at: "2026-08-28 01:34:51",
+      },
+    ],
+  }
+
+
+
+
+4. cat database/migrations/2026_08_28_012733_create_pembelian_table.php hasil :
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('pembelian', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('barang_id')->constrained('barang')->onDelete('cascade');
+            $table->integer('jumlah');
+            $table->decimal('harga_modal_saat_beli', 15, 2); // harga modal yang berlaku saat pembelian
+            $table->decimal('total_harga', 15, 2);
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('pembelian');
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. cat database/migrations/2026_08_28_013044_create_transaksi_penjualan_table.php hasil :
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('transaksi_penjualan', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('sales_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('barang_id')->constrained('barang')->onDelete('cascade');
+            $table->integer('jumlah');
+            $table->decimal('harga_jual_saat_transaksi', 15, 2);
+            $table->decimal('total', 15, 2);
+            $table->decimal('keuntungan_kotor', 15, 2);
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('transaksi_penjualan');
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. App\Models\Barang::select('nama') hasil :
+
+
+= Illuminate\Database\Eloquent\Builder {#8552
+    +pendingAttributes: [],
+  }
+
+
+
+
+error bro :
+->groupBy('nama') hasil :
+    
+   PARSE ERROR  PHP Parse error: Syntax error, unexpected T_OBJECT_OPERATOR in vendor/psy/psysh/src/Exception/ParseErrorException.php on line 44.
+
+
+
+
+->havingRaw('COUNT(*) > 1')
+    
+   PARSE ERROR  PHP Parse error: Syntax error, unexpected T_OBJECT_OPERATOR in vendor/psy/psysh/src/Exception/ParseErrorException.php on line 44.
+
+
+
+
+->get(); hasil :
+
+   PARSE ERROR  PHP Parse error: Syntax error, unexpected T_OBJECT_OPERATOR in vendor/psy/psysh/src/Exception/ParseErrorException.php on line 44.
+
+
+
+
+2. DB::select("SHOW INDEX FROM barang"); hasil :
+
+
+= [
+    {#8102
+      +"Table": "barang",
+      +"Non_unique": 0,
+      +"Key_name": "PRIMARY",
+      +"Seq_in_index": 1,
+      +"Column_name": "id",
+      +"Collation": "A",
+      +"Cardinality": 4,
+      +"Sub_part": null,
+      +"Packed": null,
+      +"Null": "",
+      +"Index_type": "BTREE",
+      +"Comment": "",
+      +"Index_comment": "",
+      +"Ignored": "NO",
+    },
+  ]
+
+
+
+
+3. cat app/Http/Controllers/BarangController.php hasil :
+
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Barang;
+use Illuminate\Http\Request;
+
+class BarangController extends Controller
+{
+    // Menampilkan daftar barang
+    public function index()
+    {
+        $barang = Barang::all();
+        return view('barang.index', compact('barang'));
+    }
+
+    // Menampilkan form tambah barang
+    public function create()
+    {
+        return view('barang.create');
+    }
+
+    // Menyimpan barang baru
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'harga_jual' => 'required|numeric|min:0',
+        ]);
+
+        Barang::create([
+            'nama' => $request->nama,
+            'stok' => 0,
+            'harga_modal' => 0,
+            'harga_jual' => $request->harga_jual,
+        ]);
+
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil ditambahkan!');
+    }
+
+    // Menampilkan form edit barang
+    public function edit($id)
+    {
+        $barang = Barang::findOrFail($id);
+        return view('barang.edit', compact('barang'));
+    }
+
+    // Mengupdate barang
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'harga_jual' => 'required|numeric|min:0',
+        ]);
+
+        $barang = Barang::findOrFail($id);
+        $barang->nama = $request->nama;
+        $barang->harga_jual = $request->harga_jual;
+        $barang->save();
+
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil diupdate!');
+    }
+
+    // Menghapus barang
+    public function destroy($id)
+    {
+        $barang = Barang::findOrFail($id);
+        $barang->delete();
+
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil dihapus!');
+    }
+}
+
+
+
+
+4. grep -R "barang" database/migrations hasil :
+
+database/migrations/2026_08_28_012449_create_barang_table.php:        Schema::create('barang', function (Blueprint $table) {
+database/migrations/2026_08_28_012449_create_barang_table.php:        Schema::dropIfExists('barang');
+database/migrations/2026_08_28_012733_create_pembelian_table.php:            $table->foreignId('barang_id')->constrained('barang')->onDelete('cascade');
+database/migrations/2026_08_28_013044_create_transaksi_penjualan_table.php:            $table->foreignId('barang_id')->constrained('barang')->onDelete('cascade');
+
+
+
+
+
+
+
+App\Models\Barang::select('nama')->groupBy('nama')->havingRaw('COUNT(*) > 1')->get(); hasil :
+
+
+= Illuminate\Database\Eloquent\Collection {#8591
+    all: [],
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+DB::select("SHOW FULL COLUMNS FROM barang"); hasil :
+
+[ada masalah saat mencoba mejalankan kode ini, saya harus klik enter berkali kali untuk melihat keseluruhan datanya, dan itu mungkin membuat datanya terpotong. saya mencoba yang terbaik ini adalah datanya, jika anda perlu data lebih berikan saya langkah² untuk mendapatkannya.]
+
+
+= [
+    {#8112
+      +"Field": "id",
+      +"Type": "bigint(20) unsigned",
+      +"Collation": null,
+      +"Null": "NO",
+      +"Key": "PRI",
+      +"Default": null,
+      +"Extra": "auto_increment",
+      +"Privileges": "select,insert,update,references",
+      +"Comment": "",
+    },
+    {#8113
+      +"Field": "nama",
+      +"Type": "varchar(255)",
+      +"Collation": "utf8mb4_unicode_ci",
+      +"Null": "NO",
+      +"Key": "",
+      +"Default": null,
+      +"Extra": "",
+      +"Privileges": "select,insert,update,references",
+      +"Comment": "",
+    },
+    {#8114
+      +"Field": "stok",
+      +"Type": "int(11)",
+      +"Collation": null,
+      +"Null": "NO",
+      +"Key": "",
+      +"Default": "0",
+      +"Extra": "",
+      +"Privileges": "select,insert,update,references",
+      +"Comment": "",
+    },
+    {#8109
+      +"Field": "harga_modal",
+      +"Type": "decimal(15,2)",
+      +"Collation": null,
+      +"Null": "NO",
+      +"Key": "",
+      +"Default": "0.00",
+      +"Extra": "",
+      +"Privileges": "select,insert,update,references",
+      +"Comment": "",
+    },
+    {#8085
+      +"Field": "harga_jual",
+      +"Type": "decimal(15,2)",
+      +"Collation": null,
+      +"Null": "NO",
+      +"Key": "",
+      +"Default": "0.00",
+      +"Extra": "",
+      +"Privileges": "select,insert,update,references",
+      +"Comment": "",
+    },
+    {#8108
+      +"Field": "created_at",
+      +"Type": "timestamp",
+      +"Collation": null,
+      +"Null": "YES",
+      +"Key": "",
+      +"Default": null,
+      +"Extra": "",
+      +"Privileges": "select,insert,update,references",
+      +"Comment": "",
+    },
+    {#8107
+      +"Field": "updated_at",
+      +"Type": "timestamp",
+      +"Collation": null,
+      +"Null": "YES",
+      +"Key": "",
+      +"Default": null,
+      +"Extra": "",
+      +"Privileges": "select,insert,update,references",
+      +"Comment": "",
+    },
+  ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. cat app/Http/Controllers/BarangController.php hasil :
+
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Barang;
+use Illuminate\Http\Request;
+
+class BarangController extends Controller
+{
+    // Menampilkan daftar barang
+    public function index()
+    {
+        $barang = Barang::all();
+        return view('barang.index', compact('barang'));
+    }
+
+    // Menampilkan form tambah barang
+    public function create()
+    {
+        return view('barang.create');
+    }
+
+    // Menyimpan barang baru
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'harga_jual' => 'required|numeric|min:0',
+        ]);
+
+        Barang::create([
+            'nama' => $request->nama,
+            'stok' => 0,
+            'harga_modal' => 0,
+            'harga_jual' => $request->harga_jual,
+        ]);
+
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil ditambahkan!');
+    }
+
+    // Menampilkan form edit barang
+    public function edit($id)
+    {
+        $barang = Barang::findOrFail($id);
+        return view('barang.edit', compact('barang'));
+    }
+
+    // Mengupdate barang
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'harga_jual' => 'required|numeric|min:0',
+        ]);
+
+        $barang = Barang::findOrFail($id);
+        $barang->nama = $request->nama;
+        $barang->harga_jual = $request->harga_jual;
+        $barang->save();
+
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil diupdate!');
+    }
+
+    // Menghapus barang
+    public function destroy($id)
+    {
+        $barang = Barang::findOrFail($id);
+        $barang->delete();
+
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil dihapus!');
+    }
+}
+
+
+
+
+3. ls app/Http/Requests/ hasil : 
+
+tidak ada folder Requests pada Http hanya ada folder Controllers dan Middleware
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+isi dari app/Http/Controllers/BarangController.php yang sudah di perbarui : 
+
+
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Barang;
+use Illuminate\Http\Request;
+
+class BarangController extends Controller
+{
+    // Menampilkan daftar barang
+    public function index()
+    {
+        $barang = Barang::all();
+        return view('barang.index', compact('barang'));
+    }
+
+    // Menampilkan form tambah barang
+    public function create()
+    {
+        return view('barang.create');
+    }
+
+    // Menyimpan barang baru
+public function store(Request $request)
+{
+    // Trim nama
+    $request->merge(['nama' => trim($request->nama)]);
+
+    $request->validate([
+        'nama' => 'required|string|max:255|unique:barang,nama',
+        'harga_jual' => 'required|numeric|min:0',
+    ]);
+
+    Barang::create([
+        'nama' => $request->nama,
+        'stok' => 0,
+        'harga_modal' => 0,
+        'harga_jual' => $request->harga_jual,
+    ]);
+
+    return redirect()->route('barang.index')->with('success', 'Barang berhasil ditambahkan!');
+}
+
+    // Menampilkan form edit barang
+    public function edit($id)
+    {
+        $barang = Barang::findOrFail($id);
+        return view('barang.edit', compact('barang'));
+    }
+
+    // Mengupdate barang
+public function update(Request $request, $id)
+{
+    // Trim nama
+    $request->merge(['nama' => trim($request->nama)]);
+
+    $request->validate([
+        'nama' => 'required|string|max:255|unique:barang,nama,' . $id,
+        'harga_jual' => 'required|numeric|min:0',
+    ]);
+
+    $barang = Barang::findOrFail($id);
+    $barang->nama = $request->nama;
+    $barang->harga_jual = $request->harga_jual;
+    $barang->save();
+
+    return redirect()->route('barang.index')->with('success', 'Barang berhasil diupdate!');
+}
+    // Menghapus barang
+    public function destroy($id)
+    {
+        $barang = Barang::findOrFail($id);
+        $barang->delete();
+
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil dihapus!');
+    }
+}
+
+saat saya menjalankan kode mysql -u root -p -e "SHOW INDEX FROM nama_database.barang WHERE Key_name = 'barang_nama_unique';" hasilnya :
+
+ERROR 1146 (42S02) at line 1: Table 'nama_database.barang' doesn't exist
+
+tetapi sebelumnya saya menjalankan kode php artisan make:migration add_unique_index_to_nama_in_barang_table hasil :
+
+   INFO  Migration [database/migrations/2026_09_01_071727_add_unique_index_to_nama_in_barang_table.php] created successfully.
+
+dan kode php artisan migrate hasil :
+
+   INFO  Running migrations.
+
+  2026_09_01_071727_add_unique_index_to_nama_in_barang_table ............ 52.52ms DONE
+
+
+apakah karena saya salah saat memasukkan kode baru pada file database/migrations/2026_09_01_071727_add_unique_index_to_nama_in_barang_table.php 
+
+isi file database/migrations/2026_09_01_071727_add_unique_index_to_nama_in_barang_table.php :
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        // Trim semua nama yang ada (spasi awal/akhir)
+        DB::statement('UPDATE barang SET nama = TRIM(nama) WHERE nama != TRIM(nama)');
+
+        // Cek duplikat setelah trim (case-insensitive)
+        $duplicates = DB::select('
+            SELECT nama, COUNT(*) as count
+            FROM barang
+            GROUP BY nama
+            HAVING COUNT(*) > 1
+        ');
+
+        if (count($duplicates) > 0) {
+            $names = implode(', ', array_column($duplicates, 'nama'));
+            throw new \Exception("Terdapat duplikat nama barang setelah trim: {$names}. Harap perbaiki secara manual.");
+        }
+
+        // Tambahkan unique index
+        Schema::table('barang', function (Blueprint $table) {
+            $table->unique('nama');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('barang', function (Blueprint $table) {
+            $table->dropUnique('barang_nama_unique');
+        });
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. Ya role nya admin
+
+2. potongan dari tail -50 storage/logs/laravel.log :
+
+#44 {main}
+"}
+[2026-08-31 07:56:02] local.ERROR: file_put_contents(): Exclusive locks are not supported for this stream {"exception":"[object] (ErrorException(code: 0): file_put_contents(): Exclusive locks are not supported for this stream at /storage/emulated/0/Ya_gitu/tugasRumah/ujian/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php:204)
+[stacktrace]
+
+3. http://0.0.0.0:8000/dashboard/admin hasil : sama bro langsung di redirect ke login. (mungkin ini bagus untuk keamanan 
+
+4. ya masih sama bro ini isinya :
+
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class CheckRole
+{
+    public function handle(Request $request, Closure $next, ...$roles)
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+
+        $user = Auth::user();
+        if (in_array($user->role, $roles)) {
+            return $next($request);
+        }
+
+        abort(403, 'Akses ditolak.');
+    }
+}
+
+
+
+
+5. isi file app/Http/Controllers/Auth/LoginController.php : 
+
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class LoginController extends Controller
+{
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
+    public function login(Request $request)
+    {
+        // Validasi input
+        $credentials = $request->validate([
+            'username' => ['required', 'string'],
+            'password' => ['required', 'string'],
+        ]);
+
+        // Coba login dengan field 'name' sebagai username
+        if (Auth::attempt(['name' => $credentials['username'], 'password' => $credentials['password']])) {
+            $request->session()->regenerate();
+
+    // DEBUG: Lihat user dan role
+    dd([
+        'user' => Auth::user(),
+        'role' => Auth::user()->role,
+        'redirect_to' => Auth::user()->role === 'admin' ? '/dashboard/admin' : '/dashboard/sales'
+    ]);
+
+
+
+            // Redirect berdasarkan role
+            $user = Auth::user();
+            if ($user->role === 'admin') {
+                return redirect()->intended('/dashboard/admin');
+            } elseif ($user->role === 'sales') {
+                return redirect()->intended('/dashboard/sales');
+            }
+
+            // fallback (seharusnya tidak terjadi)
+            return redirect('/dashboard');
+        }
+
+        // Jika gagal, kembali dengan error
+        return back()->withErrors([
+            'username' => 'Username atau password salah.',
+        ])->onlyInput('username');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login');
+    }
+}
+
+
+saat saya mencoba login hasilnya 419 | page expired bro
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+hasilnya tetap sama 419 | page expired
+
+1. php artisan key:generate hasil : 
+
+  INFO  Application key set successfully.
+  
+2. versi full bootstrap/app.php : 
+
+<?php
+
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
+
+return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware): void {
+        // Daftarkan alias middleware custom
+        $middleware->alias([
+            'role' => \App\Http\Middleware\CheckRole::class,
+        ]);
+
+        // Tambahkan middleware auth ke semua route web (opsional, tapi biarkan default)
+        // Laravel 11 sudah memiliki auth middleware bawaan, tidak perlu menambahkan lagi.
+    })
+    
+  ->withMiddleware(function (Middleware $middleware): void {
+    $middleware->web(append: [
+        \Illuminate\Session\Middleware\StartSession::class,
+    ]);
+})
+  
+    ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->shouldRenderJsonWhen(
+            fn (Request $request) => $request->is('api/*'),
+        );
+    })->create();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. isi .env : 
+
+APP_NAME=CatatRezekimu
+APP_ENV=local
+APP_KEY=base64:542uWeLFUaN3G/+YL7AFNzbNeiIFXaRDP9NSG+D8oDg=
+APP_DEBUG=true
+APP_URL=http://127.0.0.1:8000
+
+LOG_CHANNEL=stack
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=1100
+
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+SESSION_ENCRYPT=false
+SESSION_PATH=/
+SESSION_DOMAIN=localhost
+
+2. saya coba jalankan server dengan konfigurasi .env seperti no 1 lalu masuk ke halaman login, hasilnya error
+
+3. saat saya menjalankan server dan mengakses halaman login dengan SESSION_DRIVER=array, hasilnya adalah gambar kotak berisi kode pada file resources/views/Auth/login.blade.php 
+
+full dari file login.blade.php :
+(abaikan css)
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login · CatatRezekimu</title>
+
+    <!-- Google Fonts (inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ----- RESET & GLOBAL ----- */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(145deg, #f1f5f9 0%, #e2e8f0 100%);
+        }
+
+        /* ----- CARD UTAMA ----- */
+        .login-card {
+            max-width: 440px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.12);
+            padding: 40px 32px 36px;
+            transition: box-shadow 0.3s, transform 0.2s;
+        }
+
+        .login-card:hover {
+            box-shadow: 0 24px 72px rgba(0, 20, 40, 0.16);
+        }
+
+        /* ----- BRAND / HEADER ----- */
+        .brand {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .brand-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 68px;
+            height: 68px;
+            background: #0b3b2c;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            box-shadow: 0 8px 24px rgba(11, 59, 44, 0.25);
+            transition: transform 0.2s;
+        }
+
+        .brand-icon:hover {
+            transform: scale(1.02);
+        }
+
+        .brand h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0b3b2c;
+            letter-spacing: -0.3px;
+        }
+
+        .brand .sub {
+            font-size: 15px;
+            font-weight: 400;
+            color: #64748b;
+            margin-top: 6px;
+            letter-spacing: 0.2px;
+        }
+
+        /* ----- FORM ELEMEN ----- */
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+
+        .form-group .input-wrap {
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 48px 14px 18px;
+            font-size: 15px;
+            font-weight: 400;
+            font-family: 'Inter', sans-serif;
+            color: #0f172a;
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 16px;
+            outline: none;
+            transition: border 0.25s, box-shadow 0.25s, background 0.25s;
+        }
+
+        .form-group input:focus {
+            border-color: #0b3b2c;
+            box-shadow: 0 0 0 4px rgba(11, 59, 44, 0.10);
+            background: #ffffff;
+        }
+
+        .form-group input::placeholder {
+            color: #94a3b8;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        /* Toggle password icon SVG */
+        .input-wrap .toggle-password {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.2s;
+            background: none;
+            border: none;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .input-wrap .toggle-password:hover {
+            color: #0b3b2c;
+        }
+
+        .input-wrap .toggle-password svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .input-wrap .toggle-password .hidden {
+            display: none;
+        }
+
+        /* ----- PESAN ERROR ----- */
+        .error-message {
+            background: #fef2f2;
+            border-left: 4px solid #dc2626;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #991b1b;
+        }
+
+        .error-message .icon {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .error-message.hidden {
+            display: none;
+        }
+
+        /* ----- TOMBOL LOGIN ----- */
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: #0b3b2c;
+            border: none;
+            border-radius: 16px;
+            color: #ffffff;
+            font-size: 17px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+            box-shadow: 0 6px 20px rgba(11, 59, 44, 0.30);
+            margin-top: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-login:hover {
+            background: #0a3426;
+            box-shadow: 0 8px 28px rgba(11, 59, 44, 0.35);
+        }
+
+        .btn-login:active {
+            transform: scale(0.97);
+            background: #082f23;
+        }
+
+        /* ----- FOOTER ----- */
+        .login-footer {
+            text-align: center;
+            margin-top: 28px;
+            font-size: 13px;
+            color: #94a3b8;
+            border-top: 1px solid #eef2f6;
+            padding-top: 24px;
+        }
+
+        .login-footer .version {
+            display: inline-block;
+            background: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #64748b;
+        }
+
+        /* ====== RESPONSIVE UNTUK LAPTOP / DESKTOP ====== */
+        @media (min-width: 640px) {
+            .login-card {
+                padding: 48px 40px 40px;
+                max-width: 480px;
+            }
+
+            .brand-icon {
+                width: 76px;
+                height: 76px;
+                font-size: 36px;
+            }
+
+            .brand h1 {
+                font-size: 32px;
+            }
+
+            .brand .sub {
+                font-size: 16px;
+            }
+
+            .form-group input {
+                padding: 16px 48px 16px 20px;
+                font-size: 16px;
+            }
+
+            .btn-login {
+                padding: 18px;
+                font-size: 18px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .login-card {
+                padding: 56px 48px 44px;
+                max-width: 520px;
+                border-radius: 40px;
+            }
+
+            .brand-icon {
+                width: 84px;
+                height: 84px;
+                font-size: 40px;
+                border-radius: 24px;
+            }
+
+            .brand h1 {
+                font-size: 36px;
+            }
+
+            .brand .sub {
+                font-size: 17px;
+            }
+
+            .form-group input {
+                padding: 18px 52px 18px 24px;
+                font-size: 17px;
+                border-radius: 18px;
+            }
+
+            .btn-login {
+                padding: 20px;
+                font-size: 19px;
+                border-radius: 18px;
+            }
+
+            .login-footer {
+                margin-top: 32px;
+                padding-top: 28px;
+                font-size: 14px;
+            }
+        }
+
+        /* ====== RESPONSIVE UNTUK HP ====== */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 32px 20px 28px;
+                border-radius: 28px;
+            }
+
+            .brand h1 {
+                font-size: 24px;
+            }
+
+            .brand-icon {
+                width: 56px;
+                height: 56px;
+                font-size: 26px;
+            }
+
+            .form-group input {
+                padding: 13px 44px 13px 16px;
+                font-size: 15px;
+            }
+
+            .btn-login {
+                padding: 15px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-card">
+
+        <!-- Brand -->
+        <div class="brand">
+            <div class="brand-icon">📦</div>
+            <h1>CatatRezekimu</h1>
+            <div class="sub">Manajemen Stok &amp; Keuangan</div>
+        </div>
+
+        <!-- Pesan error dari Laravel -->
+        @if ($errors->any())
+            <div class="error-message">
+                <span class="icon">⚠️</span>
+                <span>{{ $errors->first() }}</span>
+            </div>
+        @endif
+
+        <!-- Form Login -->
+        <form action="{{ url('/login') }}" method="POST">
+            @csrf
+
+            <!-- Username -->
+            <div class="form-group">
+                <label for="username">Username</label>
+                <div class="input-wrap">
+                    <input type="text" id="username" name="username"
+                           placeholder="Masukkan username Anda"
+                           value="{{ old('username') }}" required autofocus />
+                </div>
+            </div>
+
+            <!-- Password dengan toggle SVG modern -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrap">
+                    <input type="password" id="password" name="password"
+                           placeholder="Masukkan password" required />
+                    <button type="button" class="toggle-password" id="togglePassword" aria-label="Tampilkan password">
+                        <!-- Icon Mata Terbuka (Default/Tersembunyi) -->
+                        <svg class="icon-eye" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                        <!-- Icon Mata Tertutup (Aktif saat password terlihat) -->
+                        <svg class="icon-eye-off hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                            <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                            <path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                            <line x1="2" y1="2" x2="22" y2="22"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-login">Masuk</button>
+        </form>
+
+        <!-- Footer -->
+        <div class="login-footer">
+            <span class="version">versi 1.0 &bull; offline</span>
+        </div>
+
+    </div>
+
+    <script>
+        // Toggle password visibility
+        const toggleBtn = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        const iconEye = toggleBtn.querySelector('.icon-eye');
+        const iconEyeOff = toggleBtn.querySelector('.icon-eye-off');
+
+        toggleBtn.addEventListener('click', function() {
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+
+            // Toggle tipe input
+            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+
+            // Toggle ikon SVG
+            iconEye.classList.toggle('hidden', isPassword);
+            iconEyeOff.classList.toggle('hidden', !isPassword);
+
+            // Update aria-label untuk aksesibilitas
+            this.setAttribute('aria-label', isPassword ? 'Sembunyikan password' : 'Tampilkan password');
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+terjadi error saat saya mengikuti langlah yang anda berikan dari 1 - 8 :
+
+file_put_contents(): Exclusive locks are not supported for this stream
+
+
+saya mengikuti langkah ke 9 dan hasilnya : berhasil muncul halaman logon dan  saat saya coba login dan masuk ke dashboard muncul kotak baris kode. seperti ini :
+
+array:3 [▼ // app/Http/Controllers/Auth/LoginController.php:29
+  "user" => 
+App\Models
+\
+User
+ {#1458 ▶}
+  "role" => "admin"
+  "redirect_to" => "/dashboard/admin"
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+php artisan route:list -v | grep dashboard hasil :
+
+  GET|HEAD        dashboard/admin dashboard.admin › routes/web.php:16
+  GET|HEAD        dashboard/sales dashboard.sales › routes/web.php:34
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+baik bro masalah sudah selesai, tapi tetap kita akan memfokuskan untuk mengembangkan fitur pada dashboard admin ini sampai benar benar final, sekarang kita beralih untuk membuat tombol logout pada dashboard admin bekerja :
+
+<button class="btn-logout" type="button">
+                <span>⏻</span> Logout
+            </button>
+
+full version resources/views/dashboard/admin.blade.php :
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Admin · CatatRezekimu</title>
+
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ----- RESET & GLOBAL ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* ----- CARD UTAMA (mockup HP) ----- */
+        .dashboard-card {
+            max-width: 420px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.10);
+            padding: 28px 20px 36px;
+            transition: box-shadow 0.2s;
+            margin: 0 auto;
+        }
+
+        /* ----- HEADER : Sapaan + Logout ----- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .header .greeting h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0b3b2c;
+            letter-spacing: -0.3px;
+        }
+
+        .header .greeting p {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .btn-logout {
+            background: #f1f5f9;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: default;
+            transition: background 0.15s;
+        }
+
+        .btn-logout span {
+            font-size: 16px;
+        }
+
+        .btn-logout:active {
+            background: #e2e8f0;
+        }
+
+        /* ----- KARTU RINGKASAN (3 kartu) ----- */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .summary-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid #eef2f6;
+        }
+
+        .summary-card .label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 6px;
+        }
+
+        .summary-card .value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0b3b2c;
+        }
+
+        .summary-card .value small {
+            font-size: 12px;
+            font-weight: 400;
+            color: #94a3b8;
+            margin-left: 2px;
+        }
+
+        /* ----- MENU NAVIGASI (5 tombol besar) ----- */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-bottom: 8px;
+        }
+
+        .menu-item {
+            background: #f8fafc;
+            border: 1px solid #eef2f6;
+            border-radius: 20px;
+            padding: 20px 10px;
+            text-align: center;
+            transition: background 0.15s, transform 0.1s;
+            cursor: default;
+        }
+
+        .menu-item:active {
+            transform: scale(0.96);
+            background: #f1f5f9;
+        }
+
+        .menu-item .icon {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .menu-item .label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            letter-spacing: -0.2px;
+        }
+
+        /* item khusus yang memakan 2 kolom (opsional, kita buat item terakhir full width) */
+        .menu-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* ----- FOOTER (opsional) ----- */
+        .dashboard-footer {
+            margin-top: 28px;
+            text-align: center;
+            font-size: 12px;
+            color: #94a3b8;
+            border-top: 1px solid #eef2f6;
+            padding-top: 20px;
+        }
+
+        .dashboard-footer .version {
+            background: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 500;
+            color: #64748b;
+            display: inline-block;
+        }
+
+        /* ----- RESPONSIVE TWEAK ----- */
+        @media (max-width: 480px) {
+            .dashboard-card {
+                padding: 20px 16px 28px;
+                border-radius: 28px;
+            }
+
+            .summary-grid {
+                gap: 8px;
+            }
+
+            .summary-card {
+                padding: 12px 6px;
+            }
+
+            .summary-card .value {
+                font-size: 17px;
+            }
+
+            .menu-grid {
+                gap: 10px;
+            }
+
+            .menu-item {
+                padding: 16px 8px;
+            }
+
+            .menu-item .icon {
+                font-size: 24px;
+            }
+
+            .header .greeting h2 {
+                font-size: 18px;
+            }
+
+            .btn-logout {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+        }
+
+        /* ----- wireframe badge (opsional) ----- */
+        .wireframe-badge {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(4px);
+            color: #e2e8f0;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 40px;
+            letter-spacing: 0.4px;
+            pointer-events: none;
+            user-select: none;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ====== DASHBOARD ADMIN ====== -->
+    <div class="dashboard-card">
+
+        <!-- Header: sapaan & logout -->
+        <div class="header">
+            <div class="greeting">
+                <h2>👋 Halo, Admin</h2>
+                <p>Selamat datang di CatatRezekimu</p>
+            </div>
+            <button class="btn-logout" type="button">
+                <span>⏻</span> Logout
+            </button>
+        </div>
+
+        <!-- Ringkasan 3 kartu (dengan label yang diperbaiki) -->
+<!-- Ringkasan 3 kartu (data dari database) -->
+<div class="summary-grid">
+    <div class="summary-card">
+        <div class="label">Omzet Hari Ini</div>
+        <div class="value">Rp {{ number_format($omzetHariIni, 0, ',', '.') }}</div>
+    </div>
+    <div class="summary-card">
+        <div class="label">Keuntungan Kotor</div>
+        <div class="value">Rp {{ number_format($keuntunganHariIni, 0, ',', '.') }}</div>
+    </div>
+    <div class="summary-card">
+        <div class="label">Jumlah Produk</div>
+        <div class="value">{{ $totalBarang }} <small>produk</small></div>
+    </div>
+</div>
+
+        <!-- Menu navigasi 5 tombol -->
+        <div class="menu-grid">
+<div class="menu-item">
+    <a href="{{ route('barang.index') }}" style="text-decoration: none; color: inherit;">
+        <span class="icon">📦</span>
+        <span class="label">Data Barang</span>
+    </a>
+</div>
+<div class="menu-item">
+    <a href="{{ route('pembelian.index') }}" style="text-decoration: none; color: inherit;">
+        <span class="icon">🛒</span>
+        <span class="label">Pembelian</span>
+    </a>
+</div>
+            <div class="menu-item">
+                <span class="icon">👥</span>
+                <span class="label">Kelola Sales</span>
+            </div>
+            <div class="menu-item">
+                <span class="icon">📊</span>
+                <span class="label">Laporan Keuangan</span>
+            </div>
+            <div class="menu-item full-width">
+                <span class="icon">📋</span>
+                <span class="label">Riwayat Transaksi</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="dashboard-footer">
+            <span class="version">versi 1.0 · offline</span>
+        </div>
+
+    </div>
+
+    <!-- Wireframe keterangan -->
+    <div class="wireframe-badge">WIREFRAME · DASHBOARD ADMIN</div>
+
+</body>
+</html>
+
+jika anda membutuhkan data tertentu berikan saya langkah langkah untuk mendapatkan data tersebut
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Schema::getColumnListing('barang'); hasil :
+
+= [
+    "id",
+    "nama",
+    "stok",
+    "harga_modal",
+    "harga_jual",
+    "created_at",
+    "updated_at",
+  ]
+
+
+
+
+Schema::getColumnListing('users'); hasil :
+
+
+= [
+    "id",
+    "name",
+    "email",
+    "email_verified_at",
+    "password",
+    "role",
+    "remember_token",
+    "created_at",
+    "updated_at",
+  ]
+
+
+
+
+ls resources/views/barang/ hasil :
+
+create.blade.php  edit.blade.php  index.blade.php
+
+
+
+
+$users = App\Models\User::all(); hasil :
+
+
+= Illuminate\Database\Eloquent\Collection {#8116
+    all: [
+      App\Models\User {#8114
+        id: 7,
+        name: "sales",
+        email: "sales@catatrezekimu.com",
+        email_verified_at: null,
+        #password: "\$2y\$12\$4oM57ELKO/M/Jq0I0Rt1W.T1YUlL/2BAR6FetQtvRRtjie2fYq/EO",
+        role: "sales",
+        #remember_token: null,
+        created_at: "2026-08-26 04:56:02",
+        updated_at: "2026-08-26 04:56:02",
+      },
+      App\Models\User {#8115
+        id: 8,
+        name: "admin",
+        email: "admin@catatrezekimu.com",
+        email_verified_at: null,
+        #password: "\$2y\$12\$yusLQpKA42k0/M.D5.cL2./CJPEbHuKIc1dy5fgr8hZn5lQZhsr0q",
+        role: "admin",
+        #remember_token: null,
+        created_at: "2026-08-26 04:56:11",
+        updated_at: "2026-08-27 00:15:16",
+      },
+    ],
+  }
+
+
+
+
+foreach ($users as $user) {
+    echo $user->id . ' - ' . $user->name . ' - ' . ($user->role ?? 'tidak ada role') . "\n";
+} hasil :
+
+7 - sales - sales
+8 - admin - admin
+
+
+
+
+php artisan route:list | grep barang hasil :
+
+  GET|HEAD        barang ....................... barang.index › BarangController@index
+  POST            barang ....................... barang.store › BarangController@store
+  GET|HEAD        barang/create .............. barang.create › BarangController@create
+  GET|HEAD        barang/{barang} ................ barang.show › BarangController@show
+  PUT|PATCH       barang/{barang} ............ barang.update › BarangController@update
+  DELETE          barang/{barang} .......... barang.destroy › BarangController@destroy
+  GET|HEAD        barang/{barang}/edit ........... barang.edit › BarangController@edit
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  1. Schema::getColumnListing('barang'); hasil : sudah ada satuan
+
+  
+ 2. SHOW CREATE TABLE barang; hasil :
+  
+  ya terdapat   UNIQUE KEY `barang_nama_unique` (`nama`)
+  
+  
+3. protected $fillable = ['nama', 'satuan', 'stok', 'harga_modal', 'harga_jual']; sudah ada 
+
+
+4. method store() dan method update() sudah sesuai
+
+5. resources/views/barang/index.blade.php sudah sesuai
+
+6. create.blade.php dan edit.blade.php sudah sesuai 
+
+7. full version web.php :
+
+<?php
+
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\PembelianController;
+use App\Models\Barang;
+use App\Models\TransaksiPenjualan;
+use Illuminate\Support\Facades\Route;
+
+// Route publik (tanpa auth)
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Semua route di bawah ini WAJIB login
+Route::middleware(['auth'])->group(function () {
+
+    // Route untuk ADMIN
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/dashboard/admin', function () {
+            $totalBarang = Barang::count();
+            $omzetHariIni = TransaksiPenjualan::whereDate('created_at', today())->sum('total') ?? 0;
+            $keuntunganHariIni = TransaksiPenjualan::whereDate('created_at', today())->sum('keuntungan_kotor') ?? 0;
+            return view('dashboard.admin', compact('totalBarang', 'omzetHariIni', 'keuntunganHariIni'));
+        })->name('dashboard.admin');
+
+        Route::resource('barang', BarangController::class);
+        Route::resource('pembelian', PembelianController::class)->except(['show', 'edit', 'update', 'destroy']);
+    });
+
+    // Route untuk SALES
+    Route::middleware(['role:sales'])->group(function () {
+        Route::get('/dashboard/sales', function () {
+            return view('dashboard.sales');
+        })->name('dashboard.sales');
+    });
+
+    // Route test (opsional, bisa dihapus nanti)
+    Route::get('/test-auth', function () {
+        return 'Anda sudah login!';
+    })->middleware('auth');
+});
+
+
+saya melakukan testing dan tidak ada masalah, hanya saja di halaman data barang saya tidak bisa kembali ke dashboard admin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Baik bro, tidak ada masalah kita bisa lanjut. selanjutnya sebelum kita eksekusi saya mau kita membuat planning sederhana tentang apa saja yang akan kita lakukan mencakup tujuan dan kapan kita akan evaluasi (evaluasi berkala bertujuan jika ada error tidak terlalu besar errornya)
+
+
+
+
+
+
+
+
+
+Baik bro, sebelumnya saat saya testing "php artisan serve" dan saya mencoba masuk ke halaman dashboard admin tanpa login dengan 127.0.0.1:8000/dashboard/admin hasilnya saya di arahkan kembali ke login begitupun dengan 127.0.0.1:8000/barang/create
+127.0.0.1:8000/barang/edit begitu juga saat saya mencoba di mode incognito
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. lanjutkan
+2. berikan pernyataan koreksi jika saya salah jika anda merasa ada hal yang tidak jelas maka tolong buatkan list nya. saya adalah siswa smk, saya perlu banyak evaluasi
+
+
+
+
+
+
+
+
+
+
+
+
+
+perubahan :
+1. deskripsi aplikasi Bab 1 dirubah agar versi 1.0 dapat mengahapus data barang.
+
+saya mengirimkan ERD setelah itu kita langsung eksekusi untuk menentukan tujuan di bentuknya halaman pembelian ini apakah perlu di buat? atau di hapus saja karena tujuan yang tidak jelas?
+
+ERD dari kode mermaid :
+
+    users {
+        int id PK
+        varchar name
+        varchar username
+        varchar password
+        enum role
+        datetime created_at
+        datetime updated_at
+    }
+
+    barang {
+        int id PK
+        varchar nama
+        varchar satuan
+        decimal harga_modal
+        decimal harga_jual
+        int stok
+        datetime created_at
+        datetime updated_at
+    }
+
+    pembelian {
+        int id PK
+        int user_id FK
+        datetime tanggal
+        decimal total
+    }
+
+    pembelian_detail {
+        int id PK
+        int pembelian_id FK
+        int barang_id FK
+        int qty
+        decimal harga_saat_beli
+    }
+
+    penjualan {
+        int id PK
+        int user_id FK
+        datetime tanggal
+        decimal total_harga
+        decimal uang_dibayar
+        decimal kembalian
+    }
+
+    penjualan_detail {
+        int id PK
+        int penjualan_id FK
+        int barang_id FK
+        int qty
+        decimal harga_jual_snapshot
+        decimal harga_modal_snapshot
+        decimal subtotal
+        decimal keuntungan_kotor
+    }
+
+    %% RELASI (1 : N)
+    users ||--o{ pembelian : "1 Admin melakukan banyak Pembelian"
+    users ||--o{ penjualan : "1 Sales melakukan banyak Penjualan"
+    barang ||--o{ pembelian_detail : "1 Barang dibeli berkali-kali"
+    barang ||--o{ penjualan_detail : "1 Barang terjual berkali-kali"
+    pembelian ||--|{ pembelian_detail : "1 Pembelian terdiri dari banyak Detail"
+    penjualan ||--|{ penjualan_detail : "1 Penjualan terdiri dari banyak Detail"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+resources/views/pembelian/index.blade.php :
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Pembelian</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f1f5f9; }
+        table { border-collapse: collapse; width: 100%; background: white; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #0b3b2c; color: white; }
+        .btn { display: inline-block; padding: 6px 12px; background: #0b3b2c; color: white; text-decoration: none; border-radius: 4px; }
+        .success { background: #dcfce7; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 16px; }
+    </style>
+</head>
+<body>
+    <h1>Riwayat Pembelian</h1>
+    <a href="{{ route('pembelian.create') }}" class="btn">Tambah Pembelian</a>
+
+    @if(session('success'))
+        <div class="success">{{ session('success') }}</div>
+    @endif
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Barang</th>
+            <th>Jumlah</th>
+            <th>Harga Modal</th>
+            <th>Total</th>
+            <th>Tanggal</th>
+        </tr>
+        @foreach ($pembelian as $item)
+        <tr>
+            <td>{{ $item->id }}</td>
+            <td>{{ $item->barang->nama }}</td>
+            <td>{{ $item->jumlah }}</td>
+            <td>Rp {{ number_format($item->harga_modal_saat_beli, 0, ',', '.') }}</td>
+            <td>Rp {{ number_format($item->total_harga, 0, ',', '.') }}</td>
+            <td>{{ $item->created_at->format('d/m/Y H:i') }}</td>
+        </tr>
+        @endforeach
+    </table>
+    <br>
+    <a href="{{ route('dashboard.admin') }}">Kembali ke Dashboard</a>
+</body>
+</html>
+
+resources/views/pembelian/create.blade.php :
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Pembelian</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f1f5f9; }
+        .container { max-width: 500px; margin: 0 auto; background: white; padding: 24px; border-radius: 16px; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; font-weight: 600; margin-bottom: 4px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
+        .btn { display: inline-block; padding: 10px 20px; background: #0b3b2c; color: white; border: none; border-radius: 8px; cursor: pointer; }
+        .btn:hover { background: #0a3426; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tambah Pembelian</h1>
+        <form action="{{ route('pembelian.store') }}" method="POST">
+            @csrf
+
+            <div class="form-group">
+                <label for="barang_id">Pilih Barang</label>
+                <select name="barang_id" id="barang_id" required>
+                    <option value="">-- Pilih Barang --</option>
+                    @foreach ($barang as $item)
+                        <option value="{{ $item->id }}">
+                            {{ $item->nama }} (Stok: {{ $item->stok }})
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="jumlah">Jumlah</label>
+                <input type="number" name="jumlah" id="jumlah" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="harga_modal_saat_beli">Harga Modal</label>
+                <input type="number" name="harga_modal_saat_beli" id="harga_modal_saat_beli" min="0" step="100" required>
+            </div>
+
+            <button type="submit" class="btn">Simpan Pembelian</button>
+            <a href="{{ route('pembelian.index') }}" style="margin-left: 10px;">Kembali</a>
+        </form>
+    </div>
+</body>
+</html>
+
+
+find resources -type f \( -name "*.css" -o -name "*.scss" \) hasil : resources/css/app.css
+
+cat package.json hasil : {
+    "$schema": "https://www.schemastore.org/package.json",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite"
+    },
+    "devDependencies": {
+        "@tailwindcss/vite": "^4.0.0",
+        "concurrently": "^9.0.1",
+        "laravel-vite-plugin": "^3.1",
+        "tailwindcss": "^4.0.0",
+        "vite": "^8.0.0"
+    }
+}
+
+cat resources/views/layouts/app.blade.php hasil : belum dibuat
+
+cat app/Models/Barang.php hasil : <?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Barang extends Model
+{
+    use HasFactory;
+
+    protected $table = 'barang';
+
+    protected $fillable = ['nama', 'satuan', 'stok', 'harga_modal', 'harga_jual'];
+}
+
+find database/migrations -type f -iname "*barang*" hasil : database/migrations/2026_08_28_012449_create_barang_table.php
+database/migrations/2026_09_01_071727_add_unique_index_to_nama_in_barang_table.php
+database/migrations/2026_09_02_073136_add_satuan_to_barang_table.php
+
+
+
+cat database/migrations/2026_08_28_012449_create_barang_table.php hasil :
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('barang', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama', 255);
+            $table->integer('stok')->default(0);
+            $table->decimal('harga_modal', 15, 2)->default(0);
+            $table->decimal('harga_jual', 15, 2)->default(0);
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('barang');
+    }
+};
+
+cat database/migrations/2026_09_01_071727_add_unique_index_to_nama_in_barang_table.php hasil :
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        // Trim semua nama yang ada (spasi awal/akhir)
+        DB::statement('UPDATE barang SET nama = TRIM(nama) WHERE nama != TRIM(nama)');
+
+        // Cek duplikat setelah trim (case-insensitive)
+        $duplicates = DB::select('
+            SELECT nama, COUNT(*) as count
+            FROM barang
+            GROUP BY nama
+            HAVING COUNT(*) > 1
+        ');
+
+        if (count($duplicates) > 0) {
+            $names = implode(', ', array_column($duplicates, 'nama'));
+            throw new \Exception("Terdapat duplikat nama barang setelah trim: {$names}. Harap perbaiki secara manual.");
+        }
+
+        // Tambahkan unique index
+        Schema::table('barang', function (Blueprint $table) {
+            $table->unique('nama');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('barang', function (Blueprint $table) {
+            $table->dropUnique('barang_nama_unique');
+        });
+    }
+};
+
+
+
+cat database/migrations/2026_09_02_073136_add_satuan_to_barang_table.php hasil :
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::table('barang', function (Blueprint $table) {
+            $table->string('satuan', 50)->nullable()->after('nama');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('barang', function (Blueprint $table) {
+            $table->dropColumn('satuan');
+        });
+    }
+};
+
+
+
+cat app/Models/Pembelian.php hasil : <?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Pembelian extends Model
+{
+    use HasFactory;
+
+    protected $table = 'pembelian';
+
+    protected $fillable = [
+        'barang_id',
+        'jumlah',
+        'harga_modal_saat_beli',
+        'total_harga',
+    ];
+
+    // Relasi ke barang
+    public function barang()
+    {
+        return $this->belongsTo(Barang::class);
+    }
+}
+
+
+find database/migrations -type f -iname "*pembelian*" hasil : database/migrations/2026_08_28_012733_create_pembelian_table.php
+
+cat database/migrations/2026_08_28_012733_create_pembelian_table.php hasil : <?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('pembelian', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('barang_id')->constrained('barang')->onDelete('cascade');
+            $table->integer('jumlah');
+            $table->decimal('harga_modal_saat_beli', 15, 2); // harga modal yang berlaku saat pembelian
+            $table->decimal('total_harga', 15, 2);
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('pembelian');
+    }
+};
+
+
+find app/Models -type f -iname "*pembelian*" hasil : app/Models/Pembelian.php
+
+cat app/Models/Pembelian.php hasil : <?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Pembelian extends Model
+{
+    use HasFactory;
+
+    protected $table = 'pembelian';
+
+    protected $fillable = [
+        'barang_id',
+        'jumlah',
+        'harga_modal_saat_beli',
+        'total_harga',
+    ];
+
+    // Relasi ke barang
+    public function barang()
+    {
+        return $this->belongsTo(Barang::class);
+    }
+}
+
+
+find database/migrations -type f -iname "*pembelian*" hasil : database/migrations/2026_08_28_012733_create_pembelian_table.php
+
+cat database/migrations/2026_08_28_012733_create_pembelian_table.php hasil : <?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('pembelian', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('barang_id')->constrained('barang')->onDelete('cascade');
+            $table->integer('jumlah');
+            $table->decimal('harga_modal_saat_beli', 15, 2); // harga modal yang berlaku saat pembelian
+            $table->decimal('total_harga', 15, 2);
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('pembelian');
+    }
+};
+
+pembelian detail belum dibuat
+
+supplier belum dibuat
+
+wireframe belum dibuat
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+find app/Models app/Http/Controllers resources/views/pembelian database/migrations routes -type f | sort hasil :
+
+app/Http/Controllers/Auth/LoginController.php
+app/Http/Controllers/BarangController.php
+app/Http/Controllers/Controller.php
+app/Http/Controllers/MasterController.php
+app/Http/Controllers/PembelianController
+app/Http/Controllers/PembelianController.php
+app/Models/Barang.php
+app/Models/Pembelian.php
+app/Models/PembelianDetail.php
+app/Models/Supplier.php
+app/Models/TransaksiPenjualan.php
+app/Models/User.php
+app/Models/User.php.bak
+database/migrations/0001_01_01_000000_create_users_table.php
+database/migrations/0001_01_01_000001_create_cache_table.php
+database/migrations/0001_01_01_000002_create_jobs_table.php
+database/migrations/2026_08_25_071551_add_role_to_users_table.php
+database/migrations/2026_08_28_012449_create_barang_table.php
+database/migrations/2026_08_28_012733_create_pembelian_table.php
+database/migrations/2026_08_28_013044_create_transaksi_penjualan_table.php
+database/migrations/2026_09_01_071727_add_unique_index_to_nama_in_barang_table.php
+database/migrations/2026_09_02_073136_add_satuan_to_barang_table.php
+database/migrations/2026_09_03_070435_create_suppliers_table.php
+database/migrations/2026_09_03_070525_create_pembelian_table.php
+database/migrations/2026_09_03_070610_create_pembelian_detail_table.php
+resources/views/pembelian/create.blade.php
+resources/views/pembelian/index.blade.php
+resources/views/pembelian/pembelian_wireframe.html
+routes/console.php
+routes/web.php
+
+cat app/Http/Controllers/PembelianController.php hasil : <?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Barang;
+use App\Models\Pembelian;
+use App\Models\PembelianDetail;
+use App\Models\Supplier;
+use Illuminate\Http\Request;
+
+class PembelianController extends Controller
+{
+    public function index()
+    {
+        $pembelian = Pembelian::with('supplier', 'detail.barang')->orderBy('created_at', 'desc')->get();
+        return view('pembelian.index', compact('pembelian'));
+    }
+
+    public function create()
+    {
+        $barang = Barang::all();
+        $supplier = Supplier::all();
+        return view('pembelian.create', compact('barang', 'supplier'));
+    }
+
+public function store(Request $request)
+{
+    try {
+        $request->validate([
+            'supplier_id' => 'required|exists:suppliers,id',
+            'items' => 'required|array|min:1',
+            'items.*.barang_id' => 'required|exists:barang,id',
+            'items.*.jumlah' => 'required|integer|min:1',
+            'items.*.harga_modal_saat_beli' => 'required|numeric|min:0',
+        ]);
+
+        $totalHarga = 0;
+        foreach ($request->items as $item) {
+            $totalHarga += $item['jumlah'] * $item['harga_modal_saat_beli'];
+        }
+
+        $pembelian = Pembelian::create([
+            'supplier_id' => $request->supplier_id,
+            'total_harga' => $totalHarga,
+        ]);
+
+        foreach ($request->items as $item) {
+            PembelianDetail::create([
+                'pembelian_id' => $pembelian->id,
+                'barang_id' => $item['barang_id'],
+                'jumlah' => $item['jumlah'],
+                'harga_modal_saat_beli' => $item['harga_modal_saat_beli'],
+                'subtotal' => $item['jumlah'] * $item['harga_modal_saat_beli'],
+            ]);
+
+            $barang = Barang::findOrFail($item['barang_id']);
+            $barang->stok += $item['jumlah'];
+            $barang->save();
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Pembelian berhasil dicatat!',
+            'data' => $pembelian
+        ]);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => $e->getMessage()
+        ], 500);
+    }
+}
+
+cat app/Models/Pembelian.php hasil : <?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Pembelian extends Model
+{
+    use HasFactory;
+
+    protected $table = 'pembelian'; // <-- TAMBAHKAN INI
+
+    protected $fillable = [
+        'supplier_id',
+        'total_harga'
+    ];
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
+    public function detail()
+    {
+        return $this->hasMany(PembelianDetail::class);
+    }
+    
+  cat app/Models/PembelianDetail.php hasil : <?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class PembelianDetail extends Model
+{
+    use HasFactory;
+
+    protected $table = 'pembelian_detail'; // <-- TAMBAHKAN INI
+
+    protected $fillable = [
+        'pembelian_id',
+        'barang_id',
+        'jumlah',
+        'harga_modal_saat_beli',
+        'subtotal'
+    ];
+
+    public function pembelian()
+    {
+        return $this->belongsTo(Pembelian::class);
+    }
+
+    public function barang()
+    {
+        return $this->belongsTo(Barang::class);
+    }
+
+cat app/Models/Supplier.php hasil : <?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Supplier extends Model
+{
+    use HasFactory;
+
+    protected $table = 'suppliers'; // <-- TAMBAHKAN INI (tapi 'suppliers' sudah plural, jadi sebenarnya tidak perlu)
+
+    protected $fillable = ['nama'];
+
+    public function pembelian()
+    {
+        return $this->hasMany(Pembelian::class);
+    }
+    
+cat database/migrations/2026_08_28_012449_create_barang_table.php hasil : <?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('barang', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama', 255);
+            $table->integer('stok')->default(0);
+            $table->decimal('harga_modal', 15, 2)->default(0);
+            $table->decimal('harga_jual', 15, 2)->default(0);
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('barang');
+    }
+};
+
+cat database/migrations/2026_09_03_070525_create_pembelian_table.php hasil 
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('pembelian', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('supplier_id')->constrained()->onDelete('restrict');
+            $table->decimal('total_harga', 15, 2)->default(0);
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('pembelian');
+    }
+};
+
+cat database/migrations/2026_08_28_012733_create_pembelian_table.php hasil : <?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('pembelian', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('barang_id')->constrained('barang')->onDelete('cascade');
+            $table->integer('jumlah');
+            $table->decimal('harga_modal_saat_beli', 15, 2); // harga modal yang berlaku saat pembelian
+            $table->decimal('total_harga', 15, 2);
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('pembelian');
+    }
+};
+
+cat database/migrations/2026_09_03_070610_create_pembelian_detail_table.php hasil : 
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('pembelian_detail', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('pembelian_id')->constrained('pembelian')->onDelete('cascade');
+            $table->foreignId('barang_id')->constrained('barang')->onDelete('restrict');
+            $table->integer('jumlah')->default(1);
+            $table->decimal('harga_modal_saat_beli', 15, 2);
+            $table->decimal('subtotal', 15, 2);
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('pembelian_detail');
+    }
+};
+
+cat database/migrations/2026_09_03_070435_create_suppliers_table.php hasil : <?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('suppliers', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama', 100)->unique();
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('suppliers');
+    }
+};
+
+cat database/migrations/0001_01_01_000000_create_users_table.php hasil : <?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
+            $table->timestamps();
+        });
+
+        Schema::create('password_reset_tokens', function (Blueprint $table) {
+            $table->string('email')->primary();
+            $table->string('token');
+            $table->timestamp('created_at')->nullable();
+        });
+
+        Schema::create('sessions', function (Blueprint $table) {
+            $table->string('id')->primary();
+            $table->foreignId('user_id')->nullable()->index();
+            $table->string('ip_address', 45)->nullable();
+            $table->text('user_agent')->nullable();
+            $table->longText('payload');
+            $table->integer('last_activity')->index();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('users');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('sessions');
+    }
+};
+
+cat resources/views/pembelian/create.blade.php : <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catat Pembelian Stok · CatatRezekimu</title>
+<script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom style tambahan */
+        .btn-primary {
+            background-color: #0b3b2c;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            width: 100%;
+            font-size: 16px;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            background-color: #082f23;
+        }
+        .btn-secondary {
+            background-color: #eef2f6;
+            color: #1e293b;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-secondary:hover {
+            background-color: #dce1e8;
+        }
+        .btn-danger {
+            background-color: #fee2e2;
+            color: #991b1b;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-danger:hover {
+            background-color: #fecaca;
+        }
+        .card-item {
+            background: #f8fafc;
+            border: 1px solid #eef2f6;
+            border-radius: 16px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 50;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 32px;
+            padding: 24px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        /* Tambahan untuk daftar barang */
+        .daftar-barang {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .empty-state {
+            text-align: center;
+            color: #94a3b8;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="min-h-screen bg-gray-100 p-4 flex justify-center items-start">
+    <div class="max-w-md w-full">
+
+        <!-- CARD UTAMA -->
+        <div class="bg-white rounded-3xl shadow-lg p-5">
+
+            <!-- HEADER -->
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <a href="{{ route('pembelian.index') }}" class="text-sm text-[#0b3b2c] font-semibold flex items-center gap-1">
+                        ⬅️ Kembali
+                    </a>
+                    <h1 class="text-2xl font-bold text-[#0b3b2c] mt-1">📦 Catat Pembelian Stok</h1>
+                </div>
+<div class="text-xs text-gray-400 text-right">
+    <div>Waktu</div>
+    <div class="font-semibold text-gray-600" id="clock-display">{{ now()->format('d/m/Y H:i:s') }}</div>
+</div>
+            </div>
+
+            <!-- SUPPLIER -->
+            <div class="mb-5">
+                <label for="supplier_id" class="block text-sm font-semibold text-gray-700 mb-1">Supplier</label>
+                <div class="flex gap-2">
+                    <select id="supplier_id" class="flex-1 border border-gray-300 rounded-2xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#0b3b2c] focus:border-transparent bg-white">
+                        <option value="">-- Pilih Supplier --</option>
+                        @foreach($supplier as $s)
+                            <option value="{{ $s->id }}">{{ $s->nama }}</option>
+                        @endforeach
+                    </select>
+                    <button onclick="toggleModalSupplier()" class="bg-[#0b3b2c] text-white px-4 py-3 rounded-2xl font-semibold whitespace-nowrap">
+                        + Tambah
+                    </button>
+                </div>
+                <p class="text-xs text-gray-400 mt-1">* Pilih supplier yang sudah ada, atau tambahkan baru</p>
+            </div>
+
+            <!-- DAFTAR BARANG -->
+            <div class="mb-4">
+                <div class="flex justify-between items-center mb-3">
+                    <h2 class="text-lg font-bold text-gray-800">Daftar Barang</h2>
+                    <span class="text-sm text-gray-500" id="total-item-label">0 item</span>
+                </div>
+
+                <!-- Container daftar barang (akan diisi JavaScript) -->
+                <div id="daftar-barang" class="daftar-barang">
+                    <div class="empty-state">Belum ada barang ditambahkan</div>
+                </div>
+
+                <!-- Tombol Tambah Barang -->
+                <button onclick="toggleModalBarang()" class="w-full py-3 border-2 border-dashed border-gray-300 rounded-2xl text-gray-500 font-semibold hover:border-[#0b3b2c] hover:text-[#0b3b2c] transition mt-2">
+                    ➕ Tambah Barang
+                </button>
+            </div>
+
+            <!-- RINGKASAN -->
+            <div class="bg-[#f1f5f9] rounded-2xl p-4 mb-5">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <div class="text-sm text-gray-600">Total Item</div>
+                        <div class="text-xl font-bold text-gray-800" id="total-item-count">0 item</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-sm text-gray-600">Total Pembelian</div>
+                        <div class="text-2xl font-bold text-[#0b3b2c]" id="total-harga">Rp 0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOMBOL SIMPAN -->
+            <button id="btn-simpan" class="btn-primary text-lg py-4" onclick="simpanPembelian()">
+                💾 Simpan Pembelian
+            </button>
+            <p class="text-xs text-center text-gray-400 mt-3">* Stok akan otomatis bertambah setelah disimpan</p>
+
+        </div>
+        <!-- END CARD -->
+    </div>
+</div>
+
+<!-- ====== MODAL TAMBAH BARANG ====== -->
+<div class="modal-overlay" id="modalBarang">
+    <div class="modal-content">
+        <h2 class="text-xl font-bold text-[#0b3b2c] mb-4">➕ Tambah Barang</h2>
+
+        <div class="mb-4">
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Pilih Barang</label>
+            <select id="barang-select" class="w-full border border-gray-300 rounded-2xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#0b3b2c]">
+                <option value="">-- Pilih Barang --</option>
+                @foreach($barang as $b)
+                    <option value="{{ $b->id }}" data-satuan="{{ $b->satuan }}" data-harga="{{ $b->harga_modal }}">
+                        {{ $b->nama }} ({{ $b->satuan }})
+                    </option>
+                @endforeach
+            </select>
+            <div id="info-barang" class="text-sm text-gray-500 mt-1 hidden">
+                <span>Satuan: <span id="info-satuan"></span></span> ·
+                <span>Harga modal: Rp <span id="info-harga"></span></span>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Jumlah</label>
+            <input type="number" id="jumlah-barang" value="1" min="1" class="w-full border border-gray-300 rounded-2xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#0b3b2c]">
+        </div>
+
+        <div class="flex gap-3">
+            <button onclick="tambahBarangKeDaftar()" class="flex-1 bg-[#0b3b2c] text-white py-3 rounded-2xl font-semibold">
+                Tambahkan
+            </button>
+            <button onclick="toggleModalBarang()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-2xl font-semibold">
+                Batal
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ====== MODAL TAMBAH SUPPLIER ====== -->
+<div class="modal-overlay" id="modalSupplier">
+    <div class="modal-content">
+        <h2 class="text-xl font-bold text-[#0b3b2c] mb-4">➕ Tambah Supplier</h2>
+
+        <div class="mb-4">
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Supplier</label>
+            <input type="text" id="nama-supplier" placeholder="Contoh: PT Sumber Jaya" class="w-full border border-gray-300 rounded-2xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#0b3b2c]">
+        </div>
+
+        <div class="flex gap-3">
+            <button onclick="tambahSupplier()" class="flex-1 bg-[#0b3b2c] text-white py-3 rounded-2xl font-semibold">
+                Simpan Supplier
+            </button>
+            <button onclick="toggleModalSupplier()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-2xl font-semibold">
+                Batal
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ====== JAVASCRIPT ====== -->
+<script>
+    // Data sementara pembelian (di memory)
+    let daftarPembelian = [];
+    let counterId = 0;
+
+    // ----- FUNGSI MODAL -----
+    function toggleModalBarang() {
+        const modal = document.getElementById('modalBarang');
+        modal.classList.toggle('active');
+        // Reset form saat modal ditutup
+        if (!modal.classList.contains('active')) {
+            document.getElementById('barang-select').value = '';
+            document.getElementById('jumlah-barang').value = 1;
+            document.getElementById('info-barang').classList.add('hidden');
+        }
+    }
+
+    function toggleModalSupplier() {
+        const modal = document.getElementById('modalSupplier');
+        modal.classList.toggle('active');
+        if (!modal.classList.contains('active')) {
+            document.getElementById('nama-supplier').value = '';
+        }
+    }
+
+    // Tutup modal jika klik di luar konten
+    document.getElementById('modalBarang').addEventListener('click', function(e) {
+        if (e.target === this) this.classList.remove('active');
+    });
+    document.getElementById('modalSupplier').addEventListener('click', function(e) {
+        if (e.target === this) this.classList.remove('active');
+    });
+
+    // ----- INFO BARANG SAAT DIPILIH -----
+    document.getElementById('barang-select').addEventListener('change', function() {
+        const selected = this.options[this.selectedIndex];
+        const infoDiv = document.getElementById('info-barang');
+        if (this.value) {
+            document.getElementById('info-satuan').textContent = selected.dataset.satuan || '-';
+            document.getElementById('info-harga').textContent = Number(selected.dataset.harga).toLocaleString('id-ID');
+            infoDiv.classList.remove('hidden');
+        } else {
+            infoDiv.classList.add('hidden');
+        }
+    });
+
+    // ----- TAMBAH BARANG KE DAFTAR -----
+    function tambahBarangKeDaftar() {
+        const select = document.getElementById('barang-select');
+        const selected = select.options[select.selectedIndex];
+        const jumlah = parseInt(document.getElementById('jumlah-barang').value) || 1;
+
+        if (!select.value) {
+            alert('Silakan pilih barang terlebih dahulu!');
+            return;
+        }
+        if (jumlah < 1) {
+            alert('Jumlah minimal 1!');
+            return;
+        }
+
+        const id = select.value;
+        const nama = selected.text.split('(')[0].trim();
+        const satuan = selected.dataset.satuan || '';
+        const hargaModal = parseFloat(selected.dataset.harga) || 0;
+        const subtotal = hargaModal * jumlah;
+
+        // Cek apakah barang sudah ada di daftar
+        const existing = daftarPembelian.find(item => item.barang_id == id);
+        if (existing) {
+            // Update jumlah dan subtotal
+            existing.jumlah += jumlah;
+            existing.subtotal = existing.harga_modal * existing.jumlah;
+        } else {
+            // Tambah baru
+            daftarPembelian.push({
+                id: ++counterId,
+                barang_id: parseInt(id),
+                nama: nama,
+                satuan: satuan,
+                harga_modal: hargaModal,
+                jumlah: jumlah,
+                subtotal: subtotal
+            });
+        }
+
+        // Tutup modal dan update daftar
+        toggleModalBarang();
+        renderDaftar();
+    }
+
+    // ----- HAPUS BARANG DARI DAFTAR -----
+    function hapusBarang(id) {
+        daftarPembelian = daftarPembelian.filter(item => item.id !== id);
+        renderDaftar();
+    }
+
+    // ----- RENDER DAFTAR BARANG -----
+    function renderDaftar() {
+        const container = document.getElementById('daftar-barang');
+        const totalItemLabel = document.getElementById('total-item-label');
+        const totalItemCount = document.getElementById('total-item-count');
+        const totalHargaEl = document.getElementById('total-harga');
+
+        if (daftarPembelian.length === 0) {
+            container.innerHTML = `<div class="empty-state">Belum ada barang ditambahkan</div>`;
+            totalItemLabel.textContent = '0 item';
+            totalItemCount.textContent = '0 item';
+            totalHargaEl.textContent = 'Rp 0';
+            return;
+        }
+
+        let html = '';
+        let totalItem = 0;
+        let totalHarga = 0;
+
+        daftarPembelian.forEach(item => {
+            totalItem += item.jumlah;
+            totalHarga += item.subtotal;
+
+            html += `
+                <div class="card-item">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <div class="font-semibold text-gray-800">${item.nama}</div>
+                            <div class="text-sm text-gray-500">Satuan: ${item.satuan}</div>
+                        </div>
+                        <button onclick="hapusBarang(${item.id})" class="btn-danger">✕ Hapus</button>
+                    </div>
+                    <div class="flex flex-wrap gap-3 items-center">
+                        <div class="flex-1 min-w-[120px]">
+                            <label class="text-xs text-gray-500 block">Harga (per unit)</label>
+                            <input type="number" value="${item.harga_modal}"
+                                   class="w-full border border-gray-300 rounded-xl px-3 py-2 text-sm"
+                                   onchange="ubahHarga(${item.id}, this.value)">
+                        </div>
+                        <div class="flex-1 min-w-[80px]">
+                            <label class="text-xs text-gray-500 block">Jumlah</label>
+                            <input type="number" value="${item.jumlah}" min="1"
+                                   class="w-full border border-gray-300 rounded-xl px-3 py-2 text-sm"
+                                   onchange="ubahJumlah(${item.id}, this.value)">
+                        </div>
+                        <div class="flex-1 text-right">
+                            <div class="text-xs text-gray-500">Subtotal</div>
+                            <div class="font-bold text-[#0b3b2c] text-lg">Rp ${item.subtotal.toLocaleString('id-ID')}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+        totalItemLabel.textContent = `${totalItem} item`;
+        totalItemCount.textContent = `${totalItem} item`;
+        totalHargaEl.textContent = `Rp ${totalHarga.toLocaleString('id-ID')}`;
+    }
+
+    // ----- UBAH JUMLAH -----
+    function ubahJumlah(id, value) {
+        const item = daftarPembelian.find(i => i.id === id);
+        if (!item) return;
+        const newJumlah = parseInt(value) || 1;
+        if (newJumlah < 1) {
+            alert('Jumlah minimal 1!');
+            renderDaftar(); // reset ke nilai lama
+            return;
+        }
+        item.jumlah = newJumlah;
+        item.subtotal = item.harga_modal * item.jumlah;
+        renderDaftar();
+    }
+
+    // ----- UBAH HARGA -----
+    function ubahHarga(id, value) {
+        const item = daftarPembelian.find(i => i.id === id);
+        if (!item) return;
+        const newHarga = parseFloat(value) || 0;
+        if (newHarga < 0) {
+            alert('Harga tidak boleh negatif!');
+            renderDaftar();
+            return;
+        }
+        item.harga_modal = newHarga;
+        item.subtotal = item.harga_modal * item.jumlah;
+        renderDaftar();
+    }
+
+    // ----- TAMBAH SUPPLIER (DEMO) -----
+    function tambahSupplier() {
+        const nama = document.getElementById('nama-supplier').value.trim();
+        if (!nama) {
+            alert('Nama supplier tidak boleh kosong!');
+            return;
+        }
+        // Simulasi: tambahkan ke dropdown secara dinamis
+        const select = document.getElementById('supplier_id');
+        const option = document.createElement('option');
+        option.value = 'new_' + Date.now();
+        option.textContent = nama + ' (baru)';
+        select.appendChild(option);
+        select.value = option.value;
+
+        alert('Supplier "' + nama + '" berhasil ditambahkan!');
+        toggleModalSupplier();
+    }
+
+    // ----- SIMPAN PEMBELIAN (DEMO) -----
+// ----- SIMPAN PEMBELIAN (REAL) -----
+function simpanPembelian() {
+    const supplierId = document.getElementById('supplier_id').value;
+    if (!supplierId) {
+        alert('Silakan pilih supplier terlebih dahulu!');
+        return;
+    }
+    if (daftarPembelian.length === 0) {
+        alert('Tambahkan minimal 1 barang!');
+        return;
+    }
+
+    // Siapkan data
+    const data = {
+        supplier_id: supplierId,
+        items: daftarPembelian.map(item => ({
+            barang_id: item.barang_id,
+            jumlah: item.jumlah,
+            harga_modal_saat_beli: item.harga_modal
+        }))
+    };
+
+    // Kirim ke server via fetch
+    fetch('{{ route("pembelian.store") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => { throw err; });
+        }
+        return response.json();
+    })
+    .then(result => {
+        alert('✅ ' + result.message);
+        // Kosongkan daftar pembelian
+        daftarPembelian = [];
+        renderDaftar();
+        // Reset supplier
+        document.getElementById('supplier_id').value = '';
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        let pesan = 'Terjadi kesalahan saat menyimpan!';
+        if (error.errors) {
+            pesan = Object.values(error.errors).flat().join('\n');
+        } else if (error.message) {
+            pesan = error.message;
+        }
+        alert('❌ ' + pesan);
+    });
+}
+
+// ----- JAM REAL-TIME (BERDETAK SETIAP DETIK) -----
+function updateClock() {
+    const now = new Date();
+    const options = {
+        timeZone: 'Asia/Jakarta',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    };
+    const formatted = now.toLocaleString('id-ID', options);
+    document.getElementById('clock-display').textContent = formatted;
+}
+    // Render awal
+renderDaftar();
+    // Jalankan pertama kali
+updateClock();
+
+// Update setiap detik
+setInterval(updateClock, 1000);
+
+</script>
+
+</body>
+</html>
+
+cat resources/views/pembelian/index.blade.php : <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Pembelian · CatatRezekimu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f1f5f9; }
+        .card { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .btn-primary { background: #0b3b2c; color: white; padding: 8px 20px; border-radius: 40px; text-decoration: none; display: inline-block; }
+        .btn-primary:hover { background: #082f23; }
+        .badge { background: #e6f0ec; color: #0b3b2c; padding: 2px 12px; border-radius: 40px; font-size: 12px; font-weight: 600; }
+        .table-container { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th { background: #f8fafc; text-align: left; padding: 10px 12px; font-weight: 600; color: #1e293b; border-bottom: 2px solid #eef2f6; }
+        td { padding: 10px 12px; border-bottom: 1px solid #eef2f6; }
+        .success { background: #dcfce7; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 16px; }
+        .detail-row { background: #fafcff; }
+        .detail-row td { padding-left: 30px; font-size: 13px; color: #475569; }
+    </style>
+</head>
+<body>
+
+<div class="max-w-5xl mx-auto">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-[#0b3b2c]">📋 Riwayat Pembelian</h1>
+        <a href="{{ route('pembelian.create') }}" class="btn-primary">➕ Catat Pembelian</a>
+    </div>
+
+    @if(session('success'))
+        <div class="success">{{ session('success') }}</div>
+    @endif
+
+    <div class="card">
+        @if($pembelian->count() > 0)
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Supplier</th>
+                            <th>Total</th>
+                            <th>Item</th>
+                            <th>Tanggal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($pembelian as $p)
+                            <tr>
+                                <td>#{{ $p->id }}</td>
+                                <td>{{ $p->supplier->nama ?? '-' }}</td>
+                                <td class="font-semibold">Rp {{ number_format($p->total_harga, 0, ',', '.') }}</td>
+                                <td>{{ $p->detail->count() }} barang</td>
+                                <td>{{ $p->created_at->format('d/m/Y H:i') }}</td>
+                            </tr>
+                            <!-- Detail barang (baris tambahan) -->
+                            @foreach($p->detail as $detail)
+                                <tr class="detail-row">
+                                    <td colspan="5">
+                                        <span class="font-medium">{{ $detail->barang->nama }}</span>
+                                        × {{ $detail->jumlah }} {{ $detail->barang->satuan }}
+                                        @ Rp {{ number_format($detail->harga_modal_saat_beli, 0, ',', '.') }}
+                                        = <span class="font-semibold">Rp {{ number_format($detail->subtotal, 0, ',', '.') }}</span>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @else
+            <p class="text-gray-500 text-center py-8">Belum ada data pembelian.</p>
+        @endif
+    </div>
+
+    <div class="mt-4">
+        <a href="{{ route('dashboard.admin') }}" class="text-sm text-[#0b3b2c] font-semibold hover:underline">⬅️ Kembali ke Dashboard</a>
+    </div>
+</div>
+
+</body>
+</html>
+
+grep -n -B 3 -A 15 -i "pembelian" routes/web.php hasil : 2-
+3-use App\Http\Controllers\BarangController;
+4-use App\Http\Controllers\Auth\LoginController;
+5:use App\Http\Controllers\PembelianController;
+6-use App\Models\Barang;
+7-use App\Models\TransaksiPenjualan;
+8-use Illuminate\Support\Facades\Route;
+9-
+10-// Route publik (tanpa auth)
+11-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+12-Route::post('/login', [LoginController::class, 'login']);
+13-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+14-
+15-// Semua route di bawah ini WAJIB login
+16-Route::middleware(['auth'])->group(function () {
+17-
+18-    // Route untuk ADMIN
+19-    Route::middleware(['role:admin'])->group(function () {
+20-        Route::get('/dashboard/admin', function () {
+--
+25-        })->name('dashboard.admin');
+26-
+27-        Route::resource('barang', BarangController::class);
+28:        Route::resource('pembelian', PembelianController::class)->except(['show', 'edit', 'update', 'destroy']);
+29-    });
+30-
+31-    // Route untuk SALES
+32-    Route::middleware(['role:sales'])->group(function () {
+33-        Route::get('/dashboard/sales', function () {
+34-            return view('dashboard.sales');
+35-        })->name('dashboard.sales');
+36-    });
+37-
+38-    // Route test (opsional, bisa dihapus nanti)
+39-    Route::get('/test-auth', function () {
+40-        return 'Anda sudah login!';
+41-    })->middleware('auth');
+42-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. masalah waktu sudah selesai
+2. kita akan fokus kerjakan 1 per 1
+3. php artisan migrate:status : 
+  Migration name ...................................................... Batch / Status
+  0001_01_01_000000_create_users_table ....................................... [1] Ran
+  0001_01_01_000001_create_cache_table ....................................... [1] Ran
+  0001_01_01_000002_create_jobs_table ........................................ [1] Ran
+  2026_08_25_071551_add_role_to_users_table .................................. [1] Ran
+  2026_08_28_012449_create_barang_table ...................................... [1] Ran
+  2026_08_28_012733_create_pembelian_table ................................... [1] Ran
+  2026_08_28_013044_create_transaksi_penjualan_table ......................... [1] Ran
+  2026_09_01_071727_add_unique_index_to_nama_in_barang_table ................. [1] Ran
+  2026_09_02_073136_add_satuan_to_barang_table ............................... [1] Ran
+  2026_09_03_070435_create_suppliers_table ................................... [1] Ran
+  2026_09_03_070525_create_pembelian_table ................................... [2] Ran
+  2026_09_03_070610_create_pembelian_detail_table ............................ [2] Ran
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+1. Schema::getColumnListing('pembelian'); hasil : = [
+    "id",
+    "supplier_id",
+    "total_harga",
+    "created_at",
+    "updated_at",
+  ]
+
+
+
+
+
+
+$detail = App\Models\PembelianDetail::first();
+echo $detail->nama_barang_snapshot; // Harusnya "Beras 5kg"
+echo $detail->satuan_snapshot;      // Harusnya "karung"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$detail = App\Models\PembelianDetail::latest()->first();
+echo $detail->nama_barang_snapshot;
+echo $detail->satuan_snapshot;
+$pembelian = App\Models\Pembelian::latest()->first();
+echo $pembelian->id;
+echo $pembelian->total_harga;
+$pembelian->detail;
+
+
+hasil : > $pembelian = App\Models\Pembelian::latest()->first();
+
+= App\Models\Pembelian {#8569
+    id: 8,
+    supplier_id: 1,
+    total_harga: "1600000.00",
+    created_at: "2026-09-08 13:10:11",
+    updated_at: "2026-09-08 13:10:11",
+  }
+
+> echo $pembelian->id;
+
+8⏎
+
+> echo $pembelian->total_harga;
+
+1600000.00⏎
+
+> $pembelian->detail;
+
+= Illuminate\Database\Eloquent\Collection {#8625
+    all: [
+      App\Models\PembelianDetail {#8621
+        id: 5,
+        pembelian_id: 8,
+        barang_id: 1,
+        nama_barang_snapshot: null,
+        satuan_snapshot: null,
+        jumlah: 5,
+        harga_modal_saat_beli: "320000.00",
+        subtotal: "1600000.00",
+        created_at: "2026-09-08 13:10:11",
+        updated_at: "2026-09-08 13:10:11",
+      },
+    ],
+  }
+
+web.php full : <?php
+
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\PembelianController;
+use App\Models\Barang;
+use App\Models\TransaksiPenjualan;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth'])->group(function () {
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/dashboard/admin', function () {
+            $totalBarang = Barang::count();
+            $omzetHariIni = TransaksiPenjualan::whereDate('created_at', today())->sum('total') ?? 0;
+            $keuntunganHariIni = TransaksiPenjualan::whereDate('created_at', today())->sum('keuntungan_kotor') ?? 0;
+            return view('dashboard.admin', compact('totalBarang', 'omzetHariIni', 'keuntunganHariIni'));
+        })->name('dashboard.admin');
+
+        Route::resource('barang', BarangController::class);
+        Route::resource('pembelian', PembelianController::class)->except(['show', 'edit', 'update', 'destroy']);
+    });
+
+    Route::middleware(['role:sales'])->group(function () {
+        Route::get('/dashboard/sales', function () {
+            return view('dashboard.sales');
+        })->name('dashboard.sales');
+    });
+});
+
+apakah hasil ini sudah sesuai dengan asumsi anda bro?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$barang = App\Models\Barang::find(1);
+echo $barang->nama;
+echo $barang->satuan;
+
+
+
+> $barang = App\Models\Barang::find(1);
+
+= App\Models\Barang {#8678
+    id: 1,
+    nama: "Beras 5kg",
+    satuan: "karung",
+    stok: 225,
+    harga_modal: "320000.00",
+    harga_jual: "350000.00",
+    created_at: "2026-09-03 14:46:53",
+    updated_at: "2026-09-08 13:10:11",
+  }
+
+> echo $barang->nama;
+
+Beras 5kg⏎
+
+> echo $barang->satuan;
+
+karung⏎
+
+>
+
+> Schema::getColumnListing('barang');
+
+= [
+    "id",
+    "nama",
+    "satuan",
+    "stok",
+    "harga_modal",
+    "harga_jual",
+    "created_at",
+    "updated_at",
+  ]
+
+php artisan route:list | grep "pembelian" : GET|HEAD        pembelian .............. pembelian.index › PembelianController@index
+  POST            pembelian .............. pembelian.store › PembelianController@store
+  GET|HEAD        pembelian/create ..... pembelian.create › PembelianController@created_at
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+tail -20 storage/logs/laravel.log | grep "DEBUG SNAPSHOT" hasil : [2026-09-08 13:25:33] local.INFO: DEBUG SNAPSHOT {"barang_id":2,"nama":"Gula 1kg","satuan":"kg"}
+
+tail -50 storage/logs/laravel.log | grep -i error hasil : #23 /storage/emulated/0/Ya_gitu/tugasRumah/ujian/vendor/laravel/framework/src/Illuminate/View/Middleware/ShareErrorsFromSession.php(48): Illuminate\\Pipeline\\Pipeline->{closure:{closure:Illuminate\\Pipeline\\Pipeline::carry():194}:195}(Object(Illuminate\\Http\\Request))
+#24 /storage/emulated/0/Ya_gitu/tugasRumah/ujian/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate\\View\\Middleware\\ShareErrorsFromSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+
+
+
+
+
+
+
+
+
+
+
+
+> Schema::getColumnListing('pembelian_detail');
+
+= [
+    "id",
+    "pembelian_id",
+    "barang_id",
+    "nama_barang_snapshot",
+    "satuan_snapshot",
+    "jumlah",
+    "harga_modal_saat_beli",
+    "subtotal",
+    "created_at",
+    "updated_at",
+  ]
+
+$detail = App\Models\PembelianDetail::latest()->first();
+echo $detail->nama_barang_snapshot;
+echo $detail->satuan_snapshot;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+DB::statement('DROP TABLE IF EXISTS transaksi_penjualan');
+DB::statement('DROP TABLE IF EXISTS penjualan_detail');
+exit;
+
+
+Schema::getColumnListing('transaksi_penjualan');
+Schema::getColumnListing('penjualan_detail');

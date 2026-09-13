@@ -1,0 +1,129 @@
+---
+
+Aktivitas 1 – Menentukan Ide Project
+
+Judul Project
+CatatRezekimu – Aplikasi Manajemen Keuangan dan Stok untuk Distributor Sembako.
+
+Bidang Project
+Manajemen Inventaris dan Keuangan UMKM (sektor distribusi bahan pokok).
+
+Permasalahan
+
+1. Stok barang tidak akurat (selisih antara catatan buku dan fisik gudang).
+2. Kesulitan memperbarui harga jual saat harga modal naik (proses manual yang memakan waktu dan rawan terlewat).
+3. Rawan selisih uang dan kecurangan Sales karena tidak ada rekam jejak transaksi digital yang jelas.
+
+Pengguna Aplikasi
+
+1. Admin (Pemilik Distributor) – akses penuh.
+2. Sales (Karyawan) – akses terbatas untuk mencatat penjualan dan melihat riwayatnya sendiri.
+
+Manfaat
+
+1. Stok terpantau real-time tanpa perlu mengecek gudang atau membuka buku.
+2. Penyesuaian harga modal cepat dan tidak mengganggu data transaksi lama (karena sistem menyimpan snapshot harga per transaksi).
+3. Data penjualan aman dan transparan berkat pemisahan akses (Role‑Based Access Control).
+4. Memudahkan pengambilan keputusan bisnis (pembelian stok, perubahan harga) melalui dashboard keuntungan.
+
+---
+
+Aktivitas 2 – Analisis Permasalahan
+
+Mengapa aplikasi perlu dibuat?
+Sistem pencatatan manual menggunakan dua buku besar (pembelian/stok dan penjualan) terbukti tidak efektif dan memakan waktu. Setiap kali ingin mengecek stok atau keuntungan, pemilik harus membuka puluhan halaman dan menghitung ulang dengan kalkulator, sehingga hasilnya sering tidak akurat karena selisih catatan.
+
+Masalah apa yang sering terjadi?
+
+1. Stok tidak akurat – selisih antara buku dan fisik gudang menyebabkan kehilangan kesempatan jual atau penumpukan stok.
+2. Update harga jual rumit – saat harga modal naik, pemilik harus mencoret dan mengoreksi harga jual lama satu per satu, berisiko terlewat dan merugi.
+3. Rentan kecurangan dan selisih uang – transaksi tercampur dengan uang Sales, pemilik sulit mengetahui total pendapatan harian dan tidak memiliki bukti riwayat untuk evaluasi.
+
+Bagaimana solusi aplikasi?
+Aplikasi CatatRezekimu (offline Android) menyediakan:
+
+· Transaksi penjualan otomatis mengurangi stok secara real-time.
+· Fitur ubah harga modal yang berlaku untuk transaksi berikutnya, sedangkan data transaksi lama tetap aman karena sistem menyimpan snapshot harga (harga modal dan harga jual) per transaksi.
+· Pemisahan hak akses (Admin vs Sales) sehingga laporan keuangan hanya dapat dilihat oleh pemilik, meningkatkan transparansi dan pengawasan.
+
+Apa dampaknya jika aplikasi tidak dibuat?
+
+1. Kerugian finansial terus berlanjut (stok kadaluarsa/kehabisan tak terdeteksi, harga jual ketinggalan).
+2. Waktu pemilik habis untuk administrasi manual, bukan untuk mengembangkan usaha.
+3. Potensi kecurangan Sales tidak terdeteksi karena tidak ada bukti transaksi digital.
+4. Pengambilan keputusan bisnis (misal: pembelian stok) menjadi lambat dan kurang tepat karena data keuntungan tidak valid.
+
+---
+
+Aktivitas 3 – Analisis Kebutuhan
+
+A. Kebutuhan Fungsional (Fitur – minimal 10)
+Berdasarkan deskripsi aplikasi, flowchart, use case, dan struktur database yang telah dirancang, sistem memiliki fitur-fitur berikut:
+
+1. Login – Autentikasi pengguna (Admin/Sales) menggunakan username dan password (disimpan hash).
+2. Logout – Mengakhiri sesi pengguna dan kembali ke halaman login.
+3. Kelola Data Barang – Admin dapat menambah dan mengedit data barang (nama, satuan, harga jual). Tidak ada fitur hapus (untuk menjaga integritas histori).
+4. Catat Pembelian Stok – Admin mencatat pembelian dari supplier (memilih barang, mengisi qty dan harga beli). Sistem otomatis menambah stok dan memperbarui harga modal di tabel barang.
+5. Ubah Harga Modal – Admin dapat mengubah harga modal suatu barang kapan saja. Perubahan hanya berlaku untuk transaksi penjualan berikutnya (data lama tidak berubah).
+6. Catat Penjualan – Sales memilih barang, mengisi qty, dan sistem melakukan validasi stok (menolak jika qty > stok). Penjualan disimpan dengan snapshot harga modal dan harga jual.
+7. Cek Ketersediaan Stok – Saat mencatat penjualan, sistem secara otomatis memeriksa stok. Jika stok tidak mencukupi, transaksi ditolak (stok tidak boleh negatif).
+8. Simpan Snapshot Harga – Sistem menyimpan harga_jual_snapshot dan harga_modal_snapshot di tabel penjualan_detail per transaksi, sehingga perubahan harga di masa depan tidak mengganggu data historis.
+9. Dashboard Ringkasan – Admin melihat total penjualan hari ini, keuntungan kotor hari ini, dan total stok seluruh barang. Sales melihat sapaan dan menu utama.
+10. Lihat Riwayat Transaksi – Admin dapat melihat semua transaksi penjualan dari semua Sales. Sales hanya dapat melihat riwayat penjualan yang dilakukannya sendiri.
+11. Kelola Akun Sales – Admin dapat menambah, mengedit, atau menghapus akun Sales (username, password).
+12. Laporan Keuangan – Admin memilih periode (tanggal) dan sistem menampilkan total penjualan serta total keuntungan kotor pada periode tersebut.
+13. Cetak Struk – Setelah transaksi penjualan berhasil, Sales dapat mencetak struk (opsional, jika tersedia printer thermal).
+
+B. Kebutuhan Non-Fungsional (Hardware, Software, dll.)
+
+· Platform: Aplikasi khusus untuk perangkat Android minimal versi 7.0 (Nougat). Tidak tersedia untuk iOS atau web browser pada versi 1.0.
+· Spesifikasi Hardware Minimal: RAM 2 GB, Memori internal tersisa minimal 100 MB, Prosesor quad-core 1.4 GHz.
+· Konektivitas: Bekerja secara offline (tanpa internet). Tidak ada fitur sinkronisasi cloud pada versi 1.0.
+· Lingkungan Pengembangan: Android Studio (Java/Kotlin) dengan database lokal SQLite.
+· Antarmuka Pengguna: UI/UX sederhana dan ramah terhadap pengguna non-teknologi (termasuk lansia).
+· Keamanan: Menerapkan Role‑Based Access Control (RBAC) untuk membatasi akses Sales terhadap data keuangan total dan fitur manajemen data.
+· Aturan Bisnis Tambahan: Barang baru memiliki stok = 0 dan harga_modal = 0 (belum bisa dijual). Tidak ada fitur hapus barang untuk menjaga integritas histori. Validasi stok wajib dilakukan sebelum penyimpanan transaksi.
+
+---
+
+Aktivitas 4 – Identifikasi Pengguna
+
+Berdasarkan aturan bisnis, aplikasi hanya memiliki 2 (dua) jenis pengguna dengan hak akses sebagai berikut:
+
+1. Admin (Pemilik Distributor) – Role: Full Access
+Hak akses / tugas:
+
+· Kelola data barang (tambah/edit – tidak bisa hapus).
+· Catat pembelian stok (menambah stok dan mengupdate harga modal).
+· Ubah harga modal kapan saja.
+· Kelola akun Sales (tambah/edit/hapus).
+· Lihat semua riwayat transaksi penjualan.
+· Lihat laporan keuangan (total penjualan & keuntungan kotor per periode).
+· Mencetak laporan/struk.
+
+2. Sales (Karyawan) – Role: Restricted Access
+Hak akses / tugas:
+
+· Catat penjualan (memilih barang, mengisi qty, melakukan pembayaran).
+· Cek ketersediaan stok (saat transaksi).
+· Lihat riwayat penjualan miliknya sendiri.
+· TIDAK diperbolehkan mengubah harga modal, menghapus barang, melihat laporan keuangan total, atau mengelola akun pengguna lain.
+
+---
+
+Aktivitas 9 – Refleksi
+
+Apa yang paling mudah?
+Menentukan ide project dan menganalisis permasalahan. Karena latar belakang diangkat dari pengalaman nyata (usaha ayah saya), setiap poin masalah, solusi, dan manfaat menjadi sangat konkret dan mudah diidentifikasi tanpa perlu berimajinasi berlebihan.
+
+Apa yang masih membingungkan?
+Perancangan struktur database, terutama logika snapshot harga agar sistem dapat menyimpan harga modal dan harga jual per transaksi secara permanen tanpa merusak integritas data ketika harga modal diubah kemudian. Selain itu, implementasi validasi stok yang harus menolak transaksi jika stok tidak mencukupi membutuhkan pemikiran lebih lanjut terkait teknis pengecekan dan penguncian data di sisi aplikasi.
+
+Apa yang akan dipelajari sebelum mulai membuat aplikasi?
+
+1. Pengelolaan SQLite di Android – menyimpan data historis (snapshot) dan menjaga konsistensi relasi antar tabel.
+2. Implementasi RBAC di aplikasi mobile agar pemisahan akses antara Admin dan Sales berjalan aman.
+3. Logika bisnis validasi stok di sisi aplikasi (mencegah stok negatif, pengecekan sebelum simpan).
+4. Desain UI/UX sederhana yang ramah terhadap pengguna awam (non‑teknologi), karena target pengguna adalah distributor sembako yang mungkin sudah lanjut usia.
+
+---

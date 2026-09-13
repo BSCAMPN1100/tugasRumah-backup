@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaksi Berhasil - CatatRezekimu</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eeeeee;
+            color: #222;
+        }
+
+        .phone {
+            width: 390px;
+            min-height: 844px;
+            margin: 20px auto;
+            background: white;
+            border: 2px solid #222;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        .header {
+            height: 65px;
+            border-bottom: 2px solid #222;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header h1 {
+            font-size: 20px;
+        }
+
+        /* CONTENT */
+        .content {
+            flex: 1;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        /* SUCCESS */
+        .success-icon {
+            width: 80px;
+            height: 80px;
+
+            border: 3px solid #222;
+            border-radius: 50%;
+
+            margin: 25px auto 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .success-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .success-text {
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        /* TRANSACTION INFO */
+        .transaction-box {
+            border: 2px solid #222;
+            padding: 18px;
+            text-align: left;
+        }
+
+        .transaction-title {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+
+            padding: 8px 0;
+
+            font-size: 14px;
+        }
+
+        .row.total {
+            border-top: 1px solid #222;
+            margin-top: 8px;
+            padding-top: 15px;
+
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        /* BUTTON AREA */
+        .button-area {
+            padding: 0 20px 20px;
+        }
+
+        .btn {
+            width: 100%;
+            height: 48px;
+
+            border: 2px solid #222;
+
+            font-weight: bold;
+            cursor: pointer;
+
+            margin-top: 10px;
+        }
+
+        .print-btn {
+            background: #222;
+            color: white;
+        }
+
+        .history-btn {
+            background: white;
+            color: #222;
+        }
+
+        .dashboard-btn {
+            background: white;
+            color: #222;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="phone">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>TRANSAKSI BERHASIL</h1>
+    </div>
+
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <!-- SUCCESS ICON -->
+        <div class="success-icon">
+            ✓
+        </div>
+
+
+        <!-- SUCCESS MESSAGE -->
+        <div class="success-title">
+            TRANSAKSI BERHASIL
+        </div>
+
+        <div class="success-text">
+            Penjualan telah berhasil disimpan.
+        </div>
+
+
+        <!-- TRANSACTION INFORMATION -->
+        <div class="transaction-box">
+
+            <div class="transaction-title">
+                RINGKASAN TRANSAKSI
+            </div>
+
+            <div class="row">
+                <span>No. Transaksi</span>
+                <span>#TRX001</span>
+            </div>
+
+            <div class="row">
+                <span>Tanggal</span>
+                <span>18-08-2026</span>
+            </div>
+
+            <div class="row">
+                <span>Total Penjualan</span>
+                <span>Rp190.000</span>
+            </div>
+
+            <div class="row">
+                <span>Uang Dibayar</span>
+                <span>Rp200.000</span>
+            </div>
+
+            <div class="row total">
+                <span>Kembalian</span>
+                <span>Rp10.000</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BUTTON AREA -->
+    <div class="button-area">
+
+        <button
+            class="btn print-btn"
+            onclick="cetakStruk()"
+        >
+            CETAK STRUK
+        </button>
+
+
+        <button
+            class="btn history-btn"
+            onclick="lihatRiwayat()"
+        >
+            LIHAT RIWAYAT PENJUALAN
+        </button>
+
+
+        <button
+            class="btn dashboard-btn"
+            onclick="keDashboard()"
+        >
+            KEMBALI KE DASHBOARD
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    function cetakStruk() {
+
+        alert("Membuka halaman cetak struk.");
+
+        // Nantinya:
+        // window.location.href = "cetak-struk.html";
+
+    }
+
+
+    function lihatRiwayat() {
+
+        alert("Membuka riwayat penjualan.");
+
+        // Nantinya:
+        // window.location.href = "riwayat-penjualan.html";
+
+    }
+
+
+    function keDashboard() {
+
+        alert("Kembali ke Dashboard Sales.");
+
+        // Nantinya:
+        // window.location.href = "dashboard-sales.html";
+
+    }
+
+</script>
+
+</body>
+</html>

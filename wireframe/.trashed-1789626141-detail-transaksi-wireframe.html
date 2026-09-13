@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Detail Transaksi - CatatRezekimu</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f2f2f2;
+            color: #222;
+        }
+
+        .container {
+            width: 390px;
+            min-height: 100vh;
+            margin: auto;
+            background: white;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 18px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .back {
+            font-size: 22px;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        /* CONTENT */
+        .content {
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* TRANSACTION INFO */
+        .transaction-info {
+            border: 1px solid #aaa;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .info-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            font-weight: bold;
+        }
+
+        /* ITEM */
+        .item {
+            border: 1px solid #aaa;
+            padding: 15px;
+            margin-bottom: 12px;
+        }
+
+        .item-name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .item-detail {
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .item-total {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #ccc;
+            margin-top: 10px;
+            padding-top: 10px;
+            font-weight: bold;
+        }
+
+        /* TOTAL */
+        .total-box {
+            border-top: 2px solid #222;
+            margin-top: 20px;
+            padding-top: 15px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* PAYMENT */
+        .payment-box {
+            border: 1px solid #aaa;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .payment-row:last-child {
+            margin-bottom: 0;
+            font-weight: bold;
+        }
+
+        /* BUTTON */
+        .button-area {
+            padding: 0 20px 20px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            background: white;
+            border: 2px solid #222;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #eeeeee;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+
+        <div class="back" onclick="kembali()">
+            ←
+        </div>
+
+        <h2>DETAIL TRANSAKSI</h2>
+
+    </div>
+
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <div class="section-title">
+            INFORMASI TRANSAKSI
+        </div>
+
+
+        <!-- TRANSACTION INFO -->
+        <div class="transaction-info">
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    ID Transaksi
+                </span>
+
+                <span>
+                    #TRX001
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Tanggal
+                </span>
+
+                <span>
+                    17-08-2026
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Sales
+                </span>
+
+                <span>
+                    Budi Santoso
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ITEMS -->
+        <div class="section-title">
+            DETAIL BARANG
+        </div>
+
+
+        <!-- ITEM 1 -->
+        <div class="item">
+
+            <div class="item-name">
+                Gula Pasir
+            </div>
+
+            <div class="item-detail">
+
+                Jumlah : 10 kg<br>
+
+                Harga Jual : Rp12.000 / kg
+
+            </div>
+
+            <div class="item-total">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <span>
+                    Rp120.000
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ITEM 2 -->
+        <div class="item">
+
+            <div class="item-name">
+                Minyak Goreng
+            </div>
+
+            <div class="item-detail">
+
+                Jumlah : 5 liter<br>
+
+                Harga Jual : Rp14.000 / liter
+
+            </div>
+
+            <div class="item-total">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <span>
+                    Rp70.000
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL -->
+        <div class="total-box">
+
+            <div class="total-row">
+
+                <span>
+                    TOTAL
+                </span>
+
+                <span>
+                    Rp190.000
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- PAYMENT INFO -->
+        <div class="payment-box">
+
+            <div class="payment-row">
+
+                <span>
+                    Uang Dibayar
+                </span>
+
+                <span>
+                    Rp200.000
+                </span>
+
+            </div>
+
+
+            <div class="payment-row">
+
+                <span>
+                    Kembalian
+                </span>
+
+                <span>
+                    Rp10.000
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BUTTON -->
+    <div class="button-area">
+
+        <button onclick="cetakStruk()">
+            CETAK STRUK
+        </button>
+
+        <button onclick="kembali()">
+            KEMBALI
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    function cetakStruk() {
+
+        alert("Membuka halaman cetak struk.");
+
+        // Nantinya:
+        // window.location.href = "cetak-struk.html";
+
+    }
+
+
+    function kembali() {
+
+        alert("Kembali ke Semua Riwayat.");
+
+        // Nantinya:
+        // window.location.href = "semua-riwayat.html";
+
+    }
+
+</script>
+
+</body>
+</html>

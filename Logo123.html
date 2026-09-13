@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background: #1a2a1a; }
+  canvas {
+    width: 512px;
+    height: 512px;
+    border-radius: 30px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+</style>
+</head>
+<body>
+<canvas id="logo" width="512" height="512"></canvas>
+<script>
+  const canvas = document.getElementById('logo');
+  const ctx = canvas.getContext('2d');
+
+  // ========== 1. BACKGROUND HIJAU PUDAR ==========
+  const grad = ctx.createRadialGradient(256, 256, 50, 256, 256, 300);
+  grad.addColorStop(0, '#C8E6C9');
+  grad.addColorStop(1, '#A5D6A7');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 512, 512);
+
+  // ========== 2. BORDER DEKORATIF (GEOMETRIS) ==========
+  ctx.strokeStyle = '#2E7D32';
+  ctx.lineWidth = 6;
+  ctx.strokeRect(20, 20, 472, 472);
+  
+  // sudut-sudut border (motif islami)
+  const corners = [[20,20], [492,20], [20,492], [492,492]];
+  corners.forEach(([x,y]) => {
+    ctx.beginPath();
+    ctx.arc(x, y, 20, 0, Math.PI*2);
+    ctx.fillStyle = '#2E7D32';
+    ctx.fill();
+  });
+
+  // ========== 3. BULAN SABIT (atas kiri) ==========
+  ctx.save();
+  ctx.translate(110, 110);
+  // bulan sabit: dua lingkaran
+  ctx.beginPath();
+  ctx.arc(0, 0, 50, 0, Math.PI*2);
+  ctx.fillStyle = '#D4AF37'; // emas
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(20, -15, 40, 0, Math.PI*2);
+  ctx.fillStyle = '#C8E6C9';
+  ctx.fill();
+  ctx.restore();
+
+  // ========== 4. BINTANG (atas kanan) ==========
+  function drawStar(cx, cy, spikes, outerR, innerR, color) {
+    ctx.beginPath();
+    for (let i = 0; i < spikes*2; i++) {
+      const r = i%2===0 ? outerR : innerR;
+      const angle = (i * Math.PI) / spikes - Math.PI/2;
+      const x = cx + Math.cos(angle) * r;
+      const y = cy + Math.sin(angle) * r;
+      i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.strokeStyle = '#2E7D32';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+  drawStar(420, 90, 5, 35, 15, '#D4AF37');
+
+  // ========== 5. HURUF R BESAR (tengah) ==========
+  ctx.shadowColor = 'rgba(0,0,0,0.3)';
+  ctx.shadowBlur = 20;
+  ctx.shadowOffsetX = 4;
+  ctx.shadowOffsetY = 4;
+
+  ctx.fillStyle = '#2E7D32'; // hijau tua
+  ctx.font = 'bold 320px "Times New Roman", serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('R', 256, 256);
+
+  // ========== 6. BAYANGAN KEDUA UNTUK EFEK GLOW ==========
+  ctx.shadowBlur = 40;
+  ctx.shadowColor = 'rgba(46, 125, 50, 0.4)';
+  ctx.fillText('R', 256, 256);
+
+  // ========== 7. TEKS "Rejekimu" di bawah ==========
+  ctx.shadowBlur = 0; // matikan shadow
+  ctx.font = 'italic 48px "Times New Roman", serif';
+  ctx.fillStyle = '#D4AF37';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  ctx.fillText('Rejekimu', 256, 380);
+
+  // ========== 8. AKSEN GARIS BAWAH ==========
+  ctx.beginPath();
+  ctx.moveTo(180, 430);
+  ctx.lineTo(332, 430);
+  ctx.strokeStyle = '#D4AF37';
+  ctx.lineWidth = 4;
+  ctx.stroke();
+
+  console.log('Logo Islami siap di-screenshot!');
+</script>
+</body>
+</html>

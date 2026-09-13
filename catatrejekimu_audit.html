@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CatatRezekimu — Project Audit Tree</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        background: #0d1117;
+        color: #c9d1d9;
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+    }
+
+    header {
+        padding: 24px 20px;
+        border-bottom: 1px solid #30363d;
+        background: #161b22;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    header h1 {
+        margin: 0 0 8px;
+        color: #58a6ff;
+        font-size: 20px;
+    }
+
+    header p {
+        margin: 0;
+        color: #8b949e;
+        line-height: 1.6;
+    }
+
+    .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 16px;
+    }
+
+    .badge {
+        padding: 5px 9px;
+        border-radius: 6px;
+        font-size: 11px;
+        border: 1px solid #30363d;
+    }
+
+    .critical {
+        color: #ff7b72;
+        border-color: #f85149;
+    }
+
+    .important {
+        color: #ffa657;
+        border-color: #db6d28;
+    }
+
+    .recommended {
+        color: #e3b341;
+        border-color: #9e6a03;
+    }
+
+    .nice {
+        color: #3fb950;
+        border-color: #238636;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: auto;
+        padding: 24px 18px 60px;
+    }
+
+    .progress-box {
+        background: #161b22;
+        border: 1px solid #30363d;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 25px;
+    }
+
+    .progress-title {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .progress {
+        height: 8px;
+        background: #21262d;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        width: 0%;
+        height: 100%;
+        background: #238636;
+        transition: 0.3s;
+    }
+
+    .tree {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    .tree ul {
+        list-style: none;
+        padding-left: 28px;
+        margin: 4px 0;
+    }
+
+    .node {
+        margin: 5px 0;
+    }
+
+    .node-content {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.15s;
+    }
+
+    .node-content:hover {
+        background: #161b22;
+    }
+
+    .toggle {
+        width: 18px;
+        color: #8b949e;
+        user-select: none;
+    }
+
+    .folder {
+        color: #58a6ff;
+        font-weight: bold;
+    }
+
+    .file {
+        color: #c9d1d9;
+    }
+
+    .critical-text {
+        color: #ff7b72;
+    }
+
+    .important-text {
+        color: #ffa657;
+    }
+
+    .recommended-text {
+        color: #e3b341;
+    }
+
+    .nice-text {
+        color: #3fb950;
+    }
+
+    .details {
+        display: none;
+        margin: 4px 0 8px 38px;
+        padding: 12px;
+        background: #161b22;
+        border-left: 2px solid #30363d;
+        color: #8b949e;
+        line-height: 1.6;
+        border-radius: 0 6px 6px 0;
+    }
+
+    .details strong {
+        color: #c9d1d9;
+    }
+
+    .details .fix {
+        margin-top: 8px;
+        color: #58a6ff;
+    }
+
+    .status {
+        margin-left: auto;
+        font-size: 10px;
+        color: #8b949e;
+        border: 1px solid #30363d;
+        padding: 3px 6px;
+        border-radius: 5px;
+    }
+
+    .checkbox {
+        accent-color: #238636;
+        cursor: pointer;
+    }
+
+    .section {
+        margin-top: 30px;
+    }
+
+    .section-title {
+        color: #8b949e;
+        border-bottom: 1px dashed #30363d;
+        padding-bottom: 8px;
+        margin-bottom: 10px;
+    }
+
+    .command {
+        background: #010409;
+        border: 1px solid #30363d;
+        padding: 14px;
+        border-radius: 6px;
+        margin-top: 20px;
+        color: #79c0ff;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    footer {
+        text-align: center;
+        color: #484f58;
+        padding: 30px 10px;
+        font-size: 11px;
+    }
+
+    @media (max-width: 600px) {
+        body {
+            font-size: 13px;
+        }
+
+        header h1 {
+            font-size: 17px;
+        }
+
+        .node-content {
+            padding: 8px 5px;
+        }
+
+        .tree ul {
+            padding-left: 18px;
+        }
+
+        .details {
+            margin-left: 20px;
+        }
+
+        .status {
+            display: none;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>📦 CatatRezekimu — Project Audit Tree</h1>
+
+    <p>
+        Peta pengerjaan proyek dari fondasi → analisis → desain →
+        implementasi → testing.
+    </p>
+
+    <div class="legend">
+        <span class="badge critical">🔴 KRITIS</span>
+        <span class="badge important">🟠 PENTING</span>
+        <span class="badge recommended">🟡 DISARANKAN</span>
+        <span class="badge nice">🟢 NICE TO HAVE</span>
+    </div>
+</header>
+
+<div class="container">
+
+    <div class="progress-box">
+        <div class="progress-title">
+            <span>PROJECT PROGRESS</span>
+            <span id="progressText">0%</span>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- ROOT -->
+    <!-- ================================================= -->
+
+    <ul class="tree">
+
+        <li class="node">
+
+            <div class="node-content">
+                <span class="toggle">▼</span>
+                <span class="folder">📁 CATATREZEKIMU</span>
+            </div>
+
+            <ul>
+
+
+                <!-- ============================= -->
+                <!-- 01 FOUNDATION -->
+                <!-- ============================= -->
+
+                <li class="node">
+
+                    <div class="node-content">
+                        <span class="toggle">▼</span>
+                        <span class="critical-text">
+                            🔴 01 — FOUNDATION / ATURAN DASAR
+                        </span>
+                    </div>
+
+                    <ul>
+
+                        <li class="node">
+
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    01.01 — Tentukan Scope Aplikasi
+                                </span>
+                                <span class="status">WAJIB</span>
+                            </div>
+
+                            <div class="details">
+                                <strong>Masalah:</strong><br>
+                                Jangan sampai aplikasi berkembang terlalu luas
+                                sebelum fitur utama selesai.
+
+                                <div class="fix">
+                                    FIX → Fokus pada toko sembako kecil/menengah:
+                                    stok + penjualan + keuntungan + role Pemilik/Kasir.
+                                </div>
+                            </div>
+
+                        </li>
+
+
+                        <li class="node">
+
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    01.02 — Tentukan Role Pengguna
+                                </span>
+                                <span class="status">WAJIB</span>
+                            </div>
+
+                            <div class="details">
+                                <strong>Role:</strong><br>
+                                1. Pemilik/Admin<br>
+                                2. Kasir
+
+                                <div class="fix">
+                                    FIX → Tentukan dengan jelas fitur apa yang
+                                    boleh dan tidak boleh digunakan setiap role.
+                                </div>
+                            </div>
+
+                        </li>
+
+
+                        <li class="node">
+
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    01.03 — Tentukan Aturan Harga Modal
+                                </span>
+                                <span class="status">KRITIS</span>
+                            </div>
+
+                            <div class="details">
+                                <strong>Aturan yang disarankan:</strong><br>
+                                Harga modal pada saat transaksi harus disimpan
+                                bersama transaksi tersebut.
+
+                                <div class="fix">
+                                    FIX → Jangan menghitung ulang transaksi lama
+                                    menggunakan harga modal terbaru.
+                                </div>
+                            </div>
+
+                        </li>
+
+
+                        <li class="node">
+
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    01.04 — Tentukan Aturan Stok
+                                </span>
+                                <span class="status">KRITIS</span>
+                            </div>
+
+                            <div class="details">
+                                <strong>Aturan minimal:</strong><br>
+                                Stok tidak boleh menjadi negatif.
+
+                                <div class="fix">
+                                    FIX → Jika jumlah penjualan melebihi stok,
+                                    transaksi harus ditolak.
+                                </div>
+                            </div>
+
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <!-- ============================= -->
+                <!-- 02 REQUIREMENTS -->
+                <!-- ============================= -->
+
+                <li class="node">
+
+                    <div class="node-content">
+                        <span class="toggle">▼</span>
+                        <span class="critical-text">
+                            🔴 02 — REQUIREMENTS
+                        </span>
+                    </div>
+
+                    <ul>
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    02.01 — Functional Requirements
+                                </span>
+                            </div>
+
+                            <div class="details">
+                                Tentukan fungsi sistem secara jelas.
+
+                                <div class="fix">
+                                    Contoh → Login, produk, stok, transaksi,
+                                    laporan, pengguna, logout.
+                                </div>
+                            </div>
+                        </li>
+
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    02.02 — Non-Functional Requirements
+                                </span>
+                            </div>
+
+                            <div class="details">
+                                Tentukan kualitas sistem.
+
+                                <div class="fix">
+                                    Contoh → offline, cepat, mudah digunakan,
+                                    data tersimpan secara lokal.
+                                </div>
+                            </div>
+                        </li>
+
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    02.03 — Definisi Hak Akses
+                                </span>
+                            </div>
+
+                            <div class="details">
+                                Buat tabel hak akses Pemilik dan Kasir.
+
+                                <div class="fix">
+                                    Tujuan → mencegah kasir mengubah data
+                                    penting seperti harga modal dan laporan.
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <!-- ============================= -->
+                <!-- 03 FLOW -->
+                <!-- ============================= -->
+
+                <li class="node">
+
+                    <div class="node-content">
+                        <span class="toggle">▼</span>
+                        <span class="critical-text">
+                            🔴 03 — FLOW & BUSINESS LOGIC
+                        </span>
+                    </div>
+
+                    <ul>
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    03.01 — Flow Login
+                                </span>
+                            </div>
+
+                            <div class="details">
+                                Login → Validasi → Cek Role →
+                                Dashboard yang sesuai.
+                            </div>
+                        </li>
+
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    03.02 — Flow Transaksi
+                                </span>
+                            </div>
+
+                            <div class="details">
+                                Cari produk → jumlah → cek stok →
+                                keranjang → pembayaran → simpan transaksi →
+                                kurangi stok.
+                            </div>
+                        </li>
+
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    03.03 — Flow Kelola Produk
+                                </span>
+                            </div>
+
+                            <div class="details">
+                                Tambah → validasi → simpan.<br>
+                                Edit → validasi → update.<br>
+                                Nonaktifkan → konfirmasi → update status.
+                            </div>
+                        </li>
+
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    03.04 — Flow Laporan
+                                </span>
+                            </div>
+
+                            <div class="details">
+                                Pilih periode → ambil transaksi →
+                                hitung penjualan → hitung keuntungan →
+                                tampilkan laporan.
+                            </div>
+                        </li>
+
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    03.05 — Edge Cases
+                                </span>
+                            </div>
+
+                            <div class="details">
+                                Tentukan apa yang terjadi ketika:<br><br>
+
+                                • Stok = 0<br>
+                                • Stok tidak cukup<br>
+                                • Pembayaran kurang<br>
+                                • Produk tidak ditemukan<br>
+                                • Username/password salah<br>
+                                • Data kosong<br>
+                                • Transaksi gagal disimpan
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <!-- ============================= -->
+                <!-- 04 DATABASE -->
+                <!-- ============================= -->
+
+                <li class="node">
+
+                    <div class="node-content">
+                        <span class="toggle">▼</span>
+                        <span class="important-text">
+                            🟠 04 — DATABASE / DATA MODEL
+                        </span>
+                    </div>
+
+                    <ul>
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    04.01 — User
+                                </span>
+                            </div>
+
+                            <div class="details">
+                                Data pengguna dan role.
+                            </div>
+                        </li>
+
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    04.02 — Product
+                                </span>
+                            </div>
+
+                            <div class="details">
+                                Nama produk, stok, harga modal,
+                                harga jual, status produk.
+                            </div>
+                        </li>
+
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    04.03 — Transaction
+                                </span>
+                            </div>
+
+                            <div class="details">
+                                Tanggal, kasir, total, pembayaran,
+                                kembalian dan informasi transaksi.
+                            </div>
+                        </li>
+
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    04.04 — Transaction Detail
+                                </span>
+                            </div>
+
+                            <div class="details">
+                                Produk, jumlah, harga jual saat transaksi,
+                                harga modal saat transaksi,
+                                subtotal dan keuntungan.
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <!-- ============================= -->
+                <!-- 05 SECURITY -->
+                <!-- ============================= -->
+
+                <li class="node">
+
+                    <div class="node-content">
+                        <span class="toggle">▼</span>
+                        <span class="important-text">
+                            🟠 05 — BASIC SECURITY
+                        </span>
+                    </div>
+
+                    <ul>
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    05.01 — Login Validation
+                                </span>
+                            </div>
+
+                            <div class="details">
+                                Username/password wajib divalidasi.
+                            </div>
+                        </li>
+
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    05.02 — Role Authorization
+                                </span>
+                            </div>
+
+                            <div class="details">
+                                User hanya boleh mengakses fitur
+                                sesuai role.
+                            </div>
+                        </li>
+
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    05.03 — Input Validation
+                                </span>
+                            </div>
+
+                            <div class="details">
+                                Validasi nama produk, harga, stok,
+                                jumlah transaksi dan pembayaran.
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <!-- ============================= -->
+                <!-- 06 UI UX -->
+                <!-- ============================= -->
+
+                <li class="node">
+
+                    <div class="node-content">
+                        <span class="toggle">▼</span>
+                        <span class="recommended-text">
+                            🟡 06 — UI / UX
+                        </span>
+                    </div>
+
+                    <ul>
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    06.01 — Navigasi Sederhana
+                                </span>
+                            </div>
+
+                            <div class="details">
+                                Karena target pengguna dapat berasal
+                                dari pengguna non-teknologi,
+                                navigasi harus sederhana dan konsisten.
+                            </div>
+                        </li>
+
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    06.02 — Feedback
+                                </span>
+                            </div>
+
+                            <div class="details">
+                                Berikan feedback setelah aksi:
+                                berhasil, gagal, stok tidak cukup,
+                                pembayaran kurang, dan sebagainya.
+                            </div>
+                        </li>
+
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    06.03 — Accessibility Dasar
+                                </span>
+                            </div>
+
+                            <div class="details">
+                                Ukuran teks cukup besar,
+                                tombol mudah ditekan,
+                                warna tidak menjadi satu-satunya indikator.
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <!-- ============================= -->
+                <!-- 07 TESTING -->
+                <!-- ============================= -->
+
+                <li class="node">
+
+                    <div class="node-content">
+                        <span class="toggle">▼</span>
+                        <span class="recommended-text">
+                            🟡 07 — TESTING
+                        </span>
+                    </div>
+
+                    <ul>
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    07.01 — Test Login
+                                </span>
+                            </div>
+                        </li>
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    07.02 — Test Transaksi
+                                </span>
+                            </div>
+                        </li>
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    07.03 — Test Stok
+                                </span>
+                            </div>
+                        </li>
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    07.04 — Test Perhitungan Keuntungan
+                                </span>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <!-- ============================= -->
+                <!-- 08 NICE TO HAVE -->
+                <!-- ============================= -->
+
+                <li class="node">
+
+                    <div class="node-content">
+                        <span class="toggle">▼</span>
+                        <span class="nice-text">
+                            🟢 08 — NICE TO HAVE
+                        </span>
+                    </div>
+
+                    <ul>
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    08.01 — Export Laporan
+                                </span>
+                            </div>
+                        </li>
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    08.02 — Backup Database
+                                </span>
+                            </div>
+                        </li>
+
+                        <li class="node">
+                            <div class="node-content">
+                                <span class="toggle">›</span>
+                                <input type="checkbox" class="checkbox">
+                                <span class="file">
+                                    08.03 — Dark Mode
+                                </span>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+            </ul>
+        </li>
+    </ul>
+
+
+    <!-- TERMINAL GUIDE -->
+
+    <div class="command">
+        $ catatrezekimu --workflow<br><br>
+        FOUNDATION → REQUIREMENTS → FLOW → DATABASE
+        → SECURITY → UI/UX → IMPLEMENTATION → TESTING
+    </div>
+
+</div>
+
+
+<footer>
+    CatatRezekimu — Project Planning & Audit Tree<br>
+    Fokus: selesaikan yang kritis terlebih dahulu.
+</footer>
+
+
+<script>
+
+    /*
+     * TREE COLLAPSE / EXPAND
+     */
+
+    document.querySelectorAll(".node-content").forEach(node => {
+
+        node.addEventListener("click", function(e) {
+
+            // Jangan trigger ketika checkbox diklik
+            if (e.target.type === "checkbox") return;
+
+            const parent = this.parentElement;
+            const children = parent.querySelector(":scope > ul");
+            const details = parent.querySelector(":scope > .details");
+            const toggle = this.querySelector(".toggle");
+
+            if (children) {
+
+                const hidden =
+                    children.style.display === "none";
+
+                children.style.display =
+                    hidden ? "block" : "none";
+
+                toggle.textContent =
+                    hidden ? "▼" : "▶";
+            }
+
+            if (details) {
+
+                const hidden =
+                    details.style.display === "none" ||
+                    details.style.display === "";
+
+                details.style.display =
+                    hidden ? "block" : "none";
+            }
+
+        });
+
+    });
+
+
+    /*
+     * CHECKBOX PROGRESS
+     */
+
+    const checkboxes =
+        document.querySelectorAll(".checkbox");
+
+    const progressBar =
+        document.getElementById("progressBar");
+
+    const progressText =
+        document.getElementById("progressText");
+
+
+    function updateProgress() {
+
+        const total = checkboxes.length;
+
+        const completed =
+            [...checkboxes]
+            .filter(cb => cb.checked)
+            .length;
+
+        const percent =
+            total === 0
+                ? 0
+                : Math.round((completed / total) * 100);
+
+        progressBar.style.width =
+            percent + "%";
+
+        progressText.textContent =
+            percent + "%";
+
+        localStorage.setItem(
+            "catatrezekimu_progress",
+            JSON.stringify(
+                [...checkboxes].map(cb => cb.checked)
+            )
+        );
+    }
+
+
+    /*
+     * LOAD SAVED PROGRESS
+     */
+
+    const saved =
+        localStorage.getItem(
+            "catatrezekimu_progress"
+        );
+
+
+    if (saved) {
+
+        try {
+
+            const states =
+                JSON.parse(saved);
+
+            checkboxes.forEach((cb, index) => {
+
+                cb.checked =
+                    states[index] || false;
+
+            });
+
+        } catch (error) {
+
+            console.log(
+                "Progress tidak dapat dimuat."
+            );
+
+        }
+
+    }
+
+
+    checkboxes.forEach(cb => {
+
+        cb.addEventListener(
+            "change",
+            updateProgress
+        );
+
+    });
+
+
+    updateProgress();
+
+</script>
+
+</body>
+</html>

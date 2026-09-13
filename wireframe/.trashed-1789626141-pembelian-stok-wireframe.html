@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Wireframe - Pembelian Stok</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+        }
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            min-height: 100vh;
+
+            background: white;
+
+            border: 2px solid #333;
+
+            padding: 20px;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            display: flex;
+            align-items: center;
+
+            border-bottom: 2px solid #333;
+
+            padding-bottom: 18px;
+
+            margin-bottom: 25px;
+        }
+
+        .back-button {
+            border: none;
+            background: none;
+
+            font-size: 24px;
+
+            margin-right: 15px;
+
+            cursor: pointer;
+        }
+
+        .header h1 {
+            font-size: 22px;
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-title {
+            font-size: 16px;
+            font-weight: bold;
+
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select {
+
+            width: 100%;
+
+            height: 48px;
+
+            border: 2px solid #333;
+
+            padding: 0 12px;
+
+            font-size: 14px;
+
+            background: white;
+        }
+
+        /* =========================
+           ADD BUTTON
+        ========================= */
+
+        .add-button {
+
+            width: 100%;
+
+            height: 48px;
+
+            border: 2px solid #333;
+
+            background: #eee;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            margin-bottom: 30px;
+        }
+
+        .add-button:hover {
+            background: #ddd;
+        }
+
+        /* =========================
+           KERANJANG
+        ========================= */
+
+        .cart-title {
+
+            font-size: 16px;
+            font-weight: bold;
+
+            border-top: 2px solid #333;
+
+            padding-top: 20px;
+
+            margin-bottom: 15px;
+        }
+
+        .cart-item {
+
+            border: 2px solid #333;
+
+            padding: 15px;
+
+            margin-bottom: 12px;
+        }
+
+        .item-name {
+
+            font-weight: bold;
+
+            font-size: 16px;
+
+            margin-bottom: 8px;
+        }
+
+        .item-info {
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+        /* =========================
+           TOTAL
+        ========================= */
+
+        .total {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            border-top: 2px solid #333;
+
+            padding-top: 15px;
+
+            margin-top: 20px;
+
+            margin-bottom: 20px;
+
+            font-weight: bold;
+
+            font-size: 15px;
+        }
+
+        /* =========================
+           SAVE BUTTON
+        ========================= */
+
+        .save-button {
+
+            width: 100%;
+
+            height: 50px;
+
+            border: 2px solid #333;
+
+            background: #eee;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .save-button:hover {
+            background: #ddd;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 500px) {
+
+            .container {
+                border: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <main class="container">
+
+        <!-- =========================
+             HEADER
+        ========================= -->
+
+        <header class="header">
+
+            <button class="back-button">
+                ←
+            </button>
+
+            <h1>
+                PEMBELIAN STOK
+            </h1>
+
+        </header>
+
+
+        <!-- =========================
+             FORM INPUT BARANG
+        ========================= -->
+
+        <h2 class="form-title">
+            TAMBAH BARANG PEMBELIAN
+        </h2>
+
+
+        <!-- PILIH BARANG -->
+
+        <div class="form-group">
+
+            <label for="barang">
+                Pilih Barang
+            </label>
+
+            <select id="barang">
+
+                <option value="">
+                    Pilih barang
+                </option>
+
+                <option value="gula">
+                    Gula Pasir
+                </option>
+
+                <option value="minyak">
+                    Minyak Goreng
+                </option>
+
+                <option value="beras">
+                    Beras
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- JUMLAH -->
+
+        <div class="form-group">
+
+            <label for="jumlah">
+                Jumlah
+            </label>
+
+            <input
+                type="number"
+                id="jumlah"
+                min="1"
+                placeholder="Masukkan jumlah"
+            >
+
+        </div>
+
+
+        <!-- HARGA MODAL -->
+
+        <div class="form-group">
+
+            <label for="harga">
+                Harga Modal Terbaru
+            </label>
+
+            <input
+                type="number"
+                id="harga"
+                placeholder="Rp"
+            >
+
+        </div>
+
+
+        <!-- TAMBAH -->
+
+        <button class="add-button">
+
+            + TAMBAH KE PEMBELIAN
+
+        </button>
+
+
+        <!-- =========================
+             KERANJANG PEMBELIAN
+        ========================= -->
+
+        <h2 class="cart-title">
+            KERANJANG PEMBELIAN
+        </h2>
+
+
+        <!-- ITEM 1 -->
+
+        <div class="cart-item">
+
+            <div class="item-name">
+                Gula Pasir
+            </div>
+
+            <div class="item-info">
+
+                100 kg × Rp10.000
+
+                <br>
+
+                Subtotal:
+                Rp1.000.000
+
+            </div>
+
+        </div>
+
+
+        <!-- ITEM 2 -->
+
+        <div class="cart-item">
+
+            <div class="item-name">
+                Minyak Goreng
+            </div>
+
+            <div class="item-info">
+
+                50 liter × Rp12.000
+
+                <br>
+
+                Subtotal:
+                Rp600.000
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL -->
+
+        <div class="total">
+
+            <span>
+                TOTAL PEMBELIAN
+            </span>
+
+            <span>
+                Rp1.600.000
+            </span>
+
+        </div>
+
+
+        <!-- SIMPAN -->
+
+        <button class="save-button">
+
+            SIMPAN PEMBELIAN
+
+        </button>
+
+    </main>
+
+</body>
+
+</html>

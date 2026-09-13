@@ -1,0 +1,82 @@
+AKTIVITAS 1 – Menentukan Ide Project
+
+Komponen Isi
+• Judul Project : 
+CatatRezekimu – Aplikasi Manajemen Keuangan & Stok untuk Distributor Sembako
+
+• Bidang Project : 
+Perdagangan / Distribusi Barang Kebutuhan Pokok (Sembako)
+
+• Permasalahan : 
+Pedagang/distributor kesulitan mencatat stok barang yang banyak, sering kehilangan catatan karena harga modal naik turun, dan sulit merekap keuntungan harian karena transaksi campur aduk dengan uang kasir.
+
+• Pengguna Aplikasi : 
+1. Pemilik Toko / Distributor (Ayah)   
+2. Kasir / Karyawan Toko
+
+• Manfaat : Membantu pemilik toko memantau stok secara real-time, menyesuaikan harga jual otomatis saat harga modal berubah, dan mencegah kerugian akibat selisih uang/stok.
+
+ AKTIVITAS 2 – Analisis Permasalahan
+
+Pertanyaan Jawaban (Berdasarkan Data Wawancara)
+• Mengapa aplikasi perlu dibuat?
+Karena selama ini ayah mencatat di 2 buku manual. Proses ini memakan waktu, rawan salah hitung, dan tidak memberikan informasi cepat seperti “stok gula sisa berapa?” atau “untung hari ini berapa?” saat dibutuhkan.
+
+• Masalah apa yang sering terjadi? 
+1. Stok kelewat: Banyak barang (gula, minyak, beras) terkadang terlewat tidak tercatat.   
+2. Harga modal naik: Ayah jadi bingung menentukan ulang harga jual dan membeli lebih sedikit.   
+3. Uang hilang/curang: Ada kasir yang tidak jujur dan pernah menerima uang palsu.
+
+• Bagaimana solusi aplikasi? 
+1. Aplikasi menyediakan fitur “Stok Opname” untuk mencocokkan stok fisik dengan catatan.   
+2. Fitur “Edit Harga Modal” yang otomatis menghitung ulang keuntungan.   
+3. Fitur “Riwayat Transaksi” yang mencatat semua pemasukan dari kasir, sehingga pemilik bisa mengecek selisih.
+
+• Apa dampaknya jika aplikasi tidak dibuat? 
+Ayah akan kesulitan untuk mendata akibat stok hilang tidak terdeteksi, tidak bisa mengambil keputusan cepat saat harga sembako naik, dan uang hasil penjualan terus-menerus rawan selisih di tangan kasir.
+
+ AKTIVITAS 3 – Analisis Kebutuhan
+
+A.	Kebutuhan Fungsional (Fitur – Minimal 10)
+
+1. Login (untuk membedakan Pemilik dan Kasir).
+2. Dashboard (menampilkan Total Saldo, Total Stok, dan Keuntungan Hari Ini).
+3. Tambah Barang (Input nama barang, harga modal, harga jual, dan stok awal).
+4. Edit Harga Modal (Mengubah harga beli saat terjadi kenaikan dari supplier).
+5. Catat Penjualan (Memilih barang, input jumlah terjual, otomatis mengurangi stok).
+6. Catat Pengeluaran (Untuk belanja stok baru atau biaya operasional toko).
+7. Riwayat Transaksi (Melihat semua pemasukan/pengeluaran per hari/per kasir).
+8. Stok Opname (Mencocokkan data stok di aplikasi dengan stok fisik di gudang).
+9. Laporan Keuangan (Melihat total laba/rugi dalam periode tertentu, misal mingguan/bulanan).
+10. Manajemen Kasir (Melihat total penjualan yang dilakukan oleh tiap kasir).
+
+B.	Kebutuhan Non-Fungsional
+
+Kategori Kebutuhan
+• Perangkat Keras (Hardware) Smartphone Android minimal OS 7.0 (Nougat), RAM 2GB, layar 5 inci.
+• Perangkat Lunak (Software) Android Studio (IDE), JDK 11, Emulator Android atau HP sungguhan untuk testing.
+• Database Menggunakan SQLite/Mariadb (offline, tidak butuh internet) agar mudah dan cepat.
+• Desain Antarmuka harus sederhana dengan tombol besar dan angka yang jelas (karena pengguna mungkin sudah tua seperti ayah).
+• Keamanan Data tersimpan lokal di HP, tidak perlu koneksi internet (untuk versi 1.0).
+
+ AKTIVITAS 4 – Identifikasi Pengguna & Hak Akses
+
+No Nama Pengguna (Aktor) Hak Akses (Fitur yang Bisa Digunakan)
+1 . Pemilik / Admin Akses penuh ke semua fitur: Dashboard, Tambah/Edit Barang, Edit Harga Modal, Lihat Semua Laporan, Manajemen Kasir, Hapus Data, Stok Opname.
+2.  Kasir / Karyawan Akses terbatas: Hanya bisa mengakses fitur Catat Penjualan, Lihat Daftar Barang (tidak bisa edit harga), dan Lihat Riwayat Penjualan miliknya sendiri (tidak bisa lihat laporan keuangan total).
+
+
+
+
+
+AKTIVITAS 9 – Refleksi
+
+Pertanyaan Jawaban Saya
+• Apa yang paling mudah dari perencanaan ini? Membuat daftar fitur dan kebutuhan pengguna, karena saya sudah punya data wawancara langsung dari ayah saya, jadi saya tahu persis apa yang menjadi masalahnya.
+• Apa yang masih membingungkan? 
+1.	Saya agak bingung menentukan relasi antar tabel database, terutama bagaimana menghubungkan transaksi dengan stok agar stok otomatis berkurang. Saya juga bingung cara membuat harga jual otomatis menyesuaikan saat harga modal diubah.
+2.	Saya sedikit kesulitan membuat flowchart dan usecase yang pada akhirnya saya dibantu AI, sampai pada akhirnya saya memahami konsep flowchart sejarahnya sedikit dan apa tujuan dari flowchart, (tujuannya adalah memetakan konsep yang rumit dan mencari bagian bagian yang dapat di efisiensikan)
+
+• Apa yang akan saya pelajari sebelum mulai membuat aplikasi (coding)? 
+1.	Ini yang menurut saya paling penting, saya harus belajar lebih dalam untuk membuat flowchart dan usecase saya akhirnya paham apa itu flowchart dan usecase.
+2.  Saya harus belajar lebih dalam tentang SQLite& Mariadb (cara query update dan delete), Logika Aritmatika di pemrograman (pengurangan stok saat transaksi), dan Desain UI sederhana agar tombolnya besar-besar dan mudah dipahami/dibaca oleh pengguna seperti ayah saya.

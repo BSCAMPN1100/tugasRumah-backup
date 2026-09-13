@@ -1,0 +1,25 @@
+1. Supplier
+Apakah sistem perlu menyimpan nama/identitas supplier, atau supplier hanya konteks dan tidak dicatat?
+
+Ya, bertujuan agar data dapat dipertanggung jawabkan. kita bisa membuatnya simpel, cukup nama supplier saja yang di atur tidak boleh sama.
+
+2. Tanggal
+Apakah tanggal pembelian:
+otomatis saat disimpan, atau
+bisa dipilih Admin?
+
+Tanggal adalah data yang tidak boleh di ubah untuk menjaga integritasnya, jadi otomatis saat disimpan.
+
+3. Edit/Hapus Pembelian
+Apakah transaksi pembelian yang sudah disimpan:
+tidak boleh diubah/dihapus pada V1.0,
+boleh diedit,
+atau boleh dibatalkan?
+
+Ya transaksi pembelian bisa di edit, tujuannya jika admin ingin membatalkan pembelian atau admin salah memasukkan data, data tersebut masih dapat di ubah
+
+
+4. Penghapusan Barang
+Karena kamu sudah mengubah BAB 1 agar barang boleh dihapus, kita harus menentukan hapus permanen atau hapus logis, terutama karena barang berhubungan dengan histori pembelian dan penjualan.
+
+menurut saya penghapusan barang dapat dilakukan dan tidak perlu mempengaruhi histori pembelian dan penjualan, karena histori pembelian dan penjualan harus berdiri sendiri karena tugasnya mencatat sejarah yang konsisten dengan data pada saat itu bukan yang terkini. jadi saat data barang di hapus histori tetap ada karena merekam kejadian di masa lalu bukan. dalam konteks ini saya masih belum paham mengenai konsep histori pembelian dan penjualan yang anda maksud, yang saya pahami dari histori pembelian dan penjualan adalah sejarah/keterangan kapan membeli/menjual barang dan detail seperti nama barang, siapa pembeli/penjualnya, dan detail lainnya  tolong koreksi saya.
