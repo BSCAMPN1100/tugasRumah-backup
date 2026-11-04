@@ -243,7 +243,8 @@
                 </div>
             @endforeach
         @else
-            <div class="empty-state">Belum ada transaksi penjualan pada periode ini.</div>
+            
+      @include('partials.empty-state', ['icon' => '💰', 'title' => 'Belum Ada Penjualan', 'description' => 'Belum ada transaksi penjualan pada periode ini.', 'size' => 'sm'])
         @endif
     </div>
 
@@ -278,7 +279,7 @@
                 </div>
             @endforeach
         @else
-            <div class="empty-state">Belum ada transaksi pembelian pada periode ini.</div>
+            @include('partials.empty-state', ['icon' => '🛒', 'title' => 'Belum Ada Pembelian', 'description' => 'Belum ada transaksi pembelian pada periode ini.', 'size' => 'sm'])
         @endif
     </div>
 

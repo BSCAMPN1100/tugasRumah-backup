@@ -107,21 +107,21 @@
                     </div>
                 </div>
 
-                <!-- PEMBAYARAN -->
-                <div class="border-t border-gray-300 pt-3">
-                    <div class="mb-3">
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">Uang Dibayar</label>
-                        <input type="number" id="uang-dibayar" 
-                               value="{{ $penjualan->uang_dibayar }}" 
-                               min="0" 
-                               class="w-full border border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#0b3b2c]"
-                               oninput="hitungKembalian()">
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm font-semibold text-gray-700">Kembalian</span>
-                        <span class="text-xl font-bold text-[#166534]" id="kembalian-display">Rp 0</span>
-                    </div>
-                </div>
+<!-- PEMBAYARAN -->
+<div class="border-t border-gray-300 pt-3">
+    <div class="mb-3">
+        <label class="block text-sm font-semibold text-gray-700 mb-1">Uang Dibayar</label>
+        <input type="text" id="uang-dibayar" 
+               value="{{ (int) $penjualan->uang_dibayar }}" 
+               data-formatted inputmode="numeric" autocomplete="off"
+               class="w-full border border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#0b3b2c]"
+               oninput="hitungKembalian()">
+    </div>
+    <div class="flex justify-between items-center">
+        <span class="text-sm font-semibold text-gray-700">Kembalian</span>
+        <span class="text-xl font-bold text-[#166534]" id="kembalian-display">Rp 0</span>
+    </div>
+</div>
             </div>
 
             <button id="btn-simpan" class="btn-primary text-lg py-4" onclick="updatePenjualan()">
@@ -174,16 +174,15 @@
     let daftarPenjualan = [];
     let counterId = 0;
 
-    // Load data lama
     @foreach($penjualan->detail as $detail)
         daftarPenjualan.push({
             id: ++counterId,
             barang_id: {{ $detail->barang_id }},
             nama: "{{ $detail->barang->nama }}",
             satuan: "{{ $detail->barang->satuan }}",
-            harga_jual: {{ $detail->harga_jual_saat_transaksi }},
+            harga_jual: {{ (int) $detail->harga_jual_saat_transaksi }},
             jumlah: {{ $detail->jumlah }},
-            subtotal: {{ $detail->subtotal }}
+            subtotal: {{ (int) $detail->subtotal }}
         });
     @endforeach
 
@@ -209,18 +208,21 @@
             infoDiv.classList.add('hidden');
         }
     });
-
+// Mark dirty saat uang dibayar diubah
+document.getElementById('uang-dibayar').addEventListener('input', function() {
+    markPageDirty();
+});
     function tambahBarangKeDaftar() {
         const select = document.getElementById('barang-select');
         const selected = select.options[select.selectedIndex];
         const jumlah = parseInt(document.getElementById('jumlah-barang').value) || 1;
 
-        if (!select.value) { alert('Silakan pilih barang!'); return; }
-        if (jumlah < 1) { alert('Jumlah minimal 1!'); return; }
+        if (!select.value) { showToast('Silakan pilih barang!', 'warning'); return; }
+        if (jumlah < 1) { showToast('Jumlah minimal 1!', 'warning'); return; }
 
         const stokTersedia = parseInt(selected.dataset.stok) || 0;
         if (jumlah > stokTersedia) {
-            alert('Stok tidak cukup! Tersedia: ' + stokTersedia);
+            showToast('Stok tidak cukup! Tersedia: ' + stokTersedia, 'warning');
             return;
         }
 
@@ -232,7 +234,7 @@
 
         const existing = daftarPenjualan.find(item => item.barang_id == id);
         if (existing) {
-            alert('⚠️ Barang ini sudah ada di daftar!');
+            showToast('Barang ini sudah ada di daftar!', 'warning');
             return;
         } else {
             daftarPenjualan.push({
@@ -248,24 +250,26 @@
 
         toggleModalBarang();
         renderDaftar();
+      markPageDirty();
     }
 
     function hapusBarang(id) {
         daftarPenjualan = daftarPenjualan.filter(item => item.id !== id);
         renderDaftar();
+      markPageDirty();
     }
 
     function hitungKembalian() {
         const totalHarga = daftarPenjualan.reduce((sum, item) => sum + item.subtotal, 0);
-        const uangDibayar = parseFloat(document.getElementById('uang-dibayar').value) || 0;
+        const uangDibayar = parseAngka(document.getElementById('uang-dibayar').value);
         const kembalian = uangDibayar - totalHarga;
 
         const display = document.getElementById('kembalian-display');
         if (kembalian < 0) {
-            display.textContent = 'Rp ' + Math.abs(kembalian).toLocaleString('id-ID') + ' (Kurang)';
+            display.textContent = 'Rp ' + formatRibuan(Math.abs(kembalian)) + ' (Kurang)';
             display.className = 'text-xl font-bold text-[#991b1b]';
         } else {
-            display.textContent = 'Rp ' + kembalian.toLocaleString('id-ID');
+            display.textContent = 'Rp ' + formatRibuan(kembalian);
             display.className = 'text-xl font-bold text-[#166534]';
         }
     }
@@ -277,7 +281,7 @@
         const totalHargaEl = document.getElementById('total-harga');
 
         if (daftarPenjualan.length === 0) {
-            container.innerHTML = `<div class="empty-state">Belum ada barang ditambahkan</div>`;
+            container.innerHTML = emptyStateSmallHtml('🛒', 'Belum Ada Barang', 'Klik tombol di atas untuk menambahkan barang ke daftar penjualan.');
             totalItemLabel.textContent = '0 item';
             totalItemCount.textContent = '0';
             totalHargaEl.textContent = 'Rp 0';
@@ -304,7 +308,8 @@
                     <div class="flex flex-wrap gap-3 items-center">
                         <div class="flex-1 min-w-[120px]">
                             <label class="text-xs text-gray-500 block">Harga Jual</label>
-                            <input type="number" value="${item.harga_jual}" 
+                            <input type="text" value="${formatRibuan(item.harga_jual)}" 
+                                   data-formatted inputmode="numeric" data-item-id="${item.id}"
                                    class="w-full border border-gray-300 rounded-xl px-3 py-2 text-sm"
                                    onchange="ubahHarga(${item.id}, this.value)">
                         </div>
@@ -327,6 +332,11 @@
         totalItemLabel.textContent = `${daftarPenjualan.length} item`;
         totalItemCount.textContent = `${totalItem}`;
         totalHargaEl.textContent = `Rp ${totalHarga.toLocaleString('id-ID')}`;
+
+        container.querySelectorAll('[data-formatted]').forEach(input => {
+            attachAutoFormat(input);
+        });
+
         hitungKembalian();
     }
 
@@ -334,35 +344,50 @@
         const item = daftarPenjualan.find(i => i.id === id);
         if (!item) return;
         const newJumlah = parseInt(value) || 1;
-        if (newJumlah < 1) { alert('Jumlah minimal 1!'); renderDaftar(); return; }
+        if (newJumlah < 1) { showToast('Jumlah minimal 1!', 'warning'); renderDaftar(); return; }
         item.jumlah = newJumlah;
         item.subtotal = item.harga_jual * item.jumlah;
         renderDaftar();
+      markPageDirty();
     }
 
     function ubahHarga(id, value) {
         const item = daftarPenjualan.find(i => i.id === id);
         if (!item) return;
-        const newHarga = parseFloat(value) || 0;
-        if (newHarga < 0) { alert('Harga tidak boleh negatif!'); renderDaftar(); return; }
+        const newHarga = parseAngka(value);
+        if (newHarga < 0) { showToast('Harga tidak boleh negatif!', 'warning'); renderDaftar(); return; }
         item.harga_jual = newHarga;
         item.subtotal = item.harga_jual * item.jumlah;
         renderDaftar();
+      markPageDirty();
     }
 
     function updatePenjualan() {
+        // SYNC: pastikan semua input terbaru terbaca
+        document.querySelectorAll('#daftar-barang input[data-formatted]').forEach(input => {
+            const id = parseInt(input.dataset.itemId);
+            const item = daftarPenjualan.find(i => i.id === id);
+            if (item) {
+                item.harga_jual = parseAngka(input.value);
+                item.subtotal = item.harga_jual * item.jumlah;
+            }
+        });
+
         if (daftarPenjualan.length === 0) {
-            alert('Tambahkan minimal 1 barang!');
+            showToast('Tambahkan minimal 1 barang!', 'warning');
             return;
         }
 
         const totalHarga = daftarPenjualan.reduce((sum, item) => sum + item.subtotal, 0);
-        const uangDibayar = parseFloat(document.getElementById('uang-dibayar').value) || 0;
+        const uangDibayar = parseAngka(document.getElementById('uang-dibayar').value);
 
         if (uangDibayar < totalHarga) {
-            alert('Uang dibayar kurang dari total! Total: Rp ' + totalHarga.toLocaleString('id-ID'));
+            showToast('Uang dibayar kurang dari total! Total: Rp ' + formatRibuan(totalHarga), 'warning');
             return;
         }
+
+        const btn = document.getElementById('btn-simpan');
+        setLoading(btn, 'Menyimpan...');
 
         const data = {
             items: daftarPenjualan.map(item => ({
@@ -383,24 +408,26 @@
             body: JSON.stringify(data)
         })
         .then(response => {
-            if (!response.ok) {
-                return response.json().then(err => { throw err; });
-            }
+            if (!response.ok) return response.json().then(err => { throw err; });
             return response.json();
         })
         .then(result => {
-            alert('✅ ' + result.message);
-            window.location.href = '{{ route("penjualan.index") }}';
-        })
+    clearPageDirty();
+    showToast(result.message, 'success');
+    setTimeout(() => {
+        window.location.href = '{{ route("penjualan.index") }}';
+    }, 800);
+})
         .catch(error => {
+            resetLoading(btn);
             console.error('Error:', error);
             let pesan = 'Terjadi kesalahan!';
             if (error.errors) {
-                pesan = Object.values(error.errors).flat().join('\n');
+                pesan = Object.values(error.errors).flat().join(' ');
             } else if (error.message) {
                 pesan = error.message;
             }
-            alert('❌ ' + pesan);
+            showToast(pesan, 'error');
         });
     }
 

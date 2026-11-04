@@ -73,7 +73,6 @@
 
         <div class="bg-white rounded-3xl shadow-lg p-5">
 
-            <!-- HEADER -->
             <div class="flex justify-between items-center mb-4">
                 <div>
                     <a href="{{ route('pembelian.index') }}" class="text-sm text-[#0b3b2c] font-semibold flex items-center gap-1">
@@ -87,7 +86,6 @@
                 </div>
             </div>
 
-            <!-- SUPPLIER -->
             <div class="mb-5">
                 <label for="supplier_id" class="block text-sm font-semibold text-gray-700 mb-1">Supplier</label>
                 <div class="flex gap-2">
@@ -106,7 +104,6 @@
                 <p class="text-xs text-gray-400 mt-1">* Pilih supplier yang sudah ada, atau tambahkan baru</p>
             </div>
 
-            <!-- DAFTAR BARANG -->
             <div class="mb-4">
                 <div class="flex justify-between items-center mb-3">
                     <h2 class="text-lg font-bold text-gray-800">Daftar Barang</h2>
@@ -120,7 +117,6 @@
                 </button>
             </div>
 
-            <!-- RINGKASAN -->
             <div class="bg-[#f1f5f9] rounded-2xl p-4 mb-5">
                 <div class="flex justify-between items-center">
                     <div>
@@ -143,7 +139,6 @@
     </div>
 </div>
 
-<!-- ====== MODAL TAMBAH BARANG ====== -->
 <div class="modal-overlay" id="modalBarang">
     <div class="modal-content">
         <h2 class="text-xl font-bold text-[#0b3b2c] mb-4">➕ Tambah Barang</h2>
@@ -180,7 +175,6 @@
     </div>
 </div>
 
-<!-- ====== MODAL TAMBAH SUPPLIER ====== -->
 <div class="modal-overlay" id="modalSupplier">
     <div class="modal-content">
         <h2 class="text-xl font-bold text-[#0b3b2c] mb-4">➕ Tambah Supplier</h2>
@@ -191,8 +185,8 @@
         </div>
 
         <div class="flex gap-3">
-            <button onclick="tambahSupplier()" class="flex-1 bg-[#0b3b2c] text-white py-3 rounded-2xl font-semibold">
-                Simpan Supplier
+            <button id="btn-tambah-supplier" onclick="tambahSupplier()" class="flex-1 bg-[#0b3b2c] text-white py-3 rounded-2xl font-semibold">
+    Simpan Supplier
             </button>
             <button onclick="toggleModalSupplier()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-2xl font-semibold">
                 Batal
@@ -208,7 +202,6 @@
     let daftarPembelian = [];
     let counterId = 0;
 
-    // Load data lama
     @foreach($pembelian->detail as $detail)
         daftarPembelian.push({
             id: ++counterId,
@@ -250,14 +243,17 @@
             infoDiv.classList.add('hidden');
         }
     });
-
+// Mark dirty saat user ubah supplier
+document.getElementById('supplier_id').addEventListener('change', function() {
+    markPageDirty();
+});
     function tambahBarangKeDaftar() {
         const select = document.getElementById('barang-select');
         const selected = select.options[select.selectedIndex];
         const jumlah = parseInt(document.getElementById('jumlah-barang').value) || 1;
 
-        if (!select.value) { alert('Silakan pilih barang terlebih dahulu!'); return; }
-        if (jumlah < 1) { alert('Jumlah minimal 1!'); return; }
+        if (!select.value) { showToast('Silakan pilih barang terlebih dahulu!', 'warning'); return; }
+        if (jumlah < 1) { showToast('Jumlah minimal 1!', 'warning'); return; }
 
         const id = select.value;
         const nama = selected.text.split('(')[0].trim();
@@ -283,12 +279,14 @@
 
         toggleModalBarang();
         renderDaftar();
+        markPageDirty();
     }
 
     function hapusBarang(id) {
-        daftarPembelian = daftarPembelian.filter(item => item.id !== id);
-        renderDaftar();
-    }
+    daftarPembelian = daftarPembelian.filter(item => item.id !== id);
+    renderDaftar();
+    markPageDirty();
+  }
 
     function renderDaftar() {
         const container = document.getElementById('daftar-barang');
@@ -297,7 +295,7 @@
         const totalHargaEl = document.getElementById('total-harga');
 
         if (daftarPembelian.length === 0) {
-            container.innerHTML = `<div class="empty-state">Belum ada barang ditambahkan</div>`;
+            container.innerHTML = emptyStateSmallHtml('🛍️', 'Belum Ada Barang', 'Klik tombol di atas untuk menambahkan barang ke daftar pembelian.');
             totalItemLabel.textContent = '0 item';
             totalItemCount.textContent = '0';
             totalHargaEl.textContent = 'Rp 0';
@@ -322,12 +320,13 @@
                         <button onclick="hapusBarang(${item.id})" class="btn-danger">✕ Hapus</button>
                     </div>
                     <div class="flex flex-wrap gap-3 items-center">
-                        <div class="flex-1 min-w-[120px]">
-                            <label class="text-xs text-gray-500 block">Harga (per unit)</label>
-                            <input type="number" value="${item.harga_modal}" 
-                                   class="w-full border border-gray-300 rounded-xl px-3 py-2 text-sm"
-                                   onchange="ubahHarga(${item.id}, this.value)">
-                        </div>
+<div class="flex-1 min-w-[120px]">
+    <label class="text-xs text-gray-500 block">Harga (per unit)</label>
+    <input type="text" value="${formatRibuan(item.harga_modal)}" 
+           data-formatted inputmode="numeric" data-item-id="${item.id}"
+           class="w-full border border-gray-300 rounded-xl px-3 py-2 text-sm"
+           onchange="ubahHarga(${item.id}, this.value)">
+</div>
                         <div class="flex-1 min-w-[80px]">
                             <label class="text-xs text-gray-500 block">Jumlah</label>
                             <input type="number" value="${item.jumlah}" min="1" 
@@ -342,129 +341,147 @@
                 </div>
             `;
         });
+container.innerHTML = html;
+totalItemLabel.textContent = `${totalItem} item`;
+totalItemCount.textContent = `${totalItem} item`;
+totalHargaEl.textContent = `Rp ${totalHarga.toLocaleString('id-ID')}`;
 
-        container.innerHTML = html;
-        totalItemLabel.textContent = `${daftarPembelian.length} item`;
-        totalItemCount.textContent = `${totalItem}`;
-        totalHargaEl.textContent = `Rp ${totalHarga.toLocaleString('id-ID')}`;
+// Attach auto-format ke input harga yang baru di-render
+container.querySelectorAll('[data-formatted]').forEach(input => {
+    attachAutoFormat(input);
+});
+                                                              
     }
 
-    function ubahJumlah(id, value) {
+function ubahJumlah(id, value) {
+    const item = daftarPembelian.find(i => i.id === id);
+    if (!item) return;
+    const newJumlah = parseInt(value) || 1;
+    if (newJumlah < 1) { showToast('Jumlah minimal 1!', 'warning'); renderDaftar(); return; }
+    item.jumlah = newJumlah;
+    item.subtotal = item.harga_modal * item.jumlah;
+    renderDaftar();
+    markPageDirty();
+  }
+
+function ubahHarga(id, value) {
+    const item = daftarPembelian.find(i => i.id === id);
+    if (!item) return;
+    const newHarga = parseAngka(value);
+    if (newHarga < 0) { showToast('Harga tidak boleh negatif!', 'warning'); renderDaftar(); return; }
+    item.harga_modal = newHarga;
+    item.subtotal = item.harga_modal * item.jumlah;
+    renderDaftar();
+    markPageDirty();
+          }
+function updatePembelian() {
+    // SYNC: pastikan semua harga dari input terbaru
+    document.querySelectorAll('#daftar-barang input[data-formatted]').forEach(input => {
+        const id = parseInt(input.dataset.itemId);
         const item = daftarPembelian.find(i => i.id === id);
-        if (!item) return;
-        const newJumlah = parseInt(value) || 1;
-        if (newJumlah < 1) { alert('Jumlah minimal 1!'); renderDaftar(); return; }
-        item.jumlah = newJumlah;
-        item.subtotal = item.harga_modal * item.jumlah;
-        renderDaftar();
-    }
+        if (item) {
+            item.harga_modal = parseAngka(input.value);
+            item.subtotal = item.harga_modal * item.jumlah;
+        }
+    });
+    const supplierId = document.getElementById('supplier_id').value;
+    if (!supplierId) { showToast('Silakan pilih supplier terlebih dahulu!', 'warning'); return; }
+    if (daftarPembelian.length === 0) { showToast('Tambahkan minimal 1 barang!', 'warning'); return; }
 
-    function ubahHarga(id, value) {
-        const item = daftarPembelian.find(i => i.id === id);
-        if (!item) return;
-        const newHarga = parseFloat(value) || 0;
-        if (newHarga < 0) { alert('Harga tidak boleh negatif!'); renderDaftar(); return; }
-        item.harga_modal = newHarga;
-        item.subtotal = item.harga_modal * item.jumlah;
-        renderDaftar();
-    }
+    const btn = document.getElementById('btn-simpan');
+    setLoading(btn, 'Menyimpan...');
 
-    function updatePembelian() {
-        const supplierId = document.getElementById('supplier_id').value;
-        if (!supplierId) { alert('Silakan pilih supplier terlebih dahulu!'); return; }
-        if (daftarPembelian.length === 0) { alert('Tambahkan minimal 1 barang!'); return; }
+    const data = {
+        supplier_id: supplierId,
+        items: daftarPembelian.map(item => ({
+            barang_id: item.barang_id,
+            jumlah: item.jumlah,
+            harga_modal_saat_beli: item.harga_modal
+        }))
+    };
 
-        const data = {
-            supplier_id: supplierId,
-            items: daftarPembelian.map(item => ({
-                barang_id: item.barang_id,
-                jumlah: item.jumlah,
-                harga_modal_saat_beli: item.harga_modal
-            }))
-        };
-
-        fetch(`/pembelian/${pembelianId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(err => { throw err; });
+    fetch(`/pembelian/${pembelianId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) return response.json().then(err => { throw err; });
+        return response.json();
+    })
+    .then(result => {
+    // Jangan reset — akan redirect dalam 800ms
+    clearPageDirty();
+    showToast(result.message, 'success');
+    setTimeout(() => {
+        window.location.href = '{{ route("pembelian.index") }}';
+    }, 800);
+})
+    .catch(error => {
+        resetLoading(btn);
+        console.error('Error:', error);
+        let pesan = 'Terjadi kesalahan!';
+        if (error.errors) {
+            pesan = Object.values(error.errors).flat().join(' ');
+        } else if (error.message) {
+            pesan = error.message;
+        }
+        showToast(pesan, 'error');
+    });
             }
-            return response.json();
-        })
-        .then(result => {
-            alert('✅ ' + result.message);
-            window.location.href = '{{ route("pembelian.index") }}';
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            let pesan = 'Terjadi kesalahan!';
-            if (error.errors) {
-                pesan = Object.values(error.errors).flat().join('\n');
-            } else if (error.message) {
-                pesan = error.message;
-            }
-            alert('❌ ' + pesan);
-        });
-    }
+function tambahSupplier() {
+    const nama = document.getElementById('nama-supplier').value.trim();
+    if (!nama) { showToast('Nama supplier tidak boleh kosong!', 'warning'); return; }
 
-    function tambahSupplier() {
-        const nama = document.getElementById('nama-supplier').value.trim();
-        if (!nama) { alert('Nama supplier tidak boleh kosong!'); return; }
+    const btn = document.getElementById('btn-tambah-supplier');
+    setLoading(btn, 'Menyimpan...');
 
-        fetch('{{ route("supplier.store") }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({ nama: nama })
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(err => { throw err; });
-            }
-            return response.json();
-        })
-        .then(result => {
-            alert('✅ ' + result.message);
-            const select = document.getElementById('supplier_id');
-            const option = document.createElement('option');
-            option.value = result.data.id;
-            option.textContent = result.data.nama;
-            select.appendChild(option);
-            select.value = result.data.id;
-            toggleModalSupplier();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            let pesan = 'Terjadi kesalahan!';
-            if (error.errors) {
-                pesan = Object.values(error.errors).flat().join('\n');
-            } else if (error.message) {
-                pesan = error.message;
-            }
-            alert('❌ ' + pesan);
-        });
-    }
-
+    fetch('{{ route("supplier.store") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ nama: nama })
+    })
+    .then(response => {
+        if (!response.ok) return response.json().then(err => { throw err; });
+        return response.json();
+    })
+    .then(result => {
+        resetLoading(btn);
+        showToast(result.message, 'success');
+        const select = document.getElementById('supplier_id');
+        const option = document.createElement('option');
+        option.value = result.data.id;
+        option.textContent = result.data.nama;
+        select.appendChild(option);
+        select.value = result.data.id;
+        toggleModalSupplier();
+    })
+    .catch(error => {
+        resetLoading(btn);
+        console.error('Error:', error);
+        let pesan = 'Terjadi kesalahan!';
+        if (error.errors) {
+            pesan = Object.values(error.errors).flat().join(' ');
+        } else if (error.message) {
+            pesan = error.message;
+        }
+        showToast(pesan, 'error');
+    });
+  }
     function updateClock() {
         const now = new Date();
         const options = {
             timeZone: 'Asia/Jakarta',
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
+            day: '2-digit', month: '2-digit', year: 'numeric',
+            hour: '2-digit', minute: '2-digit', second: '2-digit'
         };
         document.getElementById('clock-display').textContent = now.toLocaleString('id-ID', options);
     }

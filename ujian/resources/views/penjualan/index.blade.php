@@ -110,8 +110,16 @@
                 </table>
             </div>
         @else
-            <p class="text-gray-500 text-center py-8">Belum ada data penjualan.</p>
-        @endif
+    @include('partials.empty-state', [
+        'icon' => '💰',
+        'title' => $role === 'admin' ? 'Belum Ada Penjualan' : 'Belum Ada Penjualan Anda',
+        'description' => $role === 'admin' 
+            ? 'Catat penjualan pertama Anda untuk mulai melacak pendapatan.' 
+            : 'Catat penjualan pertama Anda hari ini.',
+        'actionUrl' => route('penjualan.create'),
+        'actionLabel' => '➕ Catat Penjualan',
+    ])
+@endif
     </div>
 
     <div class="mt-4">

@@ -79,17 +79,23 @@
             </div>
         @endif
 
-        <form action="{{ route('sales.store') }}" method="POST">
+         <form action="{{ route('sales.store') }}" method="POST" novalidate data-dirty-check onsubmit="if (!validateForm(this)) return false; setLoading(this.querySelector('[type=submit]')); return true;">
             @csrf
 
             <div class="form-group">
-                <label for="name">Nama Sales</label>
-                <input type="text" id="name" name="name" value="{{ old('name') }}" required>
+    <label for="name">Nama Sales</label>
+    <input type="text" id="name" name="name" value="{{ old('name') }}" 
+           data-validate="required|max:100" 
+           data-validate-label="Nama Sales"
+           required>
             </div>
-
+            
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" value="{{ old('email') }}" required>
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" value="{{ old('email') }}" 
+           data-validate="required|email|unique:user,email" 
+           data-validate-label="Email"
+           required>
             </div>
 
             <div class="form-group">
@@ -98,7 +104,7 @@
             </div>
 
             <div class="btn-group">
-                <button type="submit" class="btn-primary">Simpan</button>
+                <button type="submit" class="btn-primary" data-loading-text="Menyimpan...">Simpan</button>
                 <a href="{{ route('sales.index') }}" class="btn-secondary" style="flex:1;">Batal</a>
             </div>
         </form>

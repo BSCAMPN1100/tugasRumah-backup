@@ -119,9 +119,8 @@
                 </div>
 
                 <div id="daftar-barang" class="daftar-barang">
-                    <div class="empty-state">Belum ada barang ditambahkan</div>
+    @include('partials.empty-state', ['icon' => '🛍️', 'title' => 'Belum Ada Barang', 'description' => 'Klik tombol di atas untuk menambahkan barang ke daftar pembelian.', 'size' => 'sm'])
                 </div>
-
                 <button onclick="toggleModalBarang()" class="w-full py-3 border-2 border-dashed border-gray-300 rounded-2xl text-gray-500 font-semibold hover:border-[#0b3b2c] hover:text-[#0b3b2c] transition mt-2">
                     ➕ Tambah Barang
                 </button>
@@ -198,9 +197,9 @@
         </div>
 
         <div class="flex gap-3">
-            <button onclick="tambahSupplier()" class="flex-1 bg-[#0b3b2c] text-white py-3 rounded-2xl font-semibold">
-                Simpan Supplier
-            </button>
+<button id="btn-tambah-supplier" onclick="tambahSupplier()" class="flex-1 bg-[#0b3b2c] text-white py-3 rounded-2xl font-semibold">
+    Simpan Supplier
+</button>
             <button onclick="toggleModalSupplier()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-2xl font-semibold">
                 Batal
             </button>
@@ -211,11 +210,9 @@
 
 @push('scripts')
 <script>
-    // Data sementara pembelian (di memory)
     let daftarPembelian = [];
     let counterId = 0;
 
-    // ----- FUNGSI MODAL -----
     function toggleModalBarang() {
         const modal = document.getElementById('modalBarang');
         modal.classList.toggle('active');
@@ -241,7 +238,6 @@
         if (e.target === this) this.classList.remove('active');
     });
 
-    // ----- INFO BARANG SAAT DIPILIH -----
     document.getElementById('barang-select').addEventListener('change', function() {
         const selected = this.options[this.selectedIndex];
         const infoDiv = document.getElementById('info-barang');
@@ -253,21 +249,18 @@
             infoDiv.classList.add('hidden');
         }
     });
+  // Mark dirty saat user ubah supplier
+document.getElementById('supplier_id').addEventListener('change', function() {
+    markPageDirty();
+});
 
-    // ----- TAMBAH BARANG KE DAFTAR -----
     function tambahBarangKeDaftar() {
         const select = document.getElementById('barang-select');
         const selected = select.options[select.selectedIndex];
         const jumlah = parseInt(document.getElementById('jumlah-barang').value) || 1;
 
-        if (!select.value) {
-            alert('Silakan pilih barang terlebih dahulu!');
-            return;
-        }
-        if (jumlah < 1) {
-            alert('Jumlah minimal 1!');
-            return;
-        }
+        if (!select.value) { showToast('Silakan pilih barang terlebih dahulu!', 'warning'); return; }
+        if (jumlah < 1) { showToast('Jumlah minimal 1!', 'warning'); return; }
 
         const id = select.value;
         const nama = selected.text.split('(')[0].trim();
@@ -277,7 +270,7 @@
 
         const existing = daftarPembelian.find(item => item.barang_id == id);
         if (existing) {
-            alert('⚠️ Barang ini sudah ada di daftar!\nSilakan ubah jumlah langsung di daftar, atau hapus jika ingin menambah dengan harga berbeda.');
+            showToast('Barang ini sudah ada di daftar! Silakan ubah jumlah langsung di daftar.', 'warning');
             return;
         } else {
             daftarPembelian.push({
@@ -291,13 +284,15 @@
             });
         }
 
-        toggleModalBarang();
-        renderDaftar();
+    toggleModalBarang();
+    renderDaftar();
+    markPageDirty();
     }
 
     function hapusBarang(id) {
-        daftarPembelian = daftarPembelian.filter(item => item.id !== id);
-        renderDaftar();
+    daftarPembelian = daftarPembelian.filter(item => item.id !== id);
+    renderDaftar();
+    markPageDirty();
     }
 
     function renderDaftar() {
@@ -307,7 +302,7 @@
         const totalHargaEl = document.getElementById('total-harga');
 
         if (daftarPembelian.length === 0) {
-            container.innerHTML = `<div class="empty-state">Belum ada barang ditambahkan</div>`;
+            container.innerHTML = emptyStateSmallHtml('🛍️', 'Belum Ada Barang', 'Klik tombol di atas untuk menambahkan barang ke daftar pembelian.');
             totalItemLabel.textContent = '0 item';
             totalItemCount.textContent = '0 item';
             totalHargaEl.textContent = 'Rp 0';
@@ -332,12 +327,13 @@
                         <button onclick="hapusBarang(${item.id})" class="btn-danger">✕ Hapus</button>
                     </div>
                     <div class="flex flex-wrap gap-3 items-center">
-                        <div class="flex-1 min-w-[120px]">
-                            <label class="text-xs text-gray-500 block">Harga (per unit)</label>
-                            <input type="number" value="${item.harga_modal}" 
-                                   class="w-full border border-gray-300 rounded-xl px-3 py-2 text-sm"
-                                   onchange="ubahHarga(${item.id}, this.value)">
-                        </div>
+<div class="flex-1 min-w-[120px]">
+    <label class="text-xs text-gray-500 block">Harga (per unit)</label>
+    <input type="text" value="${formatRibuan(item.harga_modal)}" 
+           data-formatted inputmode="numeric" data-item-id="${item.id}"
+           class="w-full border border-gray-300 rounded-xl px-3 py-2 text-sm"
+           onchange="ubahHarga(${item.id}, this.value)">
+</div>
                         <div class="flex-1 min-w-[80px]">
                             <label class="text-xs text-gray-500 block">Jumlah</label>
                             <input type="number" value="${item.jumlah}" min="1" 
@@ -353,150 +349,147 @@
             `;
         });
 
-        container.innerHTML = html;
-        totalItemLabel.textContent = `${totalItem} item`;
-        totalItemCount.textContent = `${totalItem} item`;
-        totalHargaEl.textContent = `Rp ${totalHarga.toLocaleString('id-ID')}`;
+container.innerHTML = html;
+totalItemLabel.textContent = `${totalItem} item`;
+totalItemCount.textContent = `${totalItem} item`;
+totalHargaEl.textContent = `Rp ${totalHarga.toLocaleString('id-ID')}`;
+
+// Attach auto-format ke input harga yang baru di-render
+container.querySelectorAll('[data-formatted]').forEach(input => {
+    attachAutoFormat(input);
+});
     }
 
-    function ubahJumlah(id, value) {
+function ubahJumlah(id, value) {
+    const item = daftarPembelian.find(i => i.id === id);
+    if (!item) return;
+    const newJumlah = parseInt(value) || 1;
+    if (newJumlah < 1) { showToast('Jumlah minimal 1!', 'warning'); renderDaftar(); return; }
+    item.jumlah = newJumlah;
+    item.subtotal = item.harga_modal * item.jumlah;
+    renderDaftar();
+    markPageDirty();
+      }
+function ubahHarga(id, value) {
+    const item = daftarPembelian.find(i => i.id === id);
+    if (!item) return;
+    const newHarga = parseAngka(value);
+    if (newHarga < 0) { showToast('Harga tidak boleh negatif!', 'warning'); renderDaftar(); return; }
+    item.harga_modal = newHarga;
+    item.subtotal = item.harga_modal * item.jumlah;
+    renderDaftar();
+    markPageDirty();
+}
+function tambahSupplier() {
+    const nama = document.getElementById('nama-supplier').value.trim();
+    if (!nama) { showToast('Nama supplier tidak boleh kosong!', 'warning'); return; }
+
+    const btn = document.getElementById('btn-tambah-supplier');
+    setLoading(btn, 'Menyimpan...');
+
+    fetch('{{ route("supplier.store") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ nama: nama })
+    })
+    .then(response => {
+        if (!response.ok) return response.json().then(err => { throw err; });
+        return response.json();
+    })
+    .then(result => {
+        resetLoading(btn);
+        showToast(result.message, 'success');
+        const select = document.getElementById('supplier_id');
+        const option = document.createElement('option');
+        option.value = result.data.id;
+        option.textContent = result.data.nama;
+        select.appendChild(option);
+        select.value = result.data.id;
+        toggleModalSupplier();
+    })
+    .catch(error => {
+        resetLoading(btn);
+        console.error('Error:', error);
+        let pesan = 'Terjadi kesalahan!';
+        if (error.errors) {
+            pesan = Object.values(error.errors).flat().join(' ');
+        } else if (error.message) {
+            pesan = error.message;
+        }
+        showToast(pesan, 'error');
+    });
+                           }
+function simpanPembelian() {
+    // SYNC: pastikan semua harga dari input terbaru
+    document.querySelectorAll('#daftar-barang input[data-formatted]').forEach(input => {
+        const id = parseInt(input.dataset.itemId);
         const item = daftarPembelian.find(i => i.id === id);
-        if (!item) return;
-        const newJumlah = parseInt(value) || 1;
-        if (newJumlah < 1) {
-            alert('Jumlah minimal 1!');
-            renderDaftar();
-            return;
+        if (item) {
+            item.harga_modal = parseAngka(input.value);
+            item.subtotal = item.harga_modal * item.jumlah;
         }
-        item.jumlah = newJumlah;
-        item.subtotal = item.harga_modal * item.jumlah;
-        renderDaftar();
-    }
+    });
 
-    function ubahHarga(id, value) {
-        const item = daftarPembelian.find(i => i.id === id);
-        if (!item) return;
-        const newHarga = parseFloat(value) || 0;
-        if (newHarga < 0) {
-            alert('Harga tidak boleh negatif!');
-            renderDaftar();
-            return;
+    const supplierId = document.getElementById('supplier_id').value;
+    if (!supplierId) { showToast('Silakan pilih supplier terlebih dahulu!', 'warning'); return; }
+    if (daftarPembelian.length === 0) { showToast('Tambahkan minimal 1 barang!', 'warning'); return; }
+
+    const btn = document.getElementById('btn-simpan');
+    setLoading(btn, 'Menyimpan...');
+
+    const data = {
+        supplier_id: supplierId,
+        items: daftarPembelian.map(item => ({
+            barang_id: item.barang_id,
+            jumlah: item.jumlah,
+            harga_modal_saat_beli: item.harga_modal
+        }))
+    };
+
+    fetch('{{ route("pembelian.store") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) return response.json().then(err => { throw err; });
+        return response.json();
+    })
+    .then(result => {
+    resetLoading(btn);
+    clearPageDirty();
+    showToast(result.message, 'success');
+    daftarPembelian = [];
+    renderDaftar();
+    document.getElementById('supplier_id').value = '';
+})
+    .catch(error => {
+        resetLoading(btn);
+        console.error('Error:', error);
+        let pesan = 'Terjadi kesalahan saat menyimpan!';
+        if (error.errors) {
+            pesan = Object.values(error.errors).flat().join(' ');
+        } else if (error.message) {
+            pesan = error.message;
         }
-        item.harga_modal = newHarga;
-        item.subtotal = item.harga_modal * item.jumlah;
-        renderDaftar();
-    }
-
-    function tambahSupplier() {
-        const nama = document.getElementById('nama-supplier').value.trim();
-        if (!nama) {
-            alert('Nama supplier tidak boleh kosong!');
-            return;
-        }
-
-        fetch('{{ route("supplier.store") }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({ nama: nama })
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(err => { throw err; });
-            }
-            return response.json();
-        })
-        .then(result => {
-            alert('✅ ' + result.message);
-            const select = document.getElementById('supplier_id');
-            const option = document.createElement('option');
-            option.value = result.data.id;
-            option.textContent = result.data.nama;
-            select.appendChild(option);
-            select.value = result.data.id;
-            toggleModalSupplier();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            let pesan = 'Terjadi kesalahan!';
-            if (error.errors) {
-                pesan = Object.values(error.errors).flat().join('\n');
-            } else if (error.message) {
-                pesan = error.message;
-            }
-            alert('❌ ' + pesan);
-        });
-    }
-
-    function simpanPembelian() {
-        const supplierId = document.getElementById('supplier_id').value;
-        if (!supplierId) {
-            alert('Silakan pilih supplier terlebih dahulu!');
-            return;
-        }
-        if (daftarPembelian.length === 0) {
-            alert('Tambahkan minimal 1 barang!');
-            return;
-        }
-
-        const data = {
-            supplier_id: supplierId,
-            items: daftarPembelian.map(item => ({
-                barang_id: item.barang_id,
-                jumlah: item.jumlah,
-                harga_modal_saat_beli: item.harga_modal
-            }))
-        };
-
-        fetch('{{ route("pembelian.store") }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(err => { throw err; });
-            }
-            return response.json();
-        })
-        .then(result => {
-            alert('✅ ' + result.message);
-            daftarPembelian = [];
-            renderDaftar();
-            document.getElementById('supplier_id').value = '';
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            let pesan = 'Terjadi kesalahan saat menyimpan!';
-            if (error.errors) {
-                pesan = Object.values(error.errors).flat().join('\n');
-            } else if (error.message) {
-                pesan = error.message;
-            }
-            alert('❌ ' + pesan);
-        });
-    }
-
-    // ----- JAM REAL-TIME -----
+        showToast(pesan, 'error');
+    });
+              }
     function updateClock() {
         const now = new Date();
         const options = {
             timeZone: 'Asia/Jakarta',
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
+            day: '2-digit', month: '2-digit', year: 'numeric',
+            hour: '2-digit', minute: '2-digit', second: '2-digit'
         };
-        const formatted = now.toLocaleString('id-ID', options);
-        document.getElementById('clock-display').textContent = formatted;
+        document.getElementById('clock-display').textContent = now.toLocaleString('id-ID', options);
     }
 
     renderDaftar();

@@ -127,14 +127,18 @@
             </div>
         @endif
 
-        <form action="{{ route('barang.update', $barang->id) }}" method="POST">
+        <form action="{{ route('barang.update', $barang->id) }}" method="POST" novalidate data-dirty-check onsubmit="if (!validateForm(this)) return false; setLoading(this.querySelector('[type=submit]')); return true;">
             @csrf
             @method('PUT')
 
             <div class="form-group">
-                <label for="nama">Nama Barang <span style="color:#991b1b;">*</span></label>
-                <input type="text" id="nama" name="nama" value="{{ old('nama', $barang->nama) }}" required>
-                @error('nama') <div class="error">{{ $message }}</div> @enderror
+    <label for="nama">Nama Barang <span style="color:#991b1b;">*</span></label>
+    <input type="text" id="nama" name="nama" value="{{ old('nama', $barang->nama) }}" 
+       data-validate="required|max:255|unique:barang,nama" 
+       data-validate-exclude-id="{{ $barang->id }}"
+       data-validate-label="Nama Barang"
+       required>
+    @error('nama') <div class="error">{{ $message }}</div> @enderror
             </div>
 
             <div class="form-group">
@@ -143,29 +147,37 @@
                 @error('satuan') <div class="error">{{ $message }}</div> @enderror
             </div>
 
-            <div class="form-group">
-                <label for="harga_modal">Harga Modal (Rp)</label>
-                <input type="number" id="harga_modal" name="harga_modal" value="{{ old('harga_modal', $barang->harga_modal) }}" step="0.01" min="0">
-                @error('harga_modal') <div class="error">{{ $message }}</div> @enderror
-            </div>
+<div class="form-group">
+    <label for="harga_modal">Harga Modal (Rp)</label>
+    <input type="text" id="harga_modal" name="harga_modal" value="{{ old('harga_modal', $barang->harga_modal) }}" 
+           data-formatted inputmode="numeric" autocomplete="off"
+           data-validate="min_value:0" 
+           data-validate-label="Harga Modal">
+    @error('harga_modal') <div class="error">{{ $message }}</div> @enderror
+</div>
 
-            <div class="form-group">
-                <label for="harga_jual">Harga Jual (Rp) <span style="color:#991b1b;">*</span></label>
-                <input type="number" id="harga_jual" name="harga_jual" value="{{ old('harga_jual', $barang->harga_jual) }}" step="0.01" min="0" required>
-                @error('harga_jual') <div class="error">{{ $message }}</div> @enderror
-            </div>
-
-            <div class="form-group">
-                <label for="stok">Stok</label>
-                <input type="number" id="stok" name="stok" value="{{ old('stok', $barang->stok) }}" min="0">
-                @error('stok') <div class="error">{{ $message }}</div> @enderror
-            </div>
+<div class="form-group">
+    <label for="harga_jual">Harga Jual (Rp) <span style="color:#991b1b;">*</span></label>
+    <input type="text" id="harga_jual" name="harga_jual" value="{{ old('harga_jual', $barang->harga_jual) }}" 
+           data-formatted inputmode="numeric" autocomplete="off" 
+           data-validate="required|min_value:0" 
+           data-validate-label="Harga Jual"
+           required>
+    @error('harga_jual') <div class="error">{{ $message }}</div> @enderror
+</div>
+          <div class="form-group">
+    <label for="stok">Stok</label>
+    <input type="number" id="stok" name="stok" value="{{ old('stok', $barang->stok) }}" min="0"
+           data-validate="min_value:0" 
+           data-validate-label="Stok">
+    @error('stok') <div class="error">{{ $message }}</div> @enderror
+          </div>
 
             <div class="btn-group">
-                <button type="submit" class="btn-submit">Update</button>
+                <button type="submit" class="btn-submit" data-loading-text="Menyimpan...">Update</button>
                 <a href="{{ route('barang.index') }}" class="btn-cancel">Batal</a>
             </div>
-        </form>
+        </>
     </div>
 </div>
 @endsection

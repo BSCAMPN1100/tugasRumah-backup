@@ -23,40 +23,35 @@
     }
     .btn-primary-page:hover { background: #082f23; }
 
-    .btn-edit {
-        background: #eef2f6;
-        color: #1e293b;
-        padding: 4px 12px;
-        border-radius: 40px;
-        text-decoration: none;
-        font-size: 13px;
-        font-weight: 600;
-    }
-    .btn-edit:hover { background: #dce1e8; }
+    .btn-edit,
+.btn-detail,
+.btn-delete {
+    background: none;
+    padding: 0;
+    border: none;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+}
 
-    .btn-detail {
-        background: #0b3b2c;
-        color: white;
-        padding: 4px 12px;
-        border-radius: 40px;
-        text-decoration: none;
-        font-size: 13px;
-        font-weight: 600;
-    }
-    .btn-detail:hover { background: #082f23; }
+.btn-detail { color: #0b3b2c; }
+.btn-detail:hover { text-decoration: underline; }
 
-    .btn-delete {
-        background: #fee2e2;
-        color: #991b1b;
-        padding: 4px 12px;
-        border-radius: 40px;
-        text-decoration: none;
-        font-size: 13px;
-        font-weight: 600;
-        border: none;
-        cursor: pointer;
-    }
-    .btn-delete:hover { background: #fecaca; }
+.btn-edit { color: #1e293b; }
+.btn-edit:hover { text-decoration: underline; }
+
+.btn-delete { color: #991b1b; }
+.btn-delete:hover { text-decoration: underline; }
+
+.action-cell {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
 
     .badge-active {
         background: #dcfce7;
@@ -96,9 +91,7 @@
         <a href="{{ route('sales.create') }}" class="btn-primary-page">➕ Tambah Sales</a>
     </div>
 
-    @if(session('success'))
-        <div class="alert-success">{{ session('success') }}</div>
-    @endif
+  {{-- Alert sukses sekarang pakai toast --}}
 
     <div class="card-table">
         @if($sales->count() > 0)
@@ -133,27 +126,33 @@
                                 </td>
                                 <td>{{ $s->total_transaksi ?? 0 }} transaksi</td>
                                 <td>Rp {{ number_format($s->total_omzet ?? 0, 0, ',', '.') }}</td>
-                                <td>
-                                    <a href="{{ route('sales.show', $s->id) }}" class="btn-detail">👁️ Detail</a>
-                                    <a href="{{ route('sales.edit', $s->id) }}" class="btn-edit">✏️ Edit</a>
-                                    @if(!$s->trashed())
-                                        <form action="{{ route('sales.destroy', $s->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn-delete" onclick="return confirm('Yakin hapus akun ini? Riwayat transaksi akan tetap tersimpan.')">
-                                                🗑️ Hapus
-                                            </button>
-                                        </form>
-                                    @endif
-                                </td>
+<td>
+    <div class="action-cell">
+        <a href="{{ route('sales.show', $s->id) }}" class="btn-detail">Detail</a>
+        <a href="{{ route('sales.edit', $s->id) }}" class="btn-edit">Edit</a>
+        @if(!$s->trashed())
+            <form id="form-hapus-sales-{{ $s->id }}" action="{{ route('sales.destroy', $s->id) }}" method="POST" style="display:inline; margin:0;">
+                @csrf
+                @method('DELETE')
+                <button type="button" class="btn-delete" onclick="hapusSales({{ $s->id }}, this)">Hapus</button>
+            </form>
+        @endif
+    </div>
+</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         @else
-            <p class="text-gray-500 text-center py-8">Belum ada akun Sales.</p>
-        @endif
+    @include('partials.empty-state', [
+        'icon' => '👥',
+        'title' => 'Belum Ada Akun Sales',
+        'description' => 'Tambahkan akun sales pertama Anda untuk mulai mendelegasikan pencatatan penjualan.',
+        'actionUrl' => route('sales.create'),
+        'actionLabel' => '➕ Tambah Sales Pertama',
+    ])
+@endif
     </div>
 
     <div class="mt-4">
@@ -161,3 +160,31 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<script>
+    async function hapusSales(id, btn) {
+    const ok = await showConfirm({
+        icon: '🗑️',
+        title: 'Hapus Akun Sales',
+        message: 'Yakin hapus akun ini? Riwayat transaksi akan tetap tersimpan.',
+        yesText: 'Ya, Hapus',
+        danger: true
+    });
+    if (ok) {
+        const button = btn || document.querySelector(`#form-hapus-sales-${id} button`);
+        setLoading(button, 'Menghapus...');
+        document.getElementById('form-hapus-sales-' + id).submit();
+    }
+                              }
+
+    @if(session('success'))
+        showToast(@json(session('success')), 'success');
+    @endif
+    @if(session('error'))
+        showToast(@json(session('error')), 'error');
+    @endif
+    @if(session('warning'))
+        showToast(@json(session('warning')), 'warning');
+    @endif
+</script>
+@endpush

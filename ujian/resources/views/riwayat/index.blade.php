@@ -230,9 +230,8 @@
                 </div>
             @endforeach
         @else
-            <div class="empty-state">
-                Belum ada transaksi pada periode ini.
-            </div>
+            
+      @include('partials.empty-state', ['icon' => '📋', 'title' => 'Belum Ada Transaksi', 'description' => 'Belum ada transaksi pada periode ini. Coba ubah filter periode.', 'size' => 'sm'])
         @endif
     </div>
 

@@ -46,15 +46,7 @@
         <h1 class="text-2xl font-bold text-[#0b3b2c]">📋 Riwayat Pembelian</h1>
         <a href="{{ route('pembelian.create') }}" class="btn-primary-page">➕ Catat Pembelian</a>
     </div>
-
-    @if(session('success'))
-        <div class="alert-success">{{ session('success') }}</div>
-    @endif
-
-    @if(session('error'))
-        <div class="alert-error">{{ session('error') }}</div>
-    @endif
-
+{{-- Alert sukses/error sekarang pakai toast --}}
     <div class="card-table">
         @if($pembelian->count() > 0)
             <div class="table-container">
@@ -95,10 +87,10 @@
                                 <td>
                                     @if($p->status === 'selesai')
                                         <a href="{{ route('pembelian.edit', $p->id) }}" class="text-[#0b3b2c] font-semibold hover:underline">Edit</a>
-                                        <form action="{{ route('pembelian.batal', $p->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            <button type="submit" class="text-[#991b1b] font-semibold hover:underline" onclick="return confirm('Yakin batalkan pembelian ini? Stok akan dikembalikan.')">Batal</button>
-                                        </form>
+<form id="form-batal-pembelian-{{ $p->id }}" action="{{ route('pembelian.batal', $p->id) }}" method="POST" style="display:inline;">
+    @csrf
+    <button type="button" class="text-[#991b1b] font-semibold hover:underline" onclick="batalPembelian({{ $p->id }}, this)">Batal</button>
+</form>
                                     @else
                                         <span class="text-gray-400">Tidak ada aksi</span>
                                     @endif
@@ -121,7 +113,13 @@
                 </table>
             </div>
         @else
-            <p class="text-gray-500 text-center py-8">Belum ada data pembelian.</p>
+            @include('partials.empty-state', [
+    'icon' => '🛒',
+    'title' => 'Belum Ada Pembelian',
+    'description' => 'Catat pembelian pertama Anda untuk mulai melacak stok barang.',
+    'actionUrl' => route('pembelian.create'),
+    'actionLabel' => '➕ Catat Pembelian',
+])
         @endif
     </div>
 
@@ -130,3 +128,31 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<script>
+    async function batalPembelian(id, btn) {
+    const ok = await showConfirm({
+        icon: '⚠️',
+        title: 'Batalkan Pembelian',
+        message: 'Yakin batalkan pembelian ini? Stok akan dikembalikan ke kondisi sebelumnya.',
+        yesText: 'Ya, Batalkan',
+        danger: true
+    });
+    if (ok) {
+        const button = btn || document.querySelector(`#form-batal-pembelian-${id} button`);
+        setLoading(button, 'Membatalkan...');
+        document.getElementById('form-batal-pembelian-' + id).submit();
+    }
+    }
+
+    @if(session('success'))
+        showToast(@json(session('success')), 'success');
+    @endif
+    @if(session('error'))
+        showToast(@json(session('error')), 'error');
+    @endif
+    @if(session('warning'))
+        showToast(@json(session('warning')), 'warning');
+    @endif
+</script>
+@endpush

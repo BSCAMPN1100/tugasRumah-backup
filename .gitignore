@@ -10,3 +10,11 @@
 .vscode/
 .DS_Store
 Thumbs.db
+
+# Folder catatan pribadi (tidak perlu di-upload)
+/plan/
+PromptPenyelesaian
+ToDoListKejuruan
+/plan/
+PromptPenyelesaian
+ToDoListKejuruan

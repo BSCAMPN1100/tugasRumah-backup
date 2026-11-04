@@ -66,7 +66,7 @@
             Pilih salah satu opsi di bawah ini:
         </p>
 
-        <form action="{{ route('sales.duplicate.handle') }}" method="POST">
+        <form action="{{ route('sales.duplicate.handle') }}" method="POST" onsubmit="setLoading(this.querySelector('[type=submit]')); return true;">
             @csrf
             <input type="hidden" name="name" value="{{ $name }}">
             <input type="hidden" name="email" value="{{ $email }}">
@@ -100,9 +100,9 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn-primary">Lanjutkan</button>
+            <button type="submit" class="btn-primary" data-loading-text="Memproses...">Lanjutkan</button>
             <a href="{{ route('sales.create') }}" class="btn-secondary mt-2" style="display: block; text-align: center; text-decoration: none;">Batal</a>
-        </form>
+        </for>
     </div>
 </div>
-@endsection
+@endsectionygkb

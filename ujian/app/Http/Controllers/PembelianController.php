@@ -185,7 +185,7 @@ if (count($barangIds) !== count(array_unique($barangIds))) {
 // Ambil data supplier
 $supplier = Supplier::findOrFail($request->supplier_id);
         // 🔥 Database Transaction (P7)
-        DB::transaction(function () use ($request) {
+        DB::transaction(function () use ($request, $supplier) {
             $totalHarga = 0;
             foreach ($request->items as $item) {
                 $totalHarga += $item['jumlah'] * $item['harga_modal_saat_beli'];

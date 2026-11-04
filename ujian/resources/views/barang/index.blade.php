@@ -211,8 +211,14 @@
                         </div>
                     @endif
                 </div>
-            @empty
-                <p style="text-align:center; color:#94a3b8;">Belum ada data barang.</p>
+          @empty
+           @include('partials.empty-state', [
+    'icon' => '📦',
+    'title' => 'Belum Ada Barang',
+    'description' => 'Tambahkan barang pertama Anda untuk mulai mencatat penjualan dan pembelian.',
+    'actionUrl' => $role === 'admin' ? route('barang.create') : null,
+    'actionLabel' => '➕ Tambah Barang Pertama',
+])
             @endforelse
         </div>
 

@@ -10,7 +10,8 @@ use App\Models\Barang;
 use App\Models\Penjualan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LaporanController;
-use App\Http\Controllers\RiwayatController; // ← TAMBAHKAN DI ATAS
+use App\Http\Controllers\RiwayatController;
+use App\Http\Controllers\CheckUniqueController;
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
@@ -40,6 +41,7 @@ Route::resource('penjualan', PenjualanController::class)->only(['edit', 'update'
     Route::post('/pembelian/{id}/batal', [PembelianController::class, 'batal'])->name('pembelian.batal');
 Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
 Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
+Route::post('/check-unique', [CheckUniqueController::class, 'check'])->name('check.unique');
 });
 
 // ✅ Route untuk ADMIN dan SALES (penjualan)

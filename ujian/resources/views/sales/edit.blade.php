@@ -80,18 +80,25 @@
             </div>
         @endif
 
-        <form action="{{ route('sales.update', $sales->id) }}" method="POST">
+        <form action="{{ route('sales.update', $sales->id) }}" method="POST" novalidate data-dirty-check onsubmit="if (!validateForm(this)) return false; setLoading(this.querySelector('[type=submit]')); return true;">
             @csrf
             @method('PUT')
 
             <div class="form-group">
-                <label for="name">Nama Sales</label>
-                <input type="text" id="name" name="name" value="{{ old('name', $sales->name) }}" required>
+    <label for="name">Nama Sales</label>
+    <input type="text" id="name" name="name" value="{{ old('name', $sales->name) }}" 
+           data-validate="required|max:100" 
+           data-validate-label="Nama Sales"
+           required>
             </div>
 
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" value="{{ old('email', $sales->email) }}" required>
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" value="{{ old('email', $sales->email) }}" 
+           data-validate="required|email|unique:user,email" 
+           data-validate-exclude-id="{{ $sales->id }}"
+           data-validate-label="Email"
+           required>
             </div>
 
             <div class="form-group">
@@ -101,7 +108,7 @@
             </div>
 
             <div class="btn-group">
-                <button type="submit" class="btn-primary">Update</button>
+                <button type="submit" class="btn-primary" data-loading-text="Menyimpan...">Update</button>
                 <a href="{{ route('sales.index') }}" class="btn-secondary" style="flex:1;">Batal</a>
             </div>
         </form>
